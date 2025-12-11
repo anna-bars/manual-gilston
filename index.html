@@ -368,14 +368,28 @@ document.addEventListener('DOMContentLoaded', function() {
     const menuToggle = document.querySelector('.toolbar__menu-toggle');
     if (menuToggle) {
         menuToggle.addEventListener('click', function() {
-            console.log(menuToggle);
-            console.log(mobileMenuElement);
-            mobileMenuElement.style.setProperty('width', '100%', 'important');
-mobileMenuElement.classList.add('full');
-            console.log(mobileMenuCont);
-            mobileMenuCont.style.setProperty('transform', 'translateX(0px)', 'important');
-            mobileMenu.toggle();
-        });
+    // Log
+    console.log(menuToggle);
+    console.log(mobileMenuElement);
+
+    // Toggle width class
+    if (mobileMenuElement.classList.contains('full')) {
+        // CLOSE — remove style + class
+        mobileMenuElement.classList.remove('full');
+        mobileMenuElement.style.removeProperty('width');
+
+        mobileMenuCont.style.removeProperty('transform');
+    } else {
+        // OPEN — add style + class
+        mobileMenuElement.style.setProperty('width', '100%', 'important');
+        mobileMenuElement.classList.add('full');
+
+        mobileMenuCont.style.setProperty('transform', 'translateX(0px)', 'important');
+    }
+
+    mobileMenu.toggle();
+});
+
     }
 });
     </script>
