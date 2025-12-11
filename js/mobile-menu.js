@@ -122,6 +122,10 @@ class MobileMenu {
             <div class="part-btn">
                 <a href="https://www.globalgilson.com/replacement-parts">Replacement Parts</a>
             </div>
+
+            <div class="poster">
+                <img loading="lazy" src="./src/assets/haeder-component/mobile-menu/mob-menu-post.webp" alt="Phone">
+            </div>
             
             <div class="mob-menu-contact">
                 <div class="mob-contact-text">
