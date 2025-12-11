@@ -362,11 +362,18 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize mobile menu
     const mobileMenu = new MobileMenu();
-    
+     const mobileMenuElement = document.getElementById('mobileMenu');
+     const mobileMenuCont = document.getElementById('mobileMenuCont');
     // Add click event to menu toggle button
     const menuToggle = document.querySelector('.toolbar__menu-toggle');
     if (menuToggle) {
         menuToggle.addEventListener('click', function() {
+            console.log(menuToggle);
+            console.log(mobileMenuElement);
+            mobileMenuElement.style.setProperty('width', '100%', 'important');
+mobileMenuElement.classList.add('full');
+            console.log(mobileMenuCont);
+            mobileMenuCont.style.setProperty('transform', 'translateX(0px)', 'important');
             mobileMenu.toggle();
         });
     }
