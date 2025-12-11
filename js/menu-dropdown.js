@@ -91,7 +91,7 @@ class MegaMenu {
     createDropdown(category) {
         const dropdown = document.createElement('div');
         dropdown.className = 'mega-dropdown';
-        dropdown.style.cssText = 'position: absolute; top: 100%; left: 0; right: 0; width: 88%; z-index: 1000; background-color: white; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: left; color: #333; margin: auto; display: none;';
+        dropdown.style.cssText = 'position: absolute; border: none !important; top: 100%; left: 0; right: 0; width: 93%; z-index: 1000; background-color: white; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: left; color: #333; margin: auto; display: none;';
         
         const data = window.menuData[category];
         console.log(`Creating dropdown for ${category} with data:`, data);
@@ -157,46 +157,47 @@ class MegaMenu {
         }
         
         const categoriesHTML = activeContent.categories.map(cat => `
-            <div class="d-flex flex-column align-items-center text-center border h-100" style="padding: 15px; transition: 0.3s; box-shadow: none; border-color: #e0e0e0;">
+            <div class="category-item flex-column align-items-center text-center border h-100"
+             style="padding: 15px; transition: 0.3s; box-shadow: none; border-top: 0; border-right: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; ">
                 <div class="mb-2">
-                    <img alt="${cat.name}" loading="lazy" src="${cat.img}" style="width: 100%; height: 100px; object-fit: contain; background-color: #f5f5f5;">
+                    <img alt="${cat.name}" loading="lazy" src="${cat.img}" style="width: 100%; height: 100px; object-fit: contain;">
                 </div>
                 <div>
-                    <a href="${cat.link}" class="text-decoration-none fw-medium" style="font-size: 14px; line-height: 1.3; color: #333; transition: color 0.3s;">${cat.name}</a>
+                    <a href="${cat.link}" class="text-decoration-none fw-medium" style="font-size: 14px; color: #002d58; transition: color 0.3s; font-weight: 500; line-height: 18px; margin-top: 12px; display: block !important; ">${cat.name}</a>
                 </div>
             </div>
         `).join('');
         
         const resourcesHTML = activeContent.resources ? activeContent.resources.map(res => `
             <li class="mb-2">
-                <a href="${res.link}" class="d-flex align-items-start text-decoration-none p-2" style="transition: 0.3s; border-radius: 4px; background-color: transparent;" ${res.isVideo ? 'target="_blank"' : ''}>
-                    <img alt="${res.title}" class="me-2 flex-shrink-0" loading="lazy" src="${res.img}" style="width: 60px; height: 60px; object-fit: contain; background-color: #f5f5f5;">
-                    <span style="font-size: 14px; line-height: 1.3; font-weight: 400; color: #002d58;">${res.title}</span>
+                <a href="${res.link}" class="d-flex align-items-start text-decoration-none p-2" style="disaplay: flex; margin-bottom: 12px; transition: 0.3s; border-radius: 4px; background-color: transparent;" ${res.isVideo ? 'target="_blank"' : ''}>
+                    <img alt="${res.title}" class="me-2 flex-shrink-0" loading="lazy" src="${res.img}" style="width: 50px; height: 50px; object-fit: contain; background-color: #f5f5f5; margin-right: 6px; display: block">
+                    <span style="font-size: 16px; line-height: 1.3; font-weight: 400; color: #446798; width: 100%; display: block">${res.title}</span>
                 </a>
             </li>
         `).join('') : '';
         
         return `
             <div class="row g-0" style="min-height: 400px;">
-                <div class="col-md-9" style="padding: 20px;">
-                    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px;">
+                <div class="col-md-9" style="padding: 0 0 0 15px !important">
+                    <div style="display: grid; grid-template-columns: repeat(5, 1fr);">
                         ${categoriesHTML}
                     </div>
                 </div>
-                <div class="col-md-3 border-start p-3" style="background-color: #f2f3f4;">
-                    <h6 class="mb-3" style="color: #002d58;">Resources</h6>
+                <div class="col-md-3 border-start p-3" style="background-color: #f2f3f4; padding-right: 30px !important;">
+                    <h3 class="mb-3" style="color: #002d58; font-size: 18px; font-weight: bold; margin-bottom: 20px; padding-top: 25px;">Resources</h3>
                     <ul class="list-unstyled" style="margin-bottom: 20px;">
                         ${resourcesHTML}
                     </ul>
-                    <div class="border-bottom border-secondary mb-3 pb-3">
+                    <div class="border-bottom border-secondary mb-3 pb-3 resource-btn">
                         <a href="https://www.globalgilson.com/customer-resource-center" class="d-block text-center text-decoration-none border border-secondary rounded text-primary fw-bold py-2" style="font-size: 14px; color: #0066cc;">Resource Center</a>
                     </div>
                     <div class="mb-3">
                         <a href="https://www.globalgilson.com/Content/Images/uploaded/pdf/product-catalogs/pdf-viewer/2021/index.html?reload=1591207903917#page=1" class="d-block text-decoration-none" target="_blank">
-                            <img alt="Gilson Catalog" class="w-100" loading="lazy" src="./src/assets/haeder-component/gilson-catalog-button.webp">
+                            <img alt="Gilson Catalog" class="w-100" style="width: 100%; margin-bottom: 16px;" loading="lazy" src="./src/assets/haeder-component/gilson-catalog-button.webp">
                         </a>
                     </div>
-                    <div>
+                    <div class="resource-btn">
                         <a href="https://www.globalgilson.com/gilson-catalog" class="d-block text-center text-decoration-none border border-secondary rounded text-primary fw-bold py-2" style="font-size: 14px; color: #0066cc;">Request Catalog</a>
                     </div>
                 </div>
