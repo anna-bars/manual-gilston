@@ -1018,9 +1018,6 @@ textarea{ font-size: 16px;}
     content: "\f086"
 }
 
-.fa-phone:before {
-    content: "\f095"
-}
 
 .fa-envelope:before {
     content: "\f0e0"
@@ -3246,7 +3243,7 @@ footer {
 
 .close-btn {
     margin-top: 25px;
-    margin-left: 25px
+    margin-left: 15px
 }
 
 .mobile-menu1 h3 {
@@ -3391,12 +3388,14 @@ footer {
         width: 100%;
         height: 1px;
         background: #ececec;
-        top: 50%;
+        top: 7px;
         transform: translateY(-50%);
         left: 0;
-        right: 0
+        right: 0;
     }
-
+.mob-call-btn .sprite-img {
+    padding-top: 39px;
+}
     .mob-call-btn a i {
         font-size: 25px;
         font-weight: bold;
@@ -7642,7 +7641,6 @@ footer {
 .support-icon {
     width: 50px;
     height: 50px;
-    background-color: #ff6b00;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -7672,7 +7670,7 @@ footer {
     font-weight: bold;
     color: #424445;
     margin: 0;
-    padding-top: 20px;
+    padding-left: 10px;
 }
 
 /* Call Back Section */
@@ -7710,7 +7708,7 @@ footer {
 
 .sprite-img {
     display: inline-block;
-    margin-bottom: 5px;
+    margin-bottom: 20px;
 }
 
 .mob-call-back ul li a p {
@@ -7752,7 +7750,7 @@ footer {
     padding: 0;
     margin: 0;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
 }
 
 .newsletter-area ul li {

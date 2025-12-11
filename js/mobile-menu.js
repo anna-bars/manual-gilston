@@ -180,11 +180,21 @@ class MobileMenu {
                 
                 <div class="newsletter-area">
                     <ul>
-                        <li><a href="https://www.facebook.com/GilsonCompany"><div class="sprite-img fb-icon">FB</div></a></li>
-                        <li><a href="https://www.instagram.com/gilsoncompanyinc"><div class="sprite-img insta-icon">IG</div></a></li>
-                        <li><a href="https://twitter.com/gilsoncompany"><div class="sprite-img twitter-icon">TW</div></a></li>
-                        <li><a href="https://www.linkedin.com/company/gilson-company-inc."><div class="sprite-img linkedin-icon">IN</div></a></li>
-                        <li><a href="https://www.youtube.com/user/GilsonCompanyInc"><div class="sprite-img youtube-icon">YT</div></a></li>
+                        <li><a href="https://www.facebook.com/GilsonCompany"><div class="sprite-img fb-icon">
+                            <img src="./src/assets/haeder-component/mobile-menu/social-media/fb.webp">
+                        </div></a></li>
+                        <li><a href="https://www.instagram.com/gilsoncompanyinc"><div class="sprite-img insta-icon">
+                             <img src="./src/assets/haeder-component/mobile-menu/social-media/insta.webp">
+                        </div></a></li>
+                        <li><a href="https://twitter.com/gilsoncompany"><div class="sprite-img twitter-icon">
+                            <img src="./src/assets/haeder-component/mobile-menu/social-media/twitter.webp">
+                        </div></a></li>
+                        <li><a href="https://www.linkedin.com/company/gilson-company-inc."><div class="sprite-img linkedin-icon">
+                            <img src="./src/assets/haeder-component/mobile-menu/social-media/linkedin.webp">
+                        </div></a></li>
+                        <li><a href="https://www.youtube.com/user/GilsonCompanyInc"><div class="sprite-img youtube-icon">
+                            <img src="./src/assets/haeder-component/mobile-menu/social-media/utube.webp">
+                        </div></a></li>
                     </ul>
                 </div>
             </div>
