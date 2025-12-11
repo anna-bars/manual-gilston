@@ -396,6 +396,29 @@ document.addEventListener('DOMContentLoaded', function() {
             mobileMenu.toggle();
         });
     }
+
+     const closeBtn = document.getElementById('mobileMenuClose');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function() {
+                // Call mobileMenu close method if it exists
+                if (mobileMenu && typeof mobileMenu.close === 'function') {
+                    mobileMenu.close();
+                }
+                
+                // Also remove the full class and inline styles
+                if (mobileMenuElement) {
+                    mobileMenuElement.classList.remove('full');
+                    mobileMenuElement.style.removeProperty('width');
+                    
+                    if (mobileMenuCont) {
+                        mobileMenuCont.style.removeProperty('transform');
+                    }
+                }
+                
+                // Reset body overflow
+                document.body.style.overflow = 'auto';
+            });
+        }
 });
     </script>
 </body>
