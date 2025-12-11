@@ -7417,3 +7417,384 @@ footer {
         margin-bottom: 10px;
     }
 }
+/* Mobile Menu Overlay */
+.mobile-menu-area {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 100%;
+    z-index: 999999;
+    transition: all .5s ease-in-out;
+    overflow-x: hidden;
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.mobile-menu-area.mobile-menu-open {
+    width: 100%;
+}
+
+.mobile-menu1 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 80%;
+    height: 100%;
+    background: #fff;
+    overflow-y: auto;
+    padding: 50px 0 100px 0;
+    transform: translateX(100%);
+    transition: transform 0.5s ease-in-out;
+}
+
+.mobile-menu-area.mobile-menu-open .mobile-menu1 {
+    transform: translateX(0);
+}
+
+/* Close Button */
+.close-btn {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+/* Menu Sections */
+.mobile-menu1 h3 {
+    font-size: 15px;
+    color: #535353;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 12px 15px;
+    border-bottom: 1px solid #ececec;
+    margin-bottom: 0;
+}
+
+/* Menu List */
+.mobile-menu1 > ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.mobile-menu1 > ul li {
+    padding: 13px 15px;
+    border-bottom: 1px solid #ececec;
+    position: relative;
+}
+
+.mobile-menu1 > ul li a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    position: relative;
+}
+
+.mobile-menu1 > ul li a img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    margin-right: 15px;
+}
+
+.mobile-menu1 > ul li a p {
+    font-size: 17px;
+    font-weight: bold;
+    color: #004488;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.mobile-menu1 > ul li a i {
+    position: absolute;
+    right: 0;
+    font-size: 20px;
+    color: #666;
+    margin-right: 15px;
+}
+
+/* Account List */
+.mob-account-list {
+    margin-top: 30px;
+}
+
+.mob-account-list > ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.mob-account-list > ul li {
+    padding: 13px 15px;
+    border-bottom: 1px solid #ececec;
+    position: relative;
+}
+
+.mob-account-list > ul li a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    position: relative;
+}
+
+.mob-account-list > ul li a .svgimg {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+}
+
+.mob-account-list > ul li a p {
+    font-size: 15px;
+    color: #597baa;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.mob-account-list > ul li a i {
+    position: absolute;
+    right: 0;
+    font-size: 20px;
+    color: #666;
+    margin-right: 15px;
+}
+
+/* Contact Section */
+.mob-menu-contact {
+    padding: 15px;
+}
+
+.mob-contact-text h4 {
+    font-size: 16px;
+    color: #003366;
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.mob-contact-text p {
+    font-size: 14px;
+    color: #424445;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Call Button */
+.mob-call-btn {
+    text-align: center;
+    margin: 15px 0;
+}
+
+.mob-call-btn a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #fff;
+    color: #004488;
+    font-size: 14px;
+}
+
+.mob-call-btn a i {
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+.mob-call-btn a i img {
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+}
+
+/* Support Options */
+.support-text {
+    margin-top: 30px;
+}
+
+.support-text ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+.support-text ul li {
+    position: relative;
+    text-align: center;
+    width: 70px;
+}
+
+.support-text ul li a {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.support-icon {
+    width: 50px;
+    height: 50px;
+    background-color: #ff6b00;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.support-icon i {
+    font-size: 20px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.support-icon img {
+    width: 24px;
+    height: 24px;
+}
+
+.call-text1 {
+    margin-top: 10px;
+}
+
+.call-text1 p {
+    font-size: 14px;
+    font-weight: bold;
+    color: #424445;
+    margin: 0;
+    padding-top: 20px;
+}
+
+/* Call Back Section */
+.mob-call-back {
+    margin-top: 30px;
+}
+
+.mob-call-back ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mob-call-back ul li {
+    margin: 0 15px;
+}
+
+.mob-call-back ul li a {
+    display: inline-block;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.mob-call-back ul li a:hover {
+    border-color: #ddd;
+    background-color: #f9f9f9;
+}
+
+.sprite-img {
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+.mob-call-back ul li a p {
+    font-size: 14px;
+    font-weight: bold;
+    color: #004488;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.mob-call-back ul li a i {
+    font-size: 16px;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* Fax Section */
+.mob-menu-contact .mob-call-btn:last-child {
+    text-align: center;
+    margin-top: 20px;
+    border: none;
+}
+
+.mob-menu-contact .mob-call-btn:last-child .sprite-img {
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+/* Social Media */
+.newsletter-area {
+    margin-top: 30px;
+}
+
+.newsletter-area ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.newsletter-area ul li {
+    margin-right: 10px;
+}
+
+.newsletter-area ul li a {
+    text-decoration: none;
+}
+
+.newsletter-area ul li a .sprite-img {
+    width: 26px;
+    height: 26px;
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+/* Replacement Parts Button */
+.part-btn {
+    margin: 20px 15px;
+}
+
+.part-btn a {
+    display: block;
+    background-color: #00a651;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    padding: 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.part-btn a:hover {
+    background-color: #008f46;
+}
+
+/* Hide menu by default on page load */
+.mobile-menu-area {
+    display: none;
+}
+
+.mobile-menu-area.mobile-menu-open {
+    display: block;
+}
