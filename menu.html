@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Gilson Mobile Menu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Mega Menu Styles */
+        .mega-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            width: 88%;
+            z-index: 1000;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: left;
+            color: #333;
+            margin: auto;
+        }
+        
+        .mega-nav-tabs {
+            display: flex;
+            background-color: rgb(68, 103, 152);
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        
+        .mega-tab-btn {
+            cursor: pointer;
+            border-right: 1px solid #869bb8;
+            font-size: 14px;
+            padding: 10px 18px;
+            transition: all 0.3s ease;
+            margin: 0;
+            background-color: #446798;
+            color: #fff;
+            border: none;
+        }
+        
+        .mega-tab-btn.active {
+            background-color: #fff;
+            color: #446798;
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0;
+        }
+        
+        .category-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border: 1px solid #ddd;
+            padding: 15px;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .category-item:hover {
+            box-shadow: 0 2px 8px rgba(0,45,88,0.1);
+        }
+        
+        .category-img {
+            width: 100%;
+            height: 100px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+        
+        .category-link {
+            font-size: 14px;
+            line-height: 1.3;
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .category-link:hover {
+            color: #002d58;
+        }
+        
+        .resources-section {
+            background-color: #f2f3f4;
+            border-left: 1px solid #ddd;
+            padding: 20px;
+        }
+        
+        .resource-item {
+            display: flex;
+            align-items: flex-start;
+            text-decoration: none;
+            padding: 10px;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        
+        .resource-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .resource-img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        
+        .resource-title {
+            font-size: 16px;
+            line-height: 1.3;
+            font-weight: 400;
+            color: #002d58;
+        }
+        
+        /* Hide mega menu by default, show with JS */
+        .mega-dropdown {
+            display: none;
+        }
+        
+        .mega-dropdown.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Menu (Original) -->
+    <div class="mobile-menu-area">
+        <div class="close-btn"><img loading="lazy" src="images/close-menu.png" alt=""></div>
+        <div class="mobile-menu1">
+            <!-- Your existing mobile menu content here -->
+            <!-- ... -->
+        </div>
+    </div>
+
+    <!-- Desktop Navigation -->
+    <nav class="desktop-nav">
+        <ul class="main-nav">
+            <!-- Sieving Mega Menu -->
+            <li class="nav-item has-mega-menu">
+                <a href="#" class="nav-link" data-mega="sieving">
+                    Sieving
+                </a>
+                <div class="mega-dropdown" id="mega-sieving">
+                    <!-- Content will be loaded by JavaScript -->
+                </div>
+            </li>
+            
+            <!-- Screening Mega Menu -->
+            <li class="nav-item has-mega-menu">
+                <a href="#" class="nav-link" data-mega="screening">
+                    Screening
+                </a>
+                <div class="mega-dropdown" id="mega-screening">
+                    <!-- Content will be loaded by JavaScript -->
+                </div>
+            </li>
+            
+            <!-- Sample Splitting Mega Menu -->
+            <li class="nav-item has-mega-menu">
+                <a href="#" class="nav-link" data-mega="sample-splitting">
+                    Sample Splitting
+                </a>
+                <div class="mega-dropdown" id="mega-sample-splitting">
+                    <!-- Content will be loaded by JavaScript -->
+                </div>
+            </li>
+            
+            <!-- Aggregates Mega Menu -->
+            <li class="nav-item has-mega-menu">
+                <a href="#" class="nav-link" data-mega="aggregates">
+                    Aggregates
+                </a>
+                <div class="mega-dropdown" id="mega-aggregates">
+                    <!-- Content will be loaded by JavaScript -->
+                </div>
+            </li>
+            
+            <!-- Asphalt Mega Menu -->
+            <li class="nav-item has-mega-menu">
+                <a href="#" class="nav-link" data-mega="asphalt">
+                    Asphalt
+                </a>
+                <div class="mega-dropdown" id="mega-asphalt">
+                    <!-- Content will be loaded by JavaScript -->
+                </div>
+            </li>
+            
+            <!-- Concrete Mega Menu -->
+            <li class="nav-item has-mega-menu">
+                <a href="#" class="nav-link" data-mega="concrete">
+                    Concrete
+                </a>
+                <div class="mega-dropdown" id="mega-concrete">
+                    <!-- Content will be loaded by JavaScript -->
+                </div>
+            </li>
+            
+            <!-- Soils Mega Menu -->
+            <li class="nav-item has-mega-menu">
+                <a href="#" class="nav-link" data-mega="soils">
+                    Soils
+                </a>
+                <div class="mega-dropdown" id="mega-soils">
+                    <!-- Content will be loaded by JavaScript -->
+                </div>
+            </li>
+            
+            <!-- General Lab Mega Menu -->
+            <li class="nav-item has-mega-menu">
+                <a href="#" class="nav-link" data-mega="general-lab">
+                    General Lab
+                </a>
+                <div class="mega-dropdown" id="mega-general-lab">
+                    <!-- Content will be loaded by JavaScript -->
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Your existing mobile menu content (unchanged) -->
+    <div class="mobile-menu-area">
+        <div class="close-btn"><img loading="lazy" src="images/close-menu.png" alt=""></div>
+        <div class="mobile-menu1">
+            <!-- Keep all your original mobile menu HTML here -->
+            <!-- ... -->
+        </div>
+    </div>
+
+    <script src="menu-data.js"></script>
+    <script src="megamenu.js"></script>
+    <script>
+        // Initialize all mega menus
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize each mega menu
+            const megaMenuTypes = [
+                'sieving', 'screening', 'sample-splitting', 
+                'aggregates', 'asphalt', 'concrete', 'soils', 'general-lab'
+            ];
+            
+            megaMenuTypes.forEach(type => {
+                const container = document.getElementById(`mega-${type}`);
+                if (container && window[`${type}Data`]) {
+                    createMegaMenu(container, window[`${type}Data`]);
+                }
+            });
+            
+            // Add hover events
+            const megaTriggers = document.querySelectorAll('.has-mega-menu');
+            
+            megaTriggers.forEach(trigger => {
+                trigger.addEventListener('mouseenter', function(e) {
+                    const megaType = this.querySelector('.nav-link').dataset.mega;
+                    const megaMenu = document.getElementById(`mega-${megaType}`);
+                    
+                    // Hide all other mega menus
+                    document.querySelectorAll('.mega-dropdown.active').forEach(menu => {
+                        if (menu !== megaMenu) {
+                            menu.classList.remove('active');
+                        }
+                    });
+                    
+                    // Show this mega menu
+                    if (megaMenu) {
+                        megaMenu.classList.add('active');
+                    }
+                });
+                
+                trigger.addEventListener('mouseleave', function(e) {
+                    // Don't hide immediately - let the menu handle its own mouseleave
+                });
+            });
+            
+            // Add mouseleave to mega menus
+            document.querySelectorAll('.mega-dropdown').forEach(menu => {
+                menu.addEventListener('mouseleave', function(e) {
+                    this.classList.remove('active');
+                });
+            });
+        });
+        
+        function createMegaMenu(container, data) {
+            // Clear container
+            container.innerHTML = '';
+            
+            // Check if there are multiple tabs
+            const hasMultipleTabs = data.tabs.length > 1;
+            
+            // Create tabs if multiple
+            if (hasMultipleTabs) {
+                const tabsNav = document.createElement('ul');
+                tabsNav.className = 'mega-nav-tabs';
+                
+                data.tabs.forEach(tab => {
+                    const tabItem = document.createElement('li');
+                    tabItem.className = 'nav-item';
+                    
+                    const tabButton = document.createElement('button');
+                    tabButton.className = 'mega-tab-btn';
+                    if (tab.isActive) {
+                        tabButton.classList.add('active');
+                    }
+                    tabButton.textContent = tab.label;
+                    tabButton.dataset.tabId = tab.id;
+                    
+                    tabButton.addEventListener('click', function() {
+                        // Update active tab
+                        tabsNav.querySelectorAll('.mega-tab-btn').forEach(btn => {
+                            btn.classList.remove('active');
+                        });
+                        this.classList.add('active');
+                        
+                        // Update content
+                        const tabId = this.dataset.tabId;
+                        renderContent(tabId);
+                    });
+                    
+                    tabItem.appendChild(tabButton);
+                    tabsNav.appendChild(tabItem);
+                });
+                
+                container.appendChild(tabsNav);
+            }
+            
+            // Create content area
+            const contentArea = document.createElement('div');
+            contentArea.className = 'tab-content';
+            container.appendChild(contentArea);
+            
+            // Function to render content
+            function renderContent(tabId = data.tabs[0].id) {
+                const content = data.content[tabId];
+                if (!content) return;
+                
+                const hasResources = content.resources && content.resources.length > 0;
+                
+                contentArea.innerHTML = `
+                    <div class="row g-0">
+                        <div class="${hasResources ? 'col-md-9' : 'col-12'}">
+                            <div class="categories-grid">
+                                ${content.categories.map(cat => `
+                                    <div class="category-item">
+                                        <div class="mb-2">
+                                            <img src="${cat.img}" alt="${cat.name}" class="category-img" loading="lazy">
+                                        </div>
+                                        <div>
+                                            <a href="${cat.link}" class="category-link">${cat.name}</a>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        ${hasResources ? `
+                            <div class="col-md-3 resources-section">
+                                <h6 class="mb-3" style="color: #002d58;">Resources</h6>
+                                <ul class="list-unstyled">
+                                    ${content.resources.map(res => `
+                                        <li class="mb-2">
+                                            <a href="${res.link}" class="resource-item">
+                                                <img src="${res.img}" alt="${res.title}" class="resource-img" loading="lazy">
+                                                <span class="resource-title">${res.title}</span>
+                                            </a>
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                                
+                                <div class="border-bottom border-secondary mb-3 pb-3">
+                                    <a href="https://www.globalgilson.com/customer-resource-center" 
+                                       class="d-block text-center text-decoration-none border border-secondary rounded text-primary fw-bold py-2"
+                                       style="font-size: 14px; color: #002d58;">
+                                        Resource Center
+                                    </a>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <a href="https://www.globalgilson.com/Content/Images/uploaded/pdf/product-catalogs/pdf-viewer/2021/index.html?reload=1591207903917#page=1" 
+                                       class="d-block text-decoration-none">
+                                        <img src="./src/assets/haeder-component/gilson-catalog-button.webp" 
+                                             alt="Gilson Catalog" 
+                                             class="w-100"
+                                             loading="lazy">
+                                    </a>
+                                </div>
+                                
+                                <div>
+                                    <a href="https://www.globalgilson.com/gilson-catalog" 
+                                       class="d-block text-center text-decoration-none border border-secondary rounded text-primary fw-bold py-2"
+                                       style="font-size: 14px; color: #002d58;">
+                                        Request Catalog
+                                    </a>
+                                </div>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }
+            
+            // Initial render
+            const initialTab = data.tabs.find(t => t.isActive)?.id || data.tabs[0].id;
+            renderContent(initialTab);
+        }
+    </script>
+</body>
+</html>

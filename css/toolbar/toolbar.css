@@ -1,10 +1,13 @@
 /* ===== TOOLBAR BASE STYLES ===== */
 .toolbar {
     background: #f4f5f6;
-    position: sticky;
+
+    font-family: inherit;
+}
+.sticky-toolbar {
+        position: sticky;
     top: 0;
     z-index: 9999;
-    font-family: inherit;
 }
 
 .toolbar__container {
@@ -1052,3 +1055,5 @@ position: absolute;
         max-width: 150px;
     }
 }
+
+
