@@ -63,10 +63,6 @@ class MobileMenu {
     
     renderMenu() {
         let html = `
-            <div class="close-btn" id="mobileMenuClose">
-                <img loading="lazy" src="./src/assets/haeder-component/mobile-menu/close-menu.png" alt="Close Menu">
-            </div>
-            
             <h3>Shop by Category</h3>
             <ul>
                 ${mobileMenuData.categories.map(cat => `
@@ -200,22 +196,24 @@ class MobileMenu {
     setupEventListeners() {
         console.log("Setting up event listeners");
         
-        // Close button (using event delegation)
-        this.menu.addEventListener('click', (e) => {
-            console.log("Menu click event:", e.target);
-            
-            // Check if close button was clicked
-            if (e.target.closest('#mobileMenuClose') || 
-                e.target.id === 'mobileMenuClose' || 
-                e.target.tagName === 'IMG' && e.target.alt === 'Close Menu') {
+        // Close button event listener
+        const closeBtn = document.getElementById('mobileMenuClose');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', (e) => {
                 console.log("Close button clicked");
+                e.stopPropagation(); // Prevent event bubbling
                 this.close();
-                return;
-            }
+            });
+        }
+        
+        // Close when clicking outside the menu content (on the overlay)
+        this.menu.addEventListener('click', (e) => {
+            console.log("Mobile menu click event");
             
-            // Close when clicking outside the menu content (on the overlay)
-            if (e.target === this.menu) {
-                console.log("Clicked outside, closing menu");
+            // If click is on the menu area (overlay) but NOT on menu content
+            if (e.target === this.menu || 
+                (!this.menuContent.contains(e.target) && e.target !== closeBtn)) {
+                console.log("Clicked outside menu content, closing");
                 this.close();
             }
         });

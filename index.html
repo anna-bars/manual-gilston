@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -349,6 +349,11 @@
 
     <!-- Mobile Menu -->
 <div id="mobileMenu" class="mobile-menu-area">
+    <!-- Close button moved here (outside mobile-menu1) -->
+    <div class="close-btn" id="mobileMenuClose">
+        <img loading="lazy" src="./src/assets/haeder-component/mobile-menu/close-menu.png" alt="Close Menu">
+    </div>
+    
     <div class="mobile-menu1">
         <!-- Menu content will be inserted by JavaScript -->
     </div>
@@ -362,34 +367,34 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize mobile menu
     const mobileMenu = new MobileMenu();
-     const mobileMenuElement = document.getElementById('mobileMenu');
-     const mobileMenuCont = document.getElementById('mobileMenuCont');
+    const mobileMenuElement = document.getElementById('mobileMenu');
+    const mobileMenuCont = document.getElementById('mobileMenuCont');
+    
     // Add click event to menu toggle button
     const menuToggle = document.querySelector('.toolbar__menu-toggle');
     if (menuToggle) {
         menuToggle.addEventListener('click', function() {
-    // Log
-    console.log(menuToggle);
-    console.log(mobileMenuElement);
-
-    // Toggle width class
-    if (mobileMenuElement.classList.contains('full')) {
-        // CLOSE — remove style + class
-        mobileMenuElement.classList.remove('full');
-        mobileMenuElement.style.removeProperty('width');
-
-        mobileMenuCont.style.removeProperty('transform');
-    } else {
-        // OPEN — add style + class
-        mobileMenuElement.style.setProperty('width', '100%', 'important');
-        mobileMenuElement.classList.add('full');
-
-        mobileMenuCont.style.setProperty('transform', 'translateX(0px)', 'important');
-    }
-
-    mobileMenu.toggle();
-});
-
+            // Toggle width class
+            if (mobileMenuElement.classList.contains('full')) {
+                // CLOSE — remove style + class
+                mobileMenuElement.classList.remove('full');
+                mobileMenuElement.style.removeProperty('width');
+                
+                if (mobileMenuCont) {
+                    mobileMenuCont.style.removeProperty('transform');
+                }
+            } else {
+                // OPEN — add style + class
+                mobileMenuElement.style.setProperty('width', '100%', 'important');
+                mobileMenuElement.classList.add('full');
+                
+                if (mobileMenuCont) {
+                    mobileMenuCont.style.setProperty('transform', 'translateX(0px)', 'important');
+                }
+            }
+            
+            mobileMenu.toggle();
+        });
     }
 });
     </script>
