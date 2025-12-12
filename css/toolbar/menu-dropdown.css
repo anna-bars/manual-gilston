@@ -1,391 +1,367 @@
-/* Մեգա Մենյուի Ստիլեր */
-.mega-menu-container {
+/* mega-menu.css - վերակառուցված BEM մեթոդաբանությամբ */
+
+/* Մեգա մենյուի հիմնական կոնտեյներ */
+.mega-menu {
     position: relative;
     z-index: 1000;
-}
-
-/* Նավիգացիայի հիմնական ստիլեր */
-.mega-nav {
-    background-color: #002d58;
-    box-shadow: 0 3px 8px rgba(115,116,118,1);
-    padding: 0;
-}
-
-.mega-nav-list {
-    display: flex;
-    justify-content: space-between;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    width: 100%;
-}
-
-.mega-nav-item {
-    flex: 1;
-    text-align: center;
-}
-
-.mega-nav-link {
-    display: block;
-    color: #fff;
-    font-weight: bold;
-    text-decoration: none;
-    padding: 12px 0;
-    font-size: 16px;
-    transition: all 0.4s ease-in-out;
-    background-color: transparent;
-    border-right: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.mega-nav-item:last-child .mega-nav-link {
-    border-right: none;
-}
-
-.mega-nav-link:hover {
-    background-color: #003366;
-}
-
-/* Մեգա Դրոպդաուն Ստիլեր */
-.mega-dropdown {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    width: 88%;
-    z-index: 1001;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    text-align: left;
-    color: #333;
-    margin: auto;
     display: none;
 }
 
-.mega-dropdown.active {
+.mega-menu--visible {
     display: block;
 }
 
-/* Թաբերի Ստիլեր */
-.mega-tabs {
-    background-color: rgb(68, 103, 152);
+/* Դրոպդաունի հիմնական ստիլեր */
+.mega-dropdown {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+}
+
+.mega-dropdown--visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Թաբերի ստիլեր */
+.mega-dropdown__tabs {
+    background-color: #446798;
+}
+
+.mega-dropdown__tabs-list {
     display: flex;
     margin: 0;
     padding: 0;
     list-style: none;
+    border-bottom: 1px solid #869bb8;
 }
 
-.mega-tab {
+.mega-dropdown__tabs-item {
     margin: 0;
 }
 
-.mega-tab-btn {
+.mega-dropdown__tab {
     cursor: pointer;
+    border: none;
     border-right: 1px solid #869bb8;
     font-size: 14px;
     padding: 10px 18px;
     transition: all 0.3s ease;
     margin: 0;
-    background-color: rgb(68, 103, 152);
-    color: #fff;
-    border: none;
-    outline: none;
+    background-color: transparent;
+    color: #ffffff;
+    white-space: nowrap;
+    font-family: inherit;
 }
 
-.mega-tab-btn:hover {
-    background-color: #fff;
-    color: rgb(68, 103, 152);
+.mega-dropdown__tab--inactive {
+    background-color: #446798;
+    color: #ffffff;
 }
 
-.mega-tab-btn.active {
-    background-color: #fff;
-    color: rgb(68, 103, 152);
+.mega-dropdown__tab--active {
+    background-color: #ffffff;
+    color: #446798;
+}
+
+.mega-dropdown__tab:hover {
+    background-color: #ffffff;
+    color: #446798;
+}
+
+/* Բովանդակության ստիլեր */
+.mega-dropdown__content {
+    padding: 20px;
+}
+
+.mega-dropdown__row {
+    display: flex;
+    margin: 0 -10px;
+}
+
+.mega-dropdown__row--full {
+    display: block;
+}
+
+.mega-dropdown__col {
+    padding: 0 10px;
+}
+
+.mega-dropdown__col--categories {
+    flex: 0 0 75%;
+    max-width: 75%;
+}
+
+.mega-dropdown__col--resources {
+    flex: 0 0 25%;
+    max-width: 25%;
+    background-color: #f2f3f4;
+    padding: 20px !important;
+    border-left: 1px solid #e8e8e8;
 }
 
 /* Կատեգորիաների ցանց */
-.categories-grid {
+.mega-dropdown__categories {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 0;
+    margin: 0;
+    padding: 0;
 }
 
-.category-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    border: 1px solid #e0e0e0;
-    height: 100%;
+.mega-dropdown__category {
+    border: 1px solid #e8e8e8;
+    border-top: 0;
+    border-right: 1px solid #e8e8e8;
+    border-bottom: 1px solid #e8e8e8;
+    border-left: 0;
     padding: 15px;
     transition: all 0.3s ease;
+    background-color: #ffffff;
+    height: 100%;
+    position: relative;
 }
 
-.category-item:hover {
-    box-shadow: 0 2px 14px rgb(0 45 88 / 18%) !important;
+.mega-dropdown__category:hover {
+    box-shadow: 0 2px 14px rgba(0, 45, 88, 0.18) !important;
+    z-index: 1;
 }
 
-.category-image {
+.mega-dropdown__category:nth-child(5n) {
+    border-right: 0;
+}
+
+.mega-dropdown__category-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.mega-dropdown__category-image {
     width: 100%;
     height: 100px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mega-dropdown__category-img {
+    max-width: 100%;
+    max-height: 100%;
     object-fit: contain;
 }
 
-.category-name {
+.mega-dropdown__category-name {
     font-size: 14px;
-    line-height: 1.3;
-    color: #333;
-    text-decoration: none;
     font-weight: 500;
-    margin-top: 8px;
+    line-height: 18px;
+    color: #002d58;
+    text-align: center;
+    margin-top: 12px;
+    display: block;
     transition: color 0.3s ease;
 }
 
-.category-item:hover .category-name {
-    color: #002d58;
+.mega-dropdown__category:hover .mega-dropdown__category-name {
+    color: #446798;
 }
 
 /* Ռեսուրսների բաժին */
-.resources-section {
-    background-color: #f2f3f4;
-    border-left: 1px solid #e0e0e0;
-    padding: 15px;
-}
-
-.resources-title {
+.mega-dropdown__resources-title {
     color: #002d58;
-    margin-bottom: 15px;
-    font-size: 16px;
-    font-weight: 600;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    padding-top: 25px;
 }
 
-.resource-list {
+.mega-dropdown__resources-list {
     list-style: none;
+    margin: 0 0 20px 0;
     padding: 0;
-    margin: 0 0 15px 0;
 }
 
-.resource-item {
-    margin-bottom: 10px;
+.mega-dropdown__resource {
+    margin-bottom: 12px;
 }
 
-.resource-link {
+.mega-dropdown__resource-link {
     display: flex;
     align-items: flex-start;
     text-decoration: none;
     padding: 8px;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease;
     border-radius: 4px;
+    background-color: transparent;
 }
 
-.resource-link:hover {
-    background-color: #f8f9fa;
+.mega-dropdown__resource-link:hover {
+    background-color: #f5f5f5;
 }
 
-.resource-image {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-    margin-right: 8px;
+.mega-dropdown__resource-image {
+    width: 50px;
+    height: 50px;
     flex-shrink: 0;
-}
-
-.resource-title {
-    font-size: 14px;
-    line-height: 1.3;
-    font-weight: 400;
-    color: #002d58;
-}
-
-/* Կատալոգի կոճակներ */
-.resource-center-btn {
-    display: block;
-    text-align: center;
-    text-decoration: none;
-    border: 1px solid #6c757d;
-    border-radius: 4px;
-    color: #002d58;
-    font-weight: bold;
-    padding: 8px;
-    font-size: 14px;
-    margin-bottom: 15px;
-}
-
-.catalog-btn {
-    display: block;
-    text-decoration: none;
-    margin-bottom: 15px;
-}
-
-.catalog-btn img {
-    width: 100%;
-    height: auto;
-}
-
-.request-catalog-btn {
-    display: block;
-    text-align: center;
-    text-decoration: none;
-    border: 1px solid #6c757d;
-    border-radius: 4px;
-    color: #002d58;
-    font-weight: bold;
-    padding: 8px;
-    font-size: 14px;
-}
-
-/* Toolbar Navigation Specific Styles */
-.toolbar__nav-item.active .toolbar__nav-link {
-    background-color: #fff;
-    color: #446798 !important;
-}
-
-.mega-dropdown {
-    overflow: hidden;
-}
-
-/* Ensure proper z-index stacking */
-.toolbar__bottom {
-    position: relative;
-    z-index: 1000;
-}
-
-.mega-dropdown {
-    z-index: 1001;
-}
-
-/* Նավիգացիայի ստիլեր */
-.bottom-header {
-    background: #002d58;
-    box-shadow: #737476 0 3px 8px 0 !important;
-    -moz-box-shadow: #737476 0 3px 8px 0 !important;
-    -webkit-box-shadow: #737476 0 3px 8px 0 !important;
-}
-
-.menu-list > ul {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0;
-}
-
-.flex-item {
-    flex: auto;
-}
-
-.flex-item + .flex-item {
-    border-left: 1px solid #294f73;
-}
-
-.menu-list > ul > li > a {
-    font-size: 16px;
-    color: #fff;
-    font-weight: bold;
-    display: block;
-    transition: all .4s ease-in-out;
-    padding: 15px 0;
-    text-align: center;
-}
-
-.menu-list > ul > li:last-child > a {
-    border-right: 0;
-}
-
-.menu-list > ul > li:hover > a {
-    background: #597aa8;
-}
-
-/* Mega Dropdown Styles */
-.nav-tabs .nav-link {
-    border: 0;
-    border-radius: 0;
-}
-
-.mega-dropdown .nav-link {
-    padding: 10px 18px;
-    background: #446798;
-    font-size: 14px;
-    border-right: 1px solid #869bb8;
-    text-align: center;
-    color: #fff;
-}
-
-.nav-tabs {
-    border-bottom: 1px solid #869bb8;
-}
-
-.mega-dropdown .nav-tabs {
-    justify-content: flex-start;
-    border-bottom: 1px solid #e8e8e8;
-    background: #446798;
-}
-
-.mega-dropdown .nav-tabs .nav-item {
-    margin-bottom: 0;
-}
-
-.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
-    color: #002d58;
-    border-color: transparent;
-}
-
-.menu-list ul li:hover .mega-dropdown {
-    display: block;
-}
-
-/* Blog/Resource Items */
-.blog1 {
+    margin-right: 8px;
     display: flex;
     align-items: center;
+    justify-content: center;
+    background-color: #f5f5f5;
 }
 
-.blog-img {
-    margin-right: 7px;
+.mega-dropdown__resource-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
 }
 
-.blog-text a {
-    font-size: 16px !important;
-    color: #446798 !important;
-    font-weight: normal !important;
-    margin-bottom: 0 !important;
-    padding: 0 !important;
-    border-right: 0 !important;
+.mega-dropdown__resource-title {
+    font-size: 16px;
+    line-height: 1.3;
+    font-weight: 400;
+    color: #446798;
+    width: 100%;
+    display: block;
 }
 
-.blog-text h3 a:hover {
-    background: transparent !important;
-    text-decoration: underline;
+/* Կոճակներ */
+.mega-dropdown__btn {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    border: 1px solid #6c757d;
+    border-radius: 4px;
+    color: #0066cc;
+    font-weight: bold;
+    padding: 8px;
+    font-size: 14px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+    background-color: transparent;
 }
 
-.blog-text p {
-    font-size: 15px;
-    font-style: italic;
-    color: #acacac;
+.mega-dropdown__btn:hover {
+    background-color: #f8f9fa;
+    text-decoration: none;
+}
+
+.mega-dropdown__btn--resource {
+    margin-bottom: 20px;
+}
+
+.mega-dropdown__btn--catalog {
     margin-bottom: 0;
+}
+
+.mega-dropdown__catalog-link {
+    display: block;
+    text-decoration: none;
+    margin-bottom: 16px;
+}
+
+.mega-dropdown__catalog-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Նավիգացիայի ակտիվ վիճակ */
+.toolbar__nav-item--active .toolbar__nav-link {
+    background-color: #ffffff !important;
+    color: #446798 !important;
 }
 
 /* Responsive Styles */
-@media (max-width: 991px) {
-    .mega-nav {
-        display: none;
+@media (max-width: 1199px) {
+    .mega-dropdown__categories {
+        grid-template-columns: repeat(4, 1fr);
     }
     
-    .mega-dropdown {
-        width: 100%;
+    .mega-dropdown__category:nth-child(5n) {
+        border-right: 1px solid #e8e8e8;
     }
     
-    .categories-grid {
-        grid-template-columns: repeat(3, 1fr);
+    .mega-dropdown__category:nth-child(4n) {
+        border-right: 0;
     }
 }
 
-@media (max-width: 768px) {
-    .categories-grid {
+@media (max-width: 991px) {
+    .mega-dropdown {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100vh;
+        overflow-y: auto;
+        transform: translateY(-100%);
+    }
+    
+    .mega-dropdown--visible {
+        transform: translateY(0);
+    }
+    
+    .mega-dropdown__row {
+        flex-direction: column;
+    }
+    
+    .mega-dropdown__col--categories,
+    .mega-dropdown__col--resources {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    
+    .mega-dropdown__col--resources {
+        border-left: 0;
+        border-top: 1px solid #e8e8e8;
+        margin-top: 20px;
+        padding-top: 20px;
+    }
+    
+    .mega-dropdown__categories {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .mega-dropdown__category:nth-child(4n) {
+        border-right: 1px solid #e8e8e8;
+    }
+    
+    .mega-dropdown__category:nth-child(3n) {
+        border-right: 0;
+    }
+}
+
+@media (max-width: 767px) {
+    .mega-dropdown__categories {
         grid-template-columns: repeat(2, 1fr);
     }
     
-    .mega-tabs {
+    .mega-dropdown__category:nth-child(3n) {
+        border-right: 1px solid #e8e8e8;
+    }
+    
+    .mega-dropdown__category:nth-child(2n) {
+        border-right: 0;
+    }
+    
+    .mega-dropdown__tabs-list {
         flex-wrap: wrap;
     }
     
-    .mega-tab-btn {
+    .mega-dropdown__tab {
         flex: 1 0 auto;
         font-size: 12px;
         padding: 8px 12px;
@@ -393,18 +369,45 @@
 }
 
 @media (max-width: 480px) {
-    .categories-grid {
+    .mega-dropdown__categories {
         grid-template-columns: 1fr;
     }
     
-    .resource-link {
+    .mega-dropdown__category {
+        border-right: 0 !important;
+    }
+    
+    .mega-dropdown__resource-link {
         flex-direction: column;
         align-items: center;
         text-align: center;
     }
     
-    .resource-image {
+    .mega-dropdown__resource-image {
         margin-right: 0;
         margin-bottom: 8px;
     }
+}
+
+/* Պահպանել նույն բորդերները */
+.mega-dropdown__category {
+    border: 1px solid #e8e8e8 !important;
+    border-top: 0 !important;
+    border-right: 1px solid #e8e8e8 !important;
+    border-bottom: 1px solid #e8e8e8 !important;
+    border-left: 0 !important;
+}
+
+.mega-dropdown__category:first-child {
+    border-left: 1px solid #e8e8e8 !important;
+}
+
+/* Screen trays և accessories պահպանել սև բորդերները */
+.mega-dropdown__category:nth-child(n+6) {
+    border-top: 1px solid #e8e8e8 !important;
+}
+
+/* Պահպանել նույն box-shadow էֆեկտը */
+.mega-dropdown__category:hover {
+    box-shadow: 0 2px 14px rgba(0, 45, 88, 0.18) !important;
 }
