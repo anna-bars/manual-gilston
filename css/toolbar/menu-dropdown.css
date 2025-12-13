@@ -6,7 +6,6 @@
 /* Մեգա դրոպդաուն բլոկ */
 .mega-dropdown {
     position: absolute;
-    top: 54px;
     left: 0;
     right: 0;
     width: 100%;
@@ -25,7 +24,6 @@
 
 .mega-dropdown--visible {
     display: block;
-    top: 210.99px;
     width: 93%;
 }
 
