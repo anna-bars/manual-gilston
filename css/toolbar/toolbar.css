@@ -3,7 +3,13 @@
     background: #f4f5f6;
 
     font-family: inherit;
-}
+
+        position: sticky;
+        top: 0;
+        width: 100%;
+        transition: all 0.4s ease-in-out;
+        z-index: 1480;
+    } 
 .sticky-toolbar {
         position: sticky;
     top: 0;
@@ -54,6 +60,7 @@
 /* ===== TOP SECTION ===== */
 .toolbar__top {
     border-bottom: 1px solid #d6d8db;
+    background-color: #f4f5f6;
 }
 
 .toolbar__branding {
@@ -980,13 +987,7 @@ position: absolute;
         max-width: none;
     }
     
-    .toolbar {
-        position: sticky;
-        top: 0;
-        width: 100%;
-        transition: all 0.4s ease-in-out;
-        z-index: 1480;
-    }
+  
     
     body {
         padding-top: 0;
