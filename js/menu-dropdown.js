@@ -1,4 +1,3 @@
-// menu-dropdown.js
 console.log('menu-dropdown.js loaded');
 
 class MegaMenu {
@@ -26,7 +25,7 @@ class MegaMenu {
             if (category && window.menuData && window.menuData[category]) {
                 console.log(`Creating dropdown for: ${category}`);
                 
-                // Create dropdown container
+                // Create dropdown container with BEM classes
                 const dropdown = this.createDropdown(category);
                 item.appendChild(dropdown);
                 
@@ -90,8 +89,7 @@ class MegaMenu {
 
     createDropdown(category) {
         const dropdown = document.createElement('div');
-        dropdown.className = 'mega-dropdown';
-        dropdown.style.cssText = 'position: absolute; border: none !important; top: 100%; left: 0; right: 0; width: 93%; z-index: 1000; background-color: white; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: left; color: #333; margin: auto; display: none;';
+        dropdown.className = 'mega-dropdown mega-dropdown--hidden';
         
         const data = window.menuData[category];
         console.log(`Creating dropdown for ${category} with data:`, data);
@@ -112,16 +110,16 @@ class MegaMenu {
         const contentHTML = this.createContentHTML(data.content, activeTabId);
         
         dropdown.innerHTML = `
-            <ul class="nav-tabs" style="background-color: #446798; display: flex; list-style: none; margin: 0; padding: 0; overflow-x: auto;">
+            <ul class="mega-dropdown__tabs">
                 ${tabsHTML}
             </ul>
-            <div class="tab-content">
+            <div class="mega-dropdown__content">
                 ${contentHTML}
             </div>
         `;
         
         // Add tab click handlers
-        dropdown.querySelectorAll('.tab-btn').forEach(btn => {
+        dropdown.querySelectorAll('.mega-dropdown__tab-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
                 const tabId = btn.dataset.tab;
@@ -139,11 +137,12 @@ class MegaMenu {
         }
         
         return tabs.map(tab => `
-            <li class="nav-item" style="margin: 0; flex-shrink: 0;">
-                <button class="tab-btn nav-link border-0 rounded-0" 
+            <li class="mega-dropdown__tab-item">
+                <button class="mega-dropdown__tab-btn ${tab.id === activeTabId ? 'mega-dropdown__tab-btn--active' : ''}" 
                         data-tab="${tab.id}"
-                        data-category="${category}"
-                        style="cursor: pointer; border-right: 1px solid #869bb8; font-size: 14px; padding: 10px 18px; transition: 0.3s; margin: 0; background-color: ${tab.id === activeTabId ? '#fff' : '#446798'}; color: ${tab.id === activeTabId ? '#446798' : '#fff'}; white-space: nowrap;">${tab.label}</button>
+                        data-category="${category}">
+                    ${tab.label}
+                </button>
             </li>
         `).join('');
     }
@@ -153,52 +152,51 @@ class MegaMenu {
         
         if (!activeContent || !activeContent.categories) {
             console.error(`No content for tab: ${activeTabId}`);
-            return '<div class="p-4">No content available</div>';
+            return '<div class="mega-dropdown__no-content">No content available</div>';
         }
         
         const categoriesHTML = activeContent.categories.map(cat => `
-            <div class="category-item flex-column align-items-center text-center border h-100"
-             style="padding: 15px; transition: 0.3s; box-shadow: none; border-top: 0; border-right: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; ">
-                <div class="mb-2">
-                    <img alt="${cat.name}" loading="lazy" src="${cat.img}" style="width: 100%; height: 100px; object-fit: contain;">
+            <div class="mega-dropdown__category">
+                <div class="mega-dropdown__category-image">
+                    <img alt="${cat.name}" loading="lazy" src="${cat.img}">
                 </div>
-                <div>
-                    <a href="${cat.link}" class="text-decoration-none fw-medium" style="font-size: 14px; color: #002d58; transition: color 0.3s; font-weight: 500; line-height: 18px; margin-top: 12px; display: block !important; ">${cat.name}</a>
+                <div class="mega-dropdown__category-info">
+                    <a href="${cat.link}" class="mega-dropdown__category-link">${cat.name}</a>
                 </div>
             </div>
         `).join('');
         
         const resourcesHTML = activeContent.resources ? activeContent.resources.map(res => `
-            <li class="mb-2">
-                <a href="${res.link}" class="d-flex align-items-start text-decoration-none p-2" style="disaplay: flex; margin-bottom: 12px; transition: 0.3s; border-radius: 4px; background-color: transparent;" ${res.isVideo ? 'target="_blank"' : ''}>
-                    <img alt="${res.title}" class="me-2 flex-shrink-0" loading="lazy" src="${res.img}" style="width: 50px; height: 50px; object-fit: contain; background-color: #f5f5f5; margin-right: 6px; display: block">
-                    <span style="font-size: 16px; line-height: 1.3; font-weight: 400; color: #446798; width: 100%; display: block">${res.title}</span>
+            <li class="mega-dropdown__resource-item">
+                <a href="${res.link}" class="mega-dropdown__resource-link" ${res.isVideo ? 'target="_blank"' : ''}>
+                    <img alt="${res.title}" class="mega-dropdown__resource-img" loading="lazy" src="${res.img}">
+                    <span class="mega-dropdown__resource-title">${res.title}</span>
                 </a>
             </li>
         `).join('') : '';
         
         return `
-            <div class="row g-0" style="min-height: 400px;">
-                <div class="col-md-9" style="padding: 0 0 0 15px !important">
-                    <div style="display: grid; grid-template-columns: repeat(5, 1fr);">
+            <div class="mega-dropdown__grid">
+                <div class="mega-dropdown__categories">
+                    <div class="mega-dropdown__categories-grid">
                         ${categoriesHTML}
                     </div>
                 </div>
-                <div class="col-md-3 border-start p-3" style="background-color: #f2f3f4; padding-right: 30px !important;">
-                    <h3 class="mb-3" style="color: #002d58; font-size: 18px; font-weight: bold; margin-bottom: 20px; padding-top: 25px;">Resources</h3>
-                    <ul class="list-unstyled" style="margin-bottom: 20px;">
+                <div class="mega-dropdown__resources">
+                    <h3 class="mega-dropdown__resources-title">Resources</h3>
+                    <ul class="mega-dropdown__resource-list">
                         ${resourcesHTML}
                     </ul>
-                    <div class="border-bottom border-secondary mb-3 pb-3 resource-btn">
-                        <a href="https://www.globalgilson.com/customer-resource-center" class="d-block text-center text-decoration-none border border-secondary rounded text-primary fw-bold py-2" style="font-size: 14px; color: #0066cc;">Resource Center</a>
-                    </div>
-                    <div class="mb-3">
-                        <a href="https://www.globalgilson.com/Content/Images/uploaded/pdf/product-catalogs/pdf-viewer/2021/index.html?reload=1591207903917#page=1" class="d-block text-decoration-none" target="_blank">
-                            <img alt="Gilson Catalog" class="w-100" style="width: 100%; margin-bottom: 16px;" loading="lazy" src="./src/assets/haeder-component/gilson-catalog-button.webp">
+                    <div class="mega-dropdown__resource-actions">
+                        <a href="https://www.globalgilson.com/customer-resource-center" class="mega-dropdown__action-btn mega-dropdown__action-btn--center">
+                            Resource Center
                         </a>
-                    </div>
-                    <div class="resource-btn">
-                        <a href="https://www.globalgilson.com/gilson-catalog" class="d-block text-center text-decoration-none border border-secondary rounded text-primary fw-bold py-2" style="font-size: 14px; color: #0066cc;">Request Catalog</a>
+                        <a href="https://www.globalgilson.com/Content/Images/uploaded/pdf/product-catalogs/pdf-viewer/2021/index.html?reload=1591207903917#page=1" class="mega-dropdown__catalog-link" target="_blank">
+                            <img alt="Gilson Catalog" class="mega-dropdown__catalog-img" loading="lazy" src="./src/assets/haeder-component/gilson-catalog-button.webp">
+                        </a>
+                        <a href="https://www.globalgilson.com/gilson-catalog" class="mega-dropdown__action-btn mega-dropdown__action-btn--request">
+                            Request Catalog
+                        </a>
                     </div>
                 </div>
             </div>
@@ -209,15 +207,13 @@ class MegaMenu {
         console.log(`Switching to tab: ${tabId}`);
         
         // Update tab styles
-        dropdown.querySelectorAll('.tab-btn').forEach(btn => {
-            const isActive = btn.dataset.tab === tabId;
-            btn.style.backgroundColor = isActive ? '#fff' : '#446798';
-            btn.style.color = isActive ? '#446798' : '#fff';
+        dropdown.querySelectorAll('.mega-dropdown__tab-btn').forEach(btn => {
+            btn.classList.toggle('mega-dropdown__tab-btn--active', btn.dataset.tab === tabId);
         });
         
         // Update content
         const content = window.menuData[category].content[tabId];
-        const contentContainer = dropdown.querySelector('.tab-content');
+        const contentContainer = dropdown.querySelector('.mega-dropdown__content');
         contentContainer.innerHTML = this.createContentHTML(window.menuData[category].content, tabId);
         
         // Reattach event listeners for resources
@@ -240,24 +236,16 @@ class MegaMenu {
         const dropdown = item.querySelector('.mega-dropdown');
         
         if (dropdown) {
-            dropdown.style.display = 'block';
-            
-            // Position the dropdown
-            const rect = item.getBoundingClientRect();
-            // const containerWidth = window.innerWidth * 0.88;
-            // const leftPosition = Math.max(0, rect.left - (containerWidth - rect.width) / 2);
-            
-            // dropdown.style.left = `${leftPosition}px`;
-            // dropdown.style.width = `${containerWidth}px`;
+            dropdown.classList.remove('mega-dropdown--hidden');
+            dropdown.classList.add('mega-dropdown--visible');
             
             // Add active class to parent item
-            item.classList.add('active');
+            item.classList.add('toolbar__nav-item--active');
             
             // Add active style to link
             const link = item.querySelector('.toolbar__nav-link');
             if (link) {
-                link.style.backgroundColor = '#fff';
-                link.style.color = '#446798';
+                link.classList.add('toolbar__nav-link--active');
             }
         }
     }
@@ -266,15 +254,15 @@ class MegaMenu {
         if (this.currentMenu) {
             const dropdown = this.currentMenu.querySelector('.mega-dropdown');
             if (dropdown) {
-                dropdown.style.display = 'none';
+                dropdown.classList.remove('mega-dropdown--visible');
+                dropdown.classList.add('mega-dropdown--hidden');
             }
-            this.currentMenu.classList.remove('active');
+            this.currentMenu.classList.remove('toolbar__nav-item--active');
             
             // Remove active style from link
             const link = this.currentMenu.querySelector('.toolbar__nav-link');
             if (link) {
-                link.style.backgroundColor = 'transparent';
-                link.style.color = '';
+                link.classList.remove('toolbar__nav-link--active');
             }
             
             this.currentMenu = null;
@@ -283,7 +271,7 @@ class MegaMenu {
 
     keepMenuOpen() {
         if (this.currentMenu) {
-            this.currentMenu.classList.add('active');
+            this.currentMenu.classList.add('toolbar__nav-item--active');
         }
     }
 }
