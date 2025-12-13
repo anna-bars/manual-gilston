@@ -1,209 +1,84 @@
-img {
-            max-width: 100%;
-            height: auto;
-            vertical-align: middle;
-            border-style: none;
-        }
-        
-        a, a:hover {
-            text-decoration: none;
-            color: inherit;
-        }
-        
-        /* Banner area */
-        .banner-area {
-            width: 100%;
-            overflow: hidden;
-        }
-        
-        .container-fluid {
-            width: 100%;
-            padding-right: 15px;
-            padding-left: 15px;
-            margin-right: auto;
-            margin-left: auto;
-        }
-        
-        .row {
-            display: flex;
-            flex-wrap: wrap;
-            margin-right: -15px;
-            margin-left: -15px;
-        }
-        
-        .col-md-12 {
-            flex: 0 0 100%;
-            max-width: 100%;
-            padding-right: 15px;
-            padding-left: 15px;
-        }
-        
-        .p-0 {
-            padding: 0 !important;
-        }
-        
-        /* Slider styles */
-        .banner-slider {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .slider {
-            position: relative;
-            width: 100%;
-        }
-        
-        .slider-1 {
-            position: relative;
-            width: 100%;
-            height: fit-content;
-        }
-        
-        .slider-1 a {
-            display: block;
-            width: 100%;
-            height: fit-content;
-        }
-        
-        .slider-1 img {
-            width: 100%;
-            height: fit-content;
-            object-fit: contain;
-            display: block;
-        }
-        
-        /* Slider navigation arrows */
-        .slider-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 30px;
-            height: 30px;
-            background-color: #f6f7f8;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 999;
-            transition: background-color 0.3s;
-        }
-        
-        .slider-nav:hover {
-            background-color: #e9ecef;
-        }
-        
-        .slider-prev {
-            left: 25px;
-        }
-        
-        .slider-next {
-            right: 25px;
-        }
-        
-        .slider-nav i {
-            font-size: 20px;
-            color: #000;
-        }
-        
-        /* Slider dots */
-        .slider-dots {
-            position: absolute;
-            bottom: 20px;
-            left: 0;
-            right: 0;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            z-index: 998;
-        }
-        
-        .slider-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.5);
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            transition: background-color 0.3s;
-        }
-        
-        .slider-dot.active {
-            background-color: #fff;
-        }
-        
-        /* Slider fade animation */
-        .slider-items {
-            position: relative;
-            width: 100%;
-            height: 500px;
-            overflow: hidden;
-        }
-        
-        .slider-item {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: fit-content;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-            z-index: 1;
-        }
-        
-        .slider-item.active {
-            opacity: 1;
-            z-index: 2;
-        }
-        
-        /* Responsive styles */
-        @media only screen and (max-width: 992px) {
-            .slider-nav {
-                bottom: 10px;
-                top: auto;
-                transform: none;
-            }
-            
-            .slider-prev {
-                left: 20px;
-            }
-            
-            .slider-next {
-                right: 20px;
-            }
-            
-            .slider-dots {
-                bottom: 35px;
-            }
-            
-            .slider-items {
-                height: 400px;
-            }
-        }
-        
-        @media only screen and (max-width: 768px) {
-            .slider-items {
-                height: 350px;
-            }
-        }
-        
-        @media only screen and (max-width: 576px) {
-            .slider-items {
-                height: 300px;
-            }
-        }
-        
-        @media only screen and (max-width: 360px) {
-            .slider-items {
-                height: 250px;
-            }
-        }
-        
-        /* Picture element image fallback */
-        picture {
-            display: block;
-            width: 100%;
-            height: fit-content;
-        }
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Banner block */
+.banner {
+    width: 100%;
+    overflow: hidden;
+}
+
+.banner__container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.banner__row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.banner__col--full {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+
+.banner__slider {
+    position: relative;
+    overflow: hidden;
+}
+
+.banner__slider-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* Banner item element */
+.banner__item {
+    display: none;
+    width: 100%;
+}
+
+.banner__item--active {
+    display: block;
+}
+
+.banner__image-container {
+    position: relative;
+    width: 100%;
+}
+
+.banner__link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.banner__link:hover {
+    text-decoration: none;
+}
+
+.banner__picture {
+    display: block;
+    width: 100%;
+    line-height: 0; /* Remove extra space below image */
+}
+
+.banner__image {
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+    border-style: none;
+    display: block;
+    width: 100%;
+}
+
+/* No navigation or dots needed since there's only one slide */

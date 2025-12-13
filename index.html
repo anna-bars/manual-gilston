@@ -346,52 +346,42 @@
             </div>
 
 
-    <div class="banner-area">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12 p-0">
-                    <div class="banner-slider">
-                        <div class="slider single-item">
-                            <!-- Slider navigation buttons -->
-                            <button class="slider-nav slider-prev" aria-label="Previous slide">
-                                <i class="fas fa-chevron-left"></i>
-                            </button>
-                            <button class="slider-nav slider-next" aria-label="Next slide">
-                                <i class="fas fa-chevron-right"></i>
-                            </button>
-                            
-                            <!-- Slider items - Only ONE slide as requested -->
-                            <div class="slider-items">
-                                <!-- Single Slide -->
-                                <div class="slider-item active">
-                                    <div class="slider-1">
-                                        <a href="#">
-                                            <picture>
-                                                <!-- Desktop image (min-width: 1025px) -->
-                                                <source 
-                                                    media="(min-width: 1025px)" 
-                                                    srcset="./src/assets/home/banner/optimized/gilson-materials-testing-equipment-1400.jpg">
-                                                
-                                                <!-- Mobile image (max-width: 1024px) -->
-                                                <source 
-                                                    media="(max-width: 1024px)" 
-                                                    srcset="./src/assets/home/banner/optimized/banner1-mob.jpg">
-                                                
-                                                <!-- Fallback image for desktop -->
-                                                <img 
-                                                    loading="eager" 
-                                                    src="./src/assets/home/banner/optimized/gilson-materials-testing-equipment-1024.jpg" 
-                                                    alt="Gilson Company, Inc. - Supplying quality construction and laboratory material testing equipment since 1939">
-                                            </picture>
-                                        </a>
-                                    </div>
+    <div class="banner">
+        <div class="banner__container">
+            <div class="banner__row">
+                <div class="banner__col banner__col--full">
+                    <div class="banner__slider">
+                        <div class="banner__slider-wrapper">
+                            <!-- Single banner item -->
+                            <div class="banner__item banner__item--active">
+                                <div class="banner__image-container">
+                                    <a href="#" class="banner__link">
+                                        <picture class="banner__picture">
+                                            <!-- Desktop image (1025px and above) -->
+                                            <source 
+                                                media="(min-width: 1025px)" 
+                                                srcset="./src/assets/home/banner/optimized/gilson-materials-testing-equipment-1400.jpg"
+                                                class="banner__source banner__source--desktop"
+                                            >
+                                            
+                                            <!-- Mobile image (1024px and below) -->
+                                            <source 
+                                                media="(max-width: 1024px)" 
+                                                srcset="./src/assets/home/banner/optimized/banner1-mob.jpg"
+                                                class="banner__source banner__source--mobile"
+                                            >
+                                            
+                                            <!-- Fallback image -->
+                                            <img 
+                                                loading="eager" 
+                                                src="./src/assets/home/banner/optimized/gilson-materials-testing-equipment-1024.jpg" 
+                                                alt="Gilson Company, Inc. - Supplying quality construction and laboratory material testing equipment since 1939"
+                                                class="banner__image"
+                                            >
+                                        </picture>
+                                    </a>
                                 </div>
                             </div>
-                            
-                            <!-- Since there's only one slide, we don't need dots -->
-                            <!-- <div class="slider-dots">
-                                <button class="slider-dot active" data-slide="0" aria-label="Go to slide 1"></button>
-                            </div> -->
                         </div>
                     </div>
                 </div>
