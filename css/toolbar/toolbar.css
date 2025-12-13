@@ -852,7 +852,7 @@ position: absolute;
     color: #002d58;
     font-weight: bold;
     text-transform: uppercase;
-    margin: 0;
+    margin: 5px 0 0 0;
 }
 
 .toolbar__menu-toggle {
@@ -863,7 +863,7 @@ position: absolute;
     width: 28px;
     height: 3px;
     background: #002d58;
-    margin: 4px 0;
+    margin: 3px 0;
     display: block;
     transition: 0.3s;
 }
