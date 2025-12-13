@@ -275,7 +275,7 @@ class MobileMenu {
 }
 
 // Initialize mobile menu when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
     console.log("DOM loaded, initializing MobileMenu");
     
     // Check if mobile menu element exists
@@ -288,18 +288,63 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log("Mobile menu element found:", mobileMenuElement);
     
     // Initialize the menu
-    window.mobileMenu = new MobileMenu();
+    const mobileMenu = new MobileMenu();
     
-    // Also add event listener for the menu toggle button (as backup)
+    // Make it available globally
+    window.mobileMenu = mobileMenu;
+    
+    // Get menu container for width manipulation
+    const mobileMenuCont = document.getElementById('mobileMenuCont');
+    
+    // Add click event to menu toggle button for width/transform animation
     const menuToggle = document.querySelector('.toolbar__menu-toggle');
     if (menuToggle) {
-        console.log("Adding click event to menu toggle");
-        menuToggle.addEventListener('click', function(e) {
-            console.log("Menu toggle clicked (backup handler)");
-            e.stopPropagation();
-            if (window.mobileMenu) {
-                window.mobileMenu.toggle();
+        menuToggle.addEventListener('click', function() {
+            // Toggle width class
+            if (mobileMenuElement.classList.contains('full')) {
+                // CLOSE — remove style + class
+                mobileMenuElement.classList.remove('full');
+                mobileMenuElement.style.removeProperty('width');
+                
+                if (mobileMenuCont) {
+                    mobileMenuCont.style.removeProperty('transform');
+                }
+            } else {
+                // OPEN — add style + class
+                mobileMenuElement.style.setProperty('width', '100%', 'important');
+                mobileMenuElement.classList.add('full');
+                
+                if (mobileMenuCont) {
+                    mobileMenuCont.style.setProperty('transform', 'translateX(0px)', 'important');
+                }
             }
+            
+            // Also call the toggle method
+            mobileMenu.toggle();
+        });
+    }
+
+    // Add event listener for close button to handle width/transform removal
+    const closeBtn = document.getElementById('mobileMenuClose');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            // Call mobileMenu close method
+            if (mobileMenu && typeof mobileMenu.close === 'function') {
+                mobileMenu.close();
+            }
+            
+            // Also remove the full class and inline styles
+            if (mobileMenuElement) {
+                mobileMenuElement.classList.remove('full');
+                mobileMenuElement.style.removeProperty('width');
+                
+                if (mobileMenuCont) {
+                    mobileMenuCont.style.removeProperty('transform');
+                }
+            }
+            
+            // Reset body overflow
+            document.body.style.overflow = 'auto';
         });
     }
 });

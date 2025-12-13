@@ -364,64 +364,6 @@
     <script src="./js/menu-data.js"></script>
     <script src="./js/menu-dropdown.js"></script>
     <script src="./js/mobile-menu.js"></script>
-    <script>
-        // Add to your existing JavaScript or in a new file
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize mobile menu
-    const mobileMenu = new MobileMenu();
-    const mobileMenuElement = document.getElementById('mobileMenu');
-    const mobileMenuCont = document.getElementById('mobileMenuCont');
-    
-    // Add click event to menu toggle button
-    const menuToggle = document.querySelector('.toolbar__menu-toggle');
-    if (menuToggle) {
-        menuToggle.addEventListener('click', function() {
-            // Toggle width class
-            if (mobileMenuElement.classList.contains('full')) {
-                // CLOSE — remove style + class
-                mobileMenuElement.classList.remove('full');
-                mobileMenuElement.style.removeProperty('width');
-                
-                if (mobileMenuCont) {
-                    mobileMenuCont.style.removeProperty('transform');
-                }
-            } else {
-                // OPEN — add style + class
-                mobileMenuElement.style.setProperty('width', '100%', 'important');
-                mobileMenuElement.classList.add('full');
-                
-                if (mobileMenuCont) {
-                    mobileMenuCont.style.setProperty('transform', 'translateX(0px)', 'important');
-                }
-            }
-            
-            mobileMenu.toggle();
-        });
-    }
 
-     const closeBtn = document.getElementById('mobileMenuClose');
-        if (closeBtn) {
-            closeBtn.addEventListener('click', function() {
-                // Call mobileMenu close method if it exists
-                if (mobileMenu && typeof mobileMenu.close === 'function') {
-                    mobileMenu.close();
-                }
-                
-                // Also remove the full class and inline styles
-                if (mobileMenuElement) {
-                    mobileMenuElement.classList.remove('full');
-                    mobileMenuElement.style.removeProperty('width');
-                    
-                    if (mobileMenuCont) {
-                        mobileMenuCont.style.removeProperty('transform');
-                    }
-                }
-                
-                // Reset body overflow
-                document.body.style.overflow = 'auto';
-            });
-        }
-});
-    </script>
 </body>
 </html>
