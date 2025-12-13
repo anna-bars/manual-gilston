@@ -1,5 +1,5 @@
-// Mobile menu data
-const mobileMenuData = {
+// Mobile Menu Configuration
+const MOBILE_MENU_CONFIG = {
     categories: [
         { name: "Sieving", link: "https://www.globalgilson.com/sieve-analysis-equipment", img: "./src/assets/haeder-component/mobile-menu/sieving-mobile.png" },
         { name: "Screening", link: "https://www.globalgilson.com/screening", img: "./src/assets/haeder-component/mobile-menu/screening-mobile.png" },
@@ -44,96 +44,120 @@ const mobileMenuData = {
     ]
 };
 
-// Mobile Menu Functions
+// Template generators
+const MenuTemplates = {
+    generateList(items, iconSize = 'large', textClass = '') {
+        return items.map(item => `
+            <li class="mobile-menu__item">
+                <a href="${item.link}" class="mobile-menu__link">
+                    ${item.img ? `<img loading="lazy" src="${item.img}" alt="${item.name}" class="mobile-menu__icon mobile-menu__icon--${iconSize}">` : ''}
+                    ${item.icon ? `<img loading="lazy" src="${item.icon}" alt="${item.name}" class="mobile-menu__icon mobile-menu__icon--${iconSize}">` : ''}
+                    <p class="mobile-menu__text ${textClass}">${item.name || item.text || item.type}</p>
+                    <i class="fa fa-angle-right mobile-menu__arrow"></i>
+                </a>
+            </li>
+        `).join('');
+    },
+
+    generateSupport(items) {
+        return items.map(item => `
+            <li class="mobile-menu__support-item">
+                <a href="${item.link}" target="${item.type === 'Chat' ? '_blank' : '_self'}" class="mobile-menu__link">
+                    <div class="mobile-menu__support-icon">
+                        <img loading="lazy" src="${item.icon}" alt="${item.type}" class="mobile-menu__support-icon-img">
+                    </div>
+                    <p class="mobile-menu__support-label">${item.type}</p>
+                </a>
+            </li>
+        `).join('');
+    },
+
+    generateCallback(items) {
+        return items.map(item => `
+            <li class="mobile-menu__callback-item">
+                <a href="${item.link}" class="mobile-menu__callback-link">
+                    <img loading="lazy" src="${item.icon}" alt="${item.text}" class="mobile-menu__callback-icon">
+                    <p class="mobile-menu__callback-text">${item.text}</p>
+                    <i class="fa fa-angle-right mobile-menu__callback-arrow"></i>
+                </a>
+            </li>
+        `).join('');
+    },
+
+    generateSocial() {
+        const socialLinks = [
+            { platform: "Facebook", url: "https://www.facebook.com/GilsonCompany", icon: "./src/assets/haeder-component/mobile-menu/social-media/fb.webp" },
+            { platform: "Instagram", url: "https://www.instagram.com/gilsoncompanyinc", icon: "./src/assets/haeder-component/mobile-menu/social-media/insta.webp" },
+            { platform: "Twitter", url: "https://twitter.com/gilsoncompany", icon: "./src/assets/haeder-component/mobile-menu/social-media/twitter.webp" },
+            { platform: "LinkedIn", url: "https://www.linkedin.com/company/gilson-company-inc.", icon: "./src/assets/haeder-component/mobile-menu/social-media/linkedin.webp" },
+            { platform: "YouTube", url: "https://www.youtube.com/user/GilsonCompanyInc", icon: "./src/assets/haeder-component/mobile-menu/social-media/utube.webp" }
+        ];
+
+        return socialLinks.map(item => `
+            <li class="mobile-menu__social-item">
+                <a href="${item.url}" class="mobile-menu__social-link">
+                    <img src="${item.icon}" alt="${item.platform}" class="mobile-menu__social-icon">
+                </a>
+            </li>
+        `).join('');
+    }
+};
+
+// Mobile Menu Class
 class MobileMenu {
     constructor() {
         this.menu = document.getElementById('mobileMenu');
-        this.menuContent = this.menu.querySelector('.mobile-menu__content');
-        this.menuContent.id = 'mobileMenuContent';
+        this.content = this.menu.querySelector('.mobile-menu__content');
         this.isOpen = false;
-        
         this.init();
     }
-    
+
     init() {
-        console.log("MobileMenu initialized");
-        this.renderMenu();
-        this.setupEventListeners();
+        this.render();
+        this.bindEvents();
     }
-    
-    renderMenu() {
-        let html = `
-            <h3 class="mobile-menu__section-title">Shop by Category</h3>
+
+    render() {
+        this.content.innerHTML = `
+            <h3 class="mobile-menu__title">Shop by Category</h3>
             <ul class="mobile-menu__list">
-                ${mobileMenuData.categories.map(cat => `
-                    <li class="mobile-menu__list-item">
-                        <a href="${cat.link}" class="mobile-menu__link">
-                            <img loading="lazy" src="${cat.img}" alt="${cat.name}" class="mobile-menu__link-icon">
-                            <p class="mobile-menu__link-text">${cat.name}</p>
-                            <i class="fa fa-angle-right mobile-menu__link-arrow" aria-hidden="false"></i>
-                        </a>
-                    </li>
-                `).join('')}
+                ${MenuTemplates.generateList(MOBILE_MENU_CONFIG.categories, 'large', '')}
             </ul>
             
             <div class="mobile-menu__section">
-                <h3 class="mobile-menu__section-title">Account</h3>
+                <h3 class="mobile-menu__title">Account</h3>
                 <ul class="mobile-menu__list">
-                    ${mobileMenuData.account.map(item => `
-                        <li class="mobile-menu__list-item">
-                            <a href="${item.link}" class="mobile-menu__link">
-                                <img loading="lazy" src="${item.icon}" alt="${item.name}" class="mobile-menu__link-icon mobile-menu__link-icon--small">
-                                <p class="mobile-menu__link-text mobile-menu__link-text--account">${item.name}</p>
-                                <i class="fa fa-angle-right mobile-menu__link-arrow" aria-hidden="false"></i>
-                            </a>
-                        </li>
-                    `).join('')}
+                    ${MenuTemplates.generateList(MOBILE_MENU_CONFIG.account, 'small', 'mobile-menu__text--secondary')}
                 </ul>
             </div>
             
             <div class="mobile-menu__section">
-                <h3 class="mobile-menu__section-title">Tools</h3>
+                <h3 class="mobile-menu__title">Tools</h3>
                 <ul class="mobile-menu__list">
-                    ${mobileMenuData.tools.map(item => `
-                        <li class="mobile-menu__list-item">
-                            <a href="${item.link}" class="mobile-menu__link">
-                                <p class="mobile-menu__link-text mobile-menu__link-text--account">${item.name}</p>
-                                <i class="fa fa-angle-right mobile-menu__link-arrow" aria-hidden="false"></i>
-                            </a>
-                        </li>
-                    `).join('')}
+                    ${MenuTemplates.generateList(MOBILE_MENU_CONFIG.tools, 'small', 'mobile-menu__text--secondary')}
                 </ul>
             </div>
             
             <div class="mobile-menu__section">
-                <h3 class="mobile-menu__section-title">Resources</h3>
+                <h3 class="mobile-menu__title">Resources</h3>
                 <ul class="mobile-menu__list">
-                    ${mobileMenuData.resources.map(item => `
-                        <li class="mobile-menu__list-item">
-                            <a href="${item.link}" class="mobile-menu__link">
-                                <p class="mobile-menu__link-text mobile-menu__link-text--account">${item.name}</p>
-                                <i class="fa fa-angle-right mobile-menu__link-arrow" aria-hidden="false"></i>
-                            </a>
-                        </li>
-                    `).join('')}
+                    ${MenuTemplates.generateList(MOBILE_MENU_CONFIG.resources, 'small', 'mobile-menu__text--secondary')}
                 </ul>
             </div>
             
-            <a href="https://www.globalgilson.com/replacement-parts" class="mobile-menu__part-btn">Replacement Parts</a>
+            <a href="https://www.globalgilson.com/replacement-parts" class="mobile-menu__btn">Replacement Parts</a>
 
             <div class="mobile-menu__poster">
-                <img loading="lazy" src="./src/assets/haeder-component/mobile-menu/mob-menu-post.webp" alt="Phone" class="mobile-menu__poster-image">
+                <img loading="lazy" src="./src/assets/haeder-component/mobile-menu/mob-menu-post.webp" alt="Phone" class="mobile-menu__poster-img">
             </div>
             
             <div class="mobile-menu__contact">
-                <div class="mobile-menu__contact-text">
+                <div class="mobile-menu__contact-header">
                     <h4 class="mobile-menu__contact-title">We're here to help</h4>
-                    <p class="mobile-menu__contact-description">We'll do anything we can to help find an answer to your question.</p>
-                    <div class="mobile-menu__call-btn">
-                        <a href="#" class="mobile-menu__call-btn-link">
-                            <i class="fa fa-phone mobile-menu__call-btn-icon">
-                                <img loading="lazy" src="./src/assets/haeder-component/middle-header/phone-receiver-silhouette.png" alt="Phone">
-                            </i> 
+                    <p class="mobile-menu__contact-desc">We'll do anything we can to help find an answer to your question.</p>
+                    <div class="mobile-menu__call">
+                        <a href="#" class="mobile-menu__call-link">
+                            <img loading="lazy" src="./src/assets/haeder-component/middle-header/phone-receiver-silhouette.png" alt="Phone" class="mobile-menu__call-icon">
                             800-444-1508
                         </a>
                     </div>
@@ -141,209 +165,92 @@ class MobileMenu {
                 
                 <div class="mobile-menu__support">
                     <ul class="mobile-menu__support-list">
-                        ${mobileMenuData.support.map(item => `
-                            <li class="mobile-menu__support-item">
-                                <a href="${item.link}" target="${item.type === 'Chat' ? '_blank' : '_self'}" class="mobile-menu__link">
-                                    <div class="mobile-menu__support-icon-container">
-                                        <i class="fa mobile-menu__fa-icon">
-                                            <img loading="lazy" src="${item.icon}" alt="${item.type}" class="mobile-menu__support-icon">
-                                        </i>
-                                    </div>
-                                    <div class="mobile-menu__support-text">
-                                        <p>${item.type}</p>
-                                    </div>
-                                </a>
-                            </li>
-                        `).join('')}
+                        ${MenuTemplates.generateSupport(MOBILE_MENU_CONFIG.support)}
                     </ul>
                 </div>
                 
                 <div class="mobile-menu__callback">
                     <ul class="mobile-menu__callback-list">
-                        ${mobileMenuData.callBack.map(item => `
-                            <li class="mobile-menu__callback-item">
-                                <a href="${item.link}" class="mobile-menu__callback-link">
-                                    <div class="mobile-menu__callback-icon">
-                                        <img loading="lazy" src="${item.icon}" alt="${item.text}">
-                                    </div>
-                                    <p class="mobile-menu__callback-text">${item.text}</p>
-                                    <i class="fa fa-angle-right mobile-menu__callback-arrow" aria-hidden="false"></i>
-                                </a>
-                            </li>
-                        `).join('')}
+                        ${MenuTemplates.generateCallback(MOBILE_MENU_CONFIG.callBack)}
                     </ul>
                 </div>
                 
                 <div class="mobile-menu__fax">
-                    <div class="mobile-menu__fax-icon">
-                        <img loading="lazy" src="./src/assets/haeder-component/mobile-menu/icon/printing.png" alt="Fax">
-                    </div> 
+                    <img loading="lazy" src="./src/assets/haeder-component/mobile-menu/icon/printing.png" alt="Fax" class="mobile-menu__fax-icon">
                     740-548-5314
                 </div>
                 
                 <div class="mobile-menu__social">
                     <ul class="mobile-menu__social-list">
-                        <li class="mobile-menu__social-item"><a href="https://www.facebook.com/GilsonCompany" class="mobile-menu__social-link"><div class="mobile-menu__social-icon">
-                            <img src="./src/assets/haeder-component/mobile-menu/social-media/fb.webp" class="mobile-menu__social-icon">
-                        </div></a></li>
-                        <li class="mobile-menu__social-item"><a href="https://www.instagram.com/gilsoncompanyinc" class="mobile-menu__social-link"><div class="mobile-menu__social-icon">
-                             <img src="./src/assets/haeder-component/mobile-menu/social-media/insta.webp" class="mobile-menu__social-icon">
-                        </div></a></li>
-                        <li class="mobile-menu__social-item"><a href="https://twitter.com/gilsoncompany" class="mobile-menu__social-link"><div class="mobile-menu__social-icon">
-                            <img src="./src/assets/haeder-component/mobile-menu/social-media/twitter.webp" class="mobile-menu__social-icon">
-                        </div></a></li>
-                        <li class="mobile-menu__social-item"><a href="https://www.linkedin.com/company/gilson-company-inc." class="mobile-menu__social-link"><div class="mobile-menu__social-icon">
-                            <img src="./src/assets/haeder-component/mobile-menu/social-media/linkedin.webp" class="mobile-menu__social-icon">
-                        </div></a></li>
-                        <li class="mobile-menu__social-item"><a href="https://www.youtube.com/user/GilsonCompanyInc" class="mobile-menu__social-link"><div class="mobile-menu__social-icon">
-                            <img src="./src/assets/haeder-component/mobile-menu/social-media/utube.webp" class="mobile-menu__social-icon">
-                        </div></a></li>
+                        ${MenuTemplates.generateSocial()}
                     </ul>
                 </div>
             </div>
         `;
-        
-        this.menuContent.innerHTML = html;
     }
-    
-    setupEventListeners() {
-        console.log("Setting up event listeners");
-        
-        // Close button event listener
-        const closeBtn = document.getElementById('mobileMenuClose');
-        if (closeBtn) {
-            closeBtn.addEventListener('click', (e) => {
-                console.log("Close button clicked");
-                e.stopPropagation(); // Prevent event bubbling
-                this.close();
-            });
-        }
-        
-        // Close when clicking outside the menu content (on the overlay)
+
+    bindEvents() {
+        // Close button
+        document.getElementById('mobileMenuClose')?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.close();
+            this.removeFullClass();
+        });
+
+        // Close on overlay click
         this.menu.addEventListener('click', (e) => {
-            console.log("Mobile menu click event");
-            
-            // If click is on the menu area (overlay) but NOT on menu content
-            if (e.target === this.menu || 
-                (!this.menuContent.contains(e.target) && e.target !== closeBtn)) {
-                console.log("Clicked outside menu content, closing");
+            if (e.target === this.menu) {
                 this.close();
+                this.removeFullClass();
             }
         });
-        
-        // Add event listener to menu toggle button
-        const menuToggle = document.querySelector('.toolbar__menu-toggle');
-        if (menuToggle) {
-            console.log("Found menu toggle button");
-            menuToggle.addEventListener('click', (e) => {
-                console.log("Menu toggle clicked");
-                e.stopPropagation(); // Prevent event bubbling
-                this.toggle();
-            });
-        } else {
-            console.error("Menu toggle button not found!");
-        }
+
+        // Toggle button
+        document.querySelector('.toolbar__menu-toggle')?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.toggle();
+            this.toggleFullClass();
+        });
     }
-    
+
+    toggle() {
+        this.isOpen ? this.close() : this.open();
+    }
+
     open() {
-        console.log("Opening mobile menu");
         this.menu.classList.add('mobile-menu--open');
-        this.menu.style.width = '100%';
         this.isOpen = true;
         document.body.style.overflow = 'hidden';
-        console.log("Menu should be open now");
     }
-    
+
     close() {
-        console.log("Closing mobile menu");
         this.menu.classList.remove('mobile-menu--open');
-        this.menu.style.width = '0';
         this.isOpen = false;
-        document.body.style.overflow = 'auto';
-        console.log("Menu should be closed now");
+        document.body.style.overflow = '';
     }
-    
-    toggle() {
-        console.log("Toggling mobile menu, current state:", this.isOpen);
-        if (this.isOpen) {
-            this.close();
+
+    toggleFullClass() {
+        this.menu.classList.toggle('full');
+        if (this.menu.classList.contains('full')) {
+            this.menu.style.width = '100%';
+            this.content.style.transform = 'translateX(0)';
         } else {
-            this.open();
+            this.menu.style.width = '';
+            this.content.style.transform = '';
         }
+    }
+
+    removeFullClass() {
+        this.menu.classList.remove('full');
+        this.menu.style.width = '';
+        this.content.style.transform = '';
     }
 }
 
-// Initialize mobile menu when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    console.log("DOM loaded, initializing MobileMenu");
-    
-    // Check if mobile menu element exists
-    const mobileMenuElement = document.getElementById('mobileMenu');
-    if (!mobileMenuElement) {
-        console.error("Mobile menu element not found!");
-        return;
-    }
-    
-    console.log("Mobile menu element found:", mobileMenuElement);
-    
-    // Initialize the menu
-    const mobileMenu = new MobileMenu();
-    
-    // Make it available globally
-    window.mobileMenu = mobileMenu;
-    
-    // Get menu container for width manipulation
-    const mobileMenuContent = document.getElementById('mobileMenuContent');
-    
-    // Add click event to menu toggle button for width/transform animation
-    const menuToggle = document.querySelector('.toolbar__menu-toggle');
-    if (menuToggle) {
-        menuToggle.addEventListener('click', function() {
-            // Toggle width class
-            if (mobileMenuElement.classList.contains('full')) {
-                // CLOSE — remove style + class
-                mobileMenuElement.classList.remove('full');
-                mobileMenuElement.style.removeProperty('width');
-                
-                if (mobileMenuContent) {
-                    mobileMenuContent.style.removeProperty('transform');
-                }
-            } else {
-                // OPEN — add style + class
-                mobileMenuElement.style.setProperty('width', '100%', 'important');
-                mobileMenuElement.classList.add('full');
-                
-                if (mobileMenuContent) {
-                    mobileMenuContent.style.setProperty('transform', 'translateX(0px)', 'important');
-                }
-            }
-            
-            // Also call the toggle method
-            mobileMenu.toggle();
-        });
-    }
+// Initialize on DOM ready
+document.addEventListener('DOMContentLoaded', () => {
+    const menuElement = document.getElementById('mobileMenu');
+    if (!menuElement) return;
 
-    // Add event listener for close button to handle width/transform removal
-    const closeBtn = document.getElementById('mobileMenuClose');
-    if (closeBtn) {
-        closeBtn.addEventListener('click', function() {
-            // Call mobileMenu close method
-            if (mobileMenu && typeof mobileMenu.close === 'function') {
-                mobileMenu.close();
-            }
-            
-            // Also remove the full class and inline styles
-            if (mobileMenuElement) {
-                mobileMenuElement.classList.remove('full');
-                mobileMenuElement.style.removeProperty('width');
-                
-                if (mobileMenuContent) {
-                    mobileMenuContent.style.removeProperty('transform');
-                }
-            }
-            
-            // Reset body overflow
-            document.body.style.overflow = 'auto';
-        });
-    }
+    window.mobileMenu = new MobileMenu();
 });

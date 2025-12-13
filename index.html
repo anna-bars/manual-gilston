@@ -349,16 +349,11 @@
     <!-- index.html - մեգա մենյուի կոնտեյներ -->
 <div class="mega-menu"></div> 
 
-    <!-- Mobile Menu -->
 <div id="mobileMenu" class="mobile-menu">
-    <!-- Close button -->
-    <div class="mobile-menu__close-btn" id="mobileMenuClose">
-        <img loading="lazy" src="./src/assets/haeder-component/mobile-menu/close-menu.png" alt="Close Menu" class="mobile-menu__close-icon">
-    </div>
-
-    <div class="mobile-menu__content" id="mobileMenuContent">
-        <!-- Menu content will be inserted by JavaScript -->
-    </div>
+    <button id="mobileMenuClose" class="mobile-menu__close" aria-label="Close menu">
+        <img loading="lazy" src="./src/assets/haeder-component/mobile-menu/close-menu.png" alt="Close Menu">
+    </button>
+    <div class="mobile-menu__content"></div>
 </div>
 
     <script src="./js/menu-data.js"></script>
