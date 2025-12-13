@@ -48,8 +48,8 @@ const mobileMenuData = {
 class MobileMenu {
     constructor() {
         this.menu = document.getElementById('mobileMenu');
-        this.menuContent = this.menu.querySelector('.mobile-menu1');
-        this.menuContent.id = 'mobileMenuCont';
+        this.menuContent = this.menu.querySelector('.mobile-menu__content');
+        this.menuContent.id = 'mobileMenuContent';
         this.isOpen = false;
         
         this.init();
@@ -63,77 +63,75 @@ class MobileMenu {
     
     renderMenu() {
         let html = `
-            <h3>Shop by Category</h3>
-            <ul>
+            <h3 class="mobile-menu__section-title">Shop by Category</h3>
+            <ul class="mobile-menu__list">
                 ${mobileMenuData.categories.map(cat => `
-                    <li>
-                        <a href="${cat.link}">
-                            <img loading="lazy" src="${cat.img}" alt="${cat.name}">
-                            <p>${cat.name}</p>
-                            <i class="fa fa-angle-right" aria-hidden="false"></i>
+                    <li class="mobile-menu__list-item">
+                        <a href="${cat.link}" class="mobile-menu__link">
+                            <img loading="lazy" src="${cat.img}" alt="${cat.name}" class="mobile-menu__link-icon">
+                            <p class="mobile-menu__link-text">${cat.name}</p>
+                            <i class="fa fa-angle-right mobile-menu__link-arrow" aria-hidden="false"></i>
                         </a>
                     </li>
                 `).join('')}
             </ul>
             
-            <div class="mob-account-list">
-                <h3>Account</h3>
-                <ul>
+            <div class="mobile-menu__section">
+                <h3 class="mobile-menu__section-title">Account</h3>
+                <ul class="mobile-menu__list">
                     ${mobileMenuData.account.map(item => `
-                        <li>
-                            <a href="${item.link}">
-                                <img loading="lazy" src="${item.icon}" alt="${item.name}" class="svgimg">
-                                <p>${item.name}</p>
-                                <i class="fa fa-angle-right" aria-hidden="false"></i>
+                        <li class="mobile-menu__list-item">
+                            <a href="${item.link}" class="mobile-menu__link">
+                                <img loading="lazy" src="${item.icon}" alt="${item.name}" class="mobile-menu__link-icon mobile-menu__link-icon--small">
+                                <p class="mobile-menu__link-text mobile-menu__link-text--account">${item.name}</p>
+                                <i class="fa fa-angle-right mobile-menu__link-arrow" aria-hidden="false"></i>
                             </a>
                         </li>
                     `).join('')}
                 </ul>
             </div>
             
-            <div class="mob-account-list">
-                <h3>Tools</h3>
-                <ul>
+            <div class="mobile-menu__section">
+                <h3 class="mobile-menu__section-title">Tools</h3>
+                <ul class="mobile-menu__list">
                     ${mobileMenuData.tools.map(item => `
-                        <li>
-                            <a href="${item.link}">
-                                <p>${item.name}</p>
-                                <i class="fa fa-angle-right" aria-hidden="false"></i>
+                        <li class="mobile-menu__list-item">
+                            <a href="${item.link}" class="mobile-menu__link">
+                                <p class="mobile-menu__link-text mobile-menu__link-text--account">${item.name}</p>
+                                <i class="fa fa-angle-right mobile-menu__link-arrow" aria-hidden="false"></i>
                             </a>
                         </li>
                     `).join('')}
                 </ul>
             </div>
             
-            <div class="mob-account-list">
-                <h3>Resources</h3>
-                <ul>
+            <div class="mobile-menu__section">
+                <h3 class="mobile-menu__section-title">Resources</h3>
+                <ul class="mobile-menu__list">
                     ${mobileMenuData.resources.map(item => `
-                        <li>
-                            <a href="${item.link}">
-                                <p>${item.name}</p>
-                                <i class="fa fa-angle-right" aria-hidden="false"></i>
+                        <li class="mobile-menu__list-item">
+                            <a href="${item.link}" class="mobile-menu__link">
+                                <p class="mobile-menu__link-text mobile-menu__link-text--account">${item.name}</p>
+                                <i class="fa fa-angle-right mobile-menu__link-arrow" aria-hidden="false"></i>
                             </a>
                         </li>
                     `).join('')}
                 </ul>
             </div>
             
-            <div class="part-btn">
-                <a href="https://www.globalgilson.com/replacement-parts">Replacement Parts</a>
-            </div>
+            <a href="https://www.globalgilson.com/replacement-parts" class="mobile-menu__part-btn">Replacement Parts</a>
 
-            <div class="poster">
-                <img loading="lazy" src="./src/assets/haeder-component/mobile-menu/mob-menu-post.webp" alt="Phone">
+            <div class="mobile-menu__poster">
+                <img loading="lazy" src="./src/assets/haeder-component/mobile-menu/mob-menu-post.webp" alt="Phone" class="mobile-menu__poster-image">
             </div>
             
-            <div class="mob-menu-contact">
-                <div class="mob-contact-text">
-                    <h4>We're here to help</h4>
-                    <p>We'll do anything we can to help find an answer to your question.</p>
-                    <div class="mob-call-btn">
-                        <a href="#">
-                            <i class="fa fa-phone">
+            <div class="mobile-menu__contact">
+                <div class="mobile-menu__contact-text">
+                    <h4 class="mobile-menu__contact-title">We're here to help</h4>
+                    <p class="mobile-menu__contact-description">We'll do anything we can to help find an answer to your question.</p>
+                    <div class="mobile-menu__call-btn">
+                        <a href="#" class="mobile-menu__call-btn-link">
+                            <i class="fa fa-phone mobile-menu__call-btn-icon">
                                 <img loading="lazy" src="./src/assets/haeder-component/middle-header/phone-receiver-silhouette.png" alt="Phone">
                             </i> 
                             800-444-1508
@@ -141,63 +139,64 @@ class MobileMenu {
                     </div>
                 </div>
                 
-                <div class="support-text">
-                    <ul>
+                <div class="mobile-menu__support">
+                    <ul class="mobile-menu__support-list">
                         ${mobileMenuData.support.map(item => `
-                            <li>
-                                <a href="${item.link}" target="${item.type === 'Chat' ? '_blank' : '_self'}"></a>
-                                <div class="support-icon">
-                                    <i class="fa">
-                                        <img loading="lazy" src="${item.icon}" alt="${item.type}">
-                                    </i>
-                                </div>
-                                <div class="call-text1">
-                                    <p>${item.type}</p>
-                                </div>
-                            </li>
-                        `).join('')}
-                    </ul>
-                </div>
-                
-                <div class="mob-call-back">
-                    <ul>
-                        ${mobileMenuData.callBack.map(item => `
-                            <li>
-                                <a href="${item.link}">
-                                    <div class="sprite-img call-back">
-                                        <img loading="lazy" src="${item.icon}" alt="${item.text}">
+                            <li class="mobile-menu__support-item">
+                                <a href="${item.link}" target="${item.type === 'Chat' ? '_blank' : '_self'}" class="mobile-menu__link">
+                                    <div class="mobile-menu__support-icon-container">
+                                        <i class="fa mobile-menu__fa-icon">
+                                            <img loading="lazy" src="${item.icon}" alt="${item.type}" class="mobile-menu__support-icon">
+                                        </i>
                                     </div>
-                                    <p>${item.text}</p>
-                                    <i class="fa fa-angle-right" aria-hidden="false"></i>
+                                    <div class="mobile-menu__support-text">
+                                        <p>${item.type}</p>
+                                    </div>
                                 </a>
                             </li>
                         `).join('')}
                     </ul>
                 </div>
                 
-                <div class="mob-call-btn">
-                    <div class="sprite-img fax-icon">
+                <div class="mobile-menu__callback">
+                    <ul class="mobile-menu__callback-list">
+                        ${mobileMenuData.callBack.map(item => `
+                            <li class="mobile-menu__callback-item">
+                                <a href="${item.link}" class="mobile-menu__callback-link">
+                                    <div class="mobile-menu__callback-icon">
+                                        <img loading="lazy" src="${item.icon}" alt="${item.text}">
+                                    </div>
+                                    <p class="mobile-menu__callback-text">${item.text}</p>
+                                    <i class="fa fa-angle-right mobile-menu__callback-arrow" aria-hidden="false"></i>
+                                </a>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+                
+                <div class="mobile-menu__fax">
+                    <div class="mobile-menu__fax-icon">
                         <img loading="lazy" src="./src/assets/haeder-component/mobile-menu/icon/printing.png" alt="Fax">
                     </div> 
                     740-548-5314
                 </div>
                 
-                <div class="newsletter-area">
-                    <ul>
-                        <li><a href="https://www.facebook.com/GilsonCompany"><div class="sprite-img fb-icon">
-                            <img src="./src/assets/haeder-component/mobile-menu/social-media/fb.webp">
+                <div class="mobile-menu__social">
+                    <ul class="mobile-menu__social-list">
+                        <li class="mobile-menu__social-item"><a href="https://www.facebook.com/GilsonCompany" class="mobile-menu__social-link"><div class="mobile-menu__social-icon">
+                            <img src="./src/assets/haeder-component/mobile-menu/social-media/fb.webp" class="mobile-menu__social-icon">
                         </div></a></li>
-                        <li><a href="https://www.instagram.com/gilsoncompanyinc"><div class="sprite-img insta-icon">
-                             <img src="./src/assets/haeder-component/mobile-menu/social-media/insta.webp">
+                        <li class="mobile-menu__social-item"><a href="https://www.instagram.com/gilsoncompanyinc" class="mobile-menu__social-link"><div class="mobile-menu__social-icon">
+                             <img src="./src/assets/haeder-component/mobile-menu/social-media/insta.webp" class="mobile-menu__social-icon">
                         </div></a></li>
-                        <li><a href="https://twitter.com/gilsoncompany"><div class="sprite-img twitter-icon">
-                            <img src="./src/assets/haeder-component/mobile-menu/social-media/twitter.webp">
+                        <li class="mobile-menu__social-item"><a href="https://twitter.com/gilsoncompany" class="mobile-menu__social-link"><div class="mobile-menu__social-icon">
+                            <img src="./src/assets/haeder-component/mobile-menu/social-media/twitter.webp" class="mobile-menu__social-icon">
                         </div></a></li>
-                        <li><a href="https://www.linkedin.com/company/gilson-company-inc."><div class="sprite-img linkedin-icon">
-                            <img src="./src/assets/haeder-component/mobile-menu/social-media/linkedin.webp">
+                        <li class="mobile-menu__social-item"><a href="https://www.linkedin.com/company/gilson-company-inc." class="mobile-menu__social-link"><div class="mobile-menu__social-icon">
+                            <img src="./src/assets/haeder-component/mobile-menu/social-media/linkedin.webp" class="mobile-menu__social-icon">
                         </div></a></li>
-                        <li><a href="https://www.youtube.com/user/GilsonCompanyInc"><div class="sprite-img youtube-icon">
-                            <img src="./src/assets/haeder-component/mobile-menu/social-media/utube.webp">
+                        <li class="mobile-menu__social-item"><a href="https://www.youtube.com/user/GilsonCompanyInc" class="mobile-menu__social-link"><div class="mobile-menu__social-icon">
+                            <img src="./src/assets/haeder-component/mobile-menu/social-media/utube.webp" class="mobile-menu__social-icon">
                         </div></a></li>
                     </ul>
                 </div>
@@ -248,7 +247,7 @@ class MobileMenu {
     
     open() {
         console.log("Opening mobile menu");
-        this.menu.classList.add('mobile-menu-open');
+        this.menu.classList.add('mobile-menu--open');
         this.menu.style.width = '100%';
         this.isOpen = true;
         document.body.style.overflow = 'hidden';
@@ -257,7 +256,7 @@ class MobileMenu {
     
     close() {
         console.log("Closing mobile menu");
-        this.menu.classList.remove('mobile-menu-open');
+        this.menu.classList.remove('mobile-menu--open');
         this.menu.style.width = '0';
         this.isOpen = false;
         document.body.style.overflow = 'auto';
@@ -294,7 +293,7 @@ document.addEventListener('DOMContentLoaded', function() {
     window.mobileMenu = mobileMenu;
     
     // Get menu container for width manipulation
-    const mobileMenuCont = document.getElementById('mobileMenuCont');
+    const mobileMenuContent = document.getElementById('mobileMenuContent');
     
     // Add click event to menu toggle button for width/transform animation
     const menuToggle = document.querySelector('.toolbar__menu-toggle');
@@ -306,16 +305,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 mobileMenuElement.classList.remove('full');
                 mobileMenuElement.style.removeProperty('width');
                 
-                if (mobileMenuCont) {
-                    mobileMenuCont.style.removeProperty('transform');
+                if (mobileMenuContent) {
+                    mobileMenuContent.style.removeProperty('transform');
                 }
             } else {
                 // OPEN — add style + class
                 mobileMenuElement.style.setProperty('width', '100%', 'important');
                 mobileMenuElement.classList.add('full');
                 
-                if (mobileMenuCont) {
-                    mobileMenuCont.style.setProperty('transform', 'translateX(0px)', 'important');
+                if (mobileMenuContent) {
+                    mobileMenuContent.style.setProperty('transform', 'translateX(0px)', 'important');
                 }
             }
             
@@ -338,8 +337,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 mobileMenuElement.classList.remove('full');
                 mobileMenuElement.style.removeProperty('width');
                 
-                if (mobileMenuCont) {
-                    mobileMenuCont.style.removeProperty('transform');
+                if (mobileMenuContent) {
+                    mobileMenuContent.style.removeProperty('transform');
                 }
             }
             

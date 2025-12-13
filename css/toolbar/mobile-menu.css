@@ -1,7 +1,7 @@
-/* Mobile Menu Styles */
+/* Mobile Menu Styles - BEM Methodology */
 
-/* Mobile Menu Overlay */
-.mobile-menu-area {
+/* Block: Mobile Menu Area */
+.mobile-menu {
     position: fixed;
     top: 0;
     right: 0;
@@ -11,31 +11,56 @@
     transition: all .5s ease-in-out;
     overflow-x: hidden;
     background: rgba(0, 0, 0, 0.7);
+    display: block !important;
 }
 
-.mobile-menu-area.mobile-menu-open {
+/* Modifier: Mobile Menu Open State */
+.mobile-menu--open {
     width: 100%;
 }
 
-.mobile-menu1 {
+/* Block: Mobile Menu Content */
+.mobile-menu__content {
     position: absolute;
     top: 0;
     right: 0;
     width: 80%;
-    height: auto;
+    height: 100%;
     background: #fff;
+    overflow-y: auto;
     padding: 50px 0 100px 0;
+    transform: translateX(100%);
+    transition: transform .5s ease-in-out;
 }
 
-/* Close Button */
-.close-btn {
+/* Modifier: Content Visible */
+.mobile-menu--open .mobile-menu__content {
+    transform: translateX(0%);
+}
+
+/* Block: Close Button */
+.mobile-menu__close-btn {
+    cursor: pointer;
+    position: sticky;
+    top: 40px;
+    left: 25px;
+    z-index: 1001;
     margin-top: 25px;
     margin-left: 15px;
-    cursor: pointer;
 }
 
-/* Menu Sections */
-.mobile-menu1 h3 {
+.mobile-menu__close-icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Block: Section */
+.mobile-menu__section {
+    margin-top: 30px;
+}
+
+/* Block: Section Title */
+.mobile-menu__section-title {
     font-size: 15px;
     color: #535353;
     text-transform: uppercase;
@@ -45,79 +70,58 @@
     margin-bottom: 0;
 }
 
-/* Menu List */
-.mobile-menu1 > ul {
+/* Block: Menu List */
+.mobile-menu__list {
     margin-bottom: 0;
 }
 
-.mobile-menu1 > ul li {
+/* Element: Menu List Item */
+.mobile-menu__list-item {
     padding: 13px 15px;
     border-bottom: 1px solid #ececec;
     position: relative;
 }
 
-.mobile-menu1 > ul li a {
+/* Block: Menu Link */
+.mobile-menu__link {
     display: flex;
     align-items: center;
+    text-decoration: none;
 }
 
-.mobile-menu1 > ul li a img {
+/* Element: Link Icon */
+.mobile-menu__link-icon {
     width: 50px;
     height: 50px;
     object-fit: contain;
     margin-right: 15px;
 }
 
-.mobile-menu1 > ul li a p {
-    font-size: 17px;
-    color: #002d58;
-    font-weight: bold;
-    margin-bottom: 0;
-}
-
-.mobile-menu1 > ul li a i {
-    font-size: 20px;
-    font-weight: bold;
-    position: absolute;
-    right: 20px;
-    color: #666;
-}
-
-/* Account List */
-.mob-account-list {
-    margin-top: 30px;
-}
-
-.mob-account-list > ul {
-    margin-bottom: 0;
-}
-
-.mob-account-list > ul li {
-    padding: 13px 15px;
-    border-bottom: 1px solid #ececec;
-    position: relative;
-}
-
-.mob-account-list > ul li a {
-    display: flex;
-    align-items: center;
-}
-
-.mob-account-list > ul li a img {
+/* Element: Small Link Icon */
+.mobile-menu__link-icon--small {
     width: 18px;
     height: 18px;
     object-fit: contain;
     margin-right: 10px;
 }
 
-.mob-account-list > ul li a p {
-    font-size: 15px;
-    color: #597baa;
-    font-weight: 500;
+/* Element: Link Text */
+.mobile-menu__link-text {
+    font-size: 17px;
+    color: #002d58;
+    font-weight: bold;
     margin-bottom: 0;
 }
 
-.mob-account-list > ul li a i {
+/* Modifier: Link Text for Account Items */
+.mobile-menu__link-text--account {
+    font-size: 15px;
+    color: #597baa;
+    font-weight: 500;
+}
+
+/* Element: Link Arrow */
+.mobile-menu__link-arrow {
     font-size: 20px;
     font-weight: bold;
     position: absolute;
@@ -125,8 +129,8 @@
     color: #666;
 }
 
-/* Contact Section */
-.part-btn a {
+/* Block: Part Button */
+.mobile-menu__part-btn {
     font-size: 15px;
     color: #fff;
     font-weight: bold;
@@ -136,24 +140,29 @@
     display: block;
     text-align: center;
     margin: 20px 15px;
+    text-decoration: none;
 }
 
-.mob-menu-contact {
+/* Block: Contact Section */
+.mobile-menu__contact {
     padding: 5px 15px 20px;
 }
 
-.mob-contact-text {
+/* Block: Contact Text */
+.mobile-menu__contact-text {
     text-align: center;
 }
 
-.mob-contact-text h4 {
+/* Element: Contact Title */
+.mobile-menu__contact-title {
     font-size: 16px;
     font-weight: bold;
     color: #002d5c;
     margin-bottom: 10px;
 }
 
-.mob-contact-text p {
+/* Element: Contact Description */
+.mobile-menu__contact-description {
     font-size: 14px;
     color: #424445;
     padding-bottom: 25px;
@@ -161,13 +170,14 @@
     margin: auto;
 }
 
-/* Call Button */
-.mob-call-btn {
+/* Block: Call Button */
+.mobile-menu__call-btn {
     position: relative;
     text-align: center;
 }
 
-.mob-call-btn a {
+/* Element: Call Button Link */
+.mobile-menu__call-btn-link {
     border: 1px solid #ececec;
     padding: 10px 15px;
     border-radius: 5px;
@@ -181,79 +191,102 @@
     text-decoration: none;
 }
 
-.mob-call-btn a i {
+/* Element: Call Button Icon */
+.mobile-menu__call-btn-icon {
     font-size: 25px;
     font-weight: bold;
     color: #002d58;
     margin-right: 10px;
 }
 
-.mob-call-btn .sprite-img {
+/* Element: Sprite Image */
+.mobile-menu__sprite-img {
     padding-top: 39px;
 }
 
-/* Support Options */
-.support-text {
+/* Block: Support Section */
+.mobile-menu__support {
     height: 100%;
     padding: 20px;
 }
 
-.support-text h3 {
-    text-align: center;
-    color: #002c58;
-    font-weight: bold;
-    font-size: 20px;
-    margin-bottom: 15px;
-    text-transform: uppercase;
-}
-
-.support-text ul {
+/* Block: Support List */
+.mobile-menu__support-list {
     display: flex;
     justify-content: space-around;
 }
 
-.support-icon i {
+/* Block: Support Item */
+.mobile-menu__support-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Element: Support Icon Container */
+.mobile-menu__support-icon-container {
     background: #f59a1f;
     border-radius: 5px;
     padding: 12px 15px;
     display: inline-block;
-    color: #fff;
-    font-size: 20px;
-    margin-bottom: 0;
+    margin-bottom: 5px;
 }
 
-.call-text1 p {
+/* Element: Support Icon */
+.mobile-menu__support-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+/* Element: Support Text */
+.mobile-menu__support-text {
     color: #424445;
     text-align: center;
-    position: relative;
     padding: 5px;
     font-size: 16px;
     font-weight: bold;
-    color: #424445;
 }
 
-/* Call Back Section */
-.mob-call-back ul {
+/* Block: Callback Section */
+.mobile-menu__callback {
+    margin-top: 20px;
+}
+
+/* Block: Callback List */
+.mobile-menu__callback-list {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.mob-call-back ul {
     position: relative;
 }
 
-.mob-call-back ul li a {
+/* Block: Callback Item */
+.mobile-menu__callback-item {
     text-align: center;
     display: inline-block;
     padding: 15px 10px;
     border: 1px solid transparent;
     border-radius: 5px;
     margin: 0 15px;
-    text-decoration: none;
 }
 
-.mob-call-back ul li a p {
+/* Element: Callback Link */
+.mobile-menu__callback-link {
+    text-decoration: none;
+    display: block;
+}
+
+/* Element: Callback Icon */
+.mobile-menu__callback-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    margin: 0 auto;
+}
+
+/* Element: Callback Text */
+.mobile-menu__callback-text {
     font-size: 14px;
     color: #002d58;
     font-weight: bold;
@@ -262,32 +295,77 @@
     margin-top: 12px;
 }
 
-.mob-call-back ul li a i {
+/* Element: Callback Arrow */
+.mobile-menu__callback-arrow {
     font-size: 18px;
     color: #666;
 }
 
-/* Newsletter Area */
-.mobile-menu-area .newsletter-area {
+/* Block: Fax Section */
+.mobile-menu__fax {
+    text-align: center;
+    margin-top: 20px;
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Element: Fax Icon */
+.mobile-menu__fax-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+
+/* Block: Social Media */
+.mobile-menu__social {
     margin-top: 30px;
 }
 
-.newsletter-area ul {
+/* Block: Social List */
+.mobile-menu__social-list {
     display: flex;
     justify-content: center;
 }
 
-.newsletter-area ul li {
+/* Block: Social Item */
+.mobile-menu__social-item {
     margin-right: 10px;
 }
 
-.newsletter-area ul li a {
+/* Element: Social Link */
+.mobile-menu__social-link {
     font-size: 0;
     text-decoration: none;
+    display: block;
+}
+
+/* Element: Social Icon */
+.mobile-menu__social-icon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+/* Block: Poster */
+.mobile-menu__poster {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+/* Element: Poster Image */
+.mobile-menu__poster-image {
+    width: 98%;
+    height: auto;
+    object-fit: contain;
 }
 
 /* Font Awesome icons */
-.fa {
+.mobile-menu__fa-icon {
     display: inline-block;
     font: normal normal normal 14px/1 FontAwesome;
     font-size: inherit;
@@ -296,66 +374,7 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-
-/* Responsive styles */
-@media only screen and (max-width: 320px) {
-    .close-btn {
-        margin-left: 15px;
-    }
-}
-
-
-/* ❤️‍🔥❤️‍🔥❤️‍🔥 */
-
-/* Mobile Menu Styles */
-.mobile-menu-area {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 0;
-    height: 100%;
-    z-index: 999999;
-    transition: all .5s ease-in-out;
-    overflow-x: hidden;
-    background: rgba(0, 0, 0, 0.7);
-    display: block !important;
-}
-
-.mobile-menu-area.mobile-menu-open {
-    width: 100%;
-}
-
-.mobile-menu1 {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 80%;
-    height: 100%;
-    background: #fff;
-    overflow-y: auto;
-    padding: 50px 0 100px 0;
-    transform: translateX(100%);
-    transition: transform .5s ease-in-out;
-}
-
-.mobile-menu-area.mobile-menu-open .mobile-menu1 {
-    transform: translateX(0%);
-}
-
-.close-btn {
-    cursor: pointer;
-    position: sticky;
-    top: 40px;
-    left: 25px;
-    z-index: 1001;
-}
-
-.close-btn img {
-    width: 24px;
-    height: 24px;
-}
-
-/* Toolbar menu toggle styles */
+/* Toolbar menu toggle styles (external component) */
 .toolbar__menu-toggle {
     background: none;
     border: none;
@@ -379,13 +398,10 @@
     color: #333;
     margin-top: 4px;
 }
-.poster img {
-    width: 98%;
+
+/* Responsive styles */
+@media only screen and (max-width: 320px) {
+    .mobile-menu__close-btn {
+        margin-left: 15px;
+    }
 }
-.poster {
-    display: flex;
-    justify-content: center;
-}
-
-
-

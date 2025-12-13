@@ -347,19 +347,19 @@
 
     </header>
     <!-- index.html - մեգա մենյուի կոնտեյներ -->
-<div class="mega-menu"></div>
+<div class="mega-menu"></div> 
 
     <!-- Mobile Menu -->
-    <div id="mobileMenu" class="mobile-menu-area">
-        <!-- Close button moved here (outside mobile-menu1) -->
-        <div class="close-btn" id="mobileMenuClose">
-            <img loading="lazy" src="./src/assets/haeder-component/mobile-menu/close-menu.png" alt="Close Menu">
-        </div>
-    
-        <div class="mobile-menu1">
-            <!-- Menu content will be inserted by JavaScript -->
-        </div>
+<div id="mobileMenu" class="mobile-menu">
+    <!-- Close button -->
+    <div class="mobile-menu__close-btn" id="mobileMenuClose">
+        <img loading="lazy" src="./src/assets/haeder-component/mobile-menu/close-menu.png" alt="Close Menu" class="mobile-menu__close-icon">
     </div>
+
+    <div class="mobile-menu__content" id="mobileMenuContent">
+        <!-- Menu content will be inserted by JavaScript -->
+    </div>
+</div>
 
     <script src="./js/menu-data.js"></script>
     <script src="./js/menu-dropdown.js"></script>
