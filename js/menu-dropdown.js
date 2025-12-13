@@ -3,68 +3,35 @@ console.log('menu-dropdown.js loaded');
 class MegaMenu {
     constructor() {
         this.currentMenu = null;
-        this.currentTab = null;
         this.menuContainer = null;
         this.init();
     }
 
     init() {
         console.log('Initializing MegaMenu...');
-        console.log('Available menuData:', window.menuData);
         
-        // Find all navigation items that should have dropdowns
         const navItems = document.querySelectorAll('.toolbar__nav-item');
-        console.log('Found nav items:', navItems.length);
         
         navItems.forEach((item, index) => {
             const link = item.querySelector('.toolbar__nav-link');
             const category = this.getCategoryFromLink(link.href);
             
-            console.log(`Item ${index}: ${link.textContent}, Category: ${category}`);
-            
-            if (category && window.menuData && window.menuData[category]) {
-                console.log(`Creating dropdown for: ${category}`);
-                
-                // Create dropdown container with BEM classes
+            if (category && window.menuData?.[category]) {
                 const dropdown = this.createDropdown(category);
                 item.appendChild(dropdown);
                 
-                // Add event listeners
-                item.addEventListener('mouseenter', () => {
-                    console.log(`Mouse entered: ${category}`);
-                    this.showMenu(item, category);
-                });
-                
-                item.addEventListener('mouseleave', (e) => {
-                    if (!item.contains(e.relatedTarget)) {
-                        this.hideMenu();
-                    }
-                });
-                
-                // Keep dropdown open when hovering over it
-                dropdown.addEventListener('mouseenter', () => this.keepMenuOpen());
-                dropdown.addEventListener('mouseleave', (e) => {
-                    if (!dropdown.contains(e.relatedTarget)) {
-                        this.hideMenu();
-                    }
-                });
-            } else {
-                console.log(`No data found for category: ${category}`);
+                this.addEventListeners(item, dropdown, category);
             }
         });
         
-        // Close menu when clicking outside
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.toolbar__nav-item')) {
                 this.hideMenu();
             }
         });
-        
-        console.log('MegaMenu initialization complete');
     }
 
     getCategoryFromLink(href) {
-        // Սա պարզեցված է, կարող եք կարգավորել ըստ ձեր կարիքների
         const url = new URL(href);
         const pathname = url.pathname;
         
@@ -80,11 +47,21 @@ class MegaMenu {
         };
         
         for (const [key, value] of Object.entries(categoryMap)) {
-            if (pathname.includes(key)) {
-                return value;
-            }
+            if (pathname.includes(key)) return value;
         }
         return null;
+    }
+
+    addEventListeners(item, dropdown, category) {
+        item.addEventListener('mouseenter', () => this.showMenu(item, category));
+        
+        const hideMenuHandler = (e) => {
+            if (!item.contains(e.relatedTarget)) this.hideMenu();
+        };
+        
+        item.addEventListener('mouseleave', hideMenuHandler);
+        dropdown.addEventListener('mouseleave', hideMenuHandler);
+        dropdown.addEventListener('mouseenter', () => this.keepMenuOpen());
     }
 
     createDropdown(category) {
@@ -92,49 +69,26 @@ class MegaMenu {
         dropdown.className = 'mega-dropdown mega-dropdown--hidden';
         
         const data = window.menuData[category];
-        console.log(`Creating dropdown for ${category} with data:`, data);
+        if (!data?.tabs) return dropdown;
         
-        if (!data || !data.tabs) {
-            console.error(`No valid data for category: ${category}`);
-            return dropdown;
-        }
-        
-        // Find active tab
         const activeTab = data.tabs.find(tab => tab.isActive) || data.tabs[0];
-        const activeTabId = activeTab ? activeTab.id : data.tabs[0].id;
-        
-        // Create tabs
-        const tabsHTML = this.createTabsHTML(data.tabs, category, activeTabId);
-        
-        // Create tab content
-        const contentHTML = this.createContentHTML(data.content, activeTabId);
+        const activeTabId = activeTab?.id || data.tabs[0].id;
         
         dropdown.innerHTML = `
             <ul class="mega-dropdown__tabs">
-                ${tabsHTML}
+                ${this.createTabsHTML(data.tabs, category, activeTabId)}
             </ul>
             <div class="mega-dropdown__content">
-                ${contentHTML}
+                ${this.createContentHTML(data.content, activeTabId)}
             </div>
         `;
         
-        // Add tab click handlers
-        dropdown.querySelectorAll('.mega-dropdown__tab-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                const tabId = btn.dataset.tab;
-                this.switchTab(dropdown, tabId, category);
-            });
-        });
-        
+        this.addTabEventListeners(dropdown, category);
         return dropdown;
     }
 
     createTabsHTML(tabs, category, activeTabId) {
-        if (!tabs || !Array.isArray(tabs)) {
-            console.error(`No tabs array for category: ${category}`);
-            return '';
-        }
+        if (!Array.isArray(tabs)) return '';
         
         return tabs.map(tab => `
             <li class="mega-dropdown__tab-item">
@@ -149,11 +103,7 @@ class MegaMenu {
 
     createContentHTML(content, activeTabId) {
         const activeContent = content[activeTabId];
-        
-        if (!activeContent || !activeContent.categories) {
-            console.error(`No content for tab: ${activeTabId}`);
-            return '<div class="mega-dropdown__no-content">No content available</div>';
-        }
+        if (!activeContent?.categories) return '<div class="mega-dropdown__no-content">No content available</div>';
         
         const categoriesHTML = activeContent.categories.map(cat => `
             <div class="mega-dropdown__category">
@@ -166,14 +116,14 @@ class MegaMenu {
             </div>
         `).join('');
         
-        const resourcesHTML = activeContent.resources ? activeContent.resources.map(res => `
+        const resourcesHTML = activeContent.resources?.map(res => `
             <li class="mega-dropdown__resource-item">
                 <a href="${res.link}" class="mega-dropdown__resource-link" ${res.isVideo ? 'target="_blank"' : ''}>
                     <img alt="${res.title}" class="mega-dropdown__resource-img" loading="lazy" src="${res.img}">
                     <span class="mega-dropdown__resource-title">${res.title}</span>
                 </a>
             </li>
-        `).join('') : '';
+        `).join('') || '';
         
         return `
             <div class="mega-dropdown__grid">
@@ -191,7 +141,8 @@ class MegaMenu {
                         <a href="https://www.globalgilson.com/customer-resource-center" class="mega-dropdown__action-btn mega-dropdown__action-btn--center">
                             Resource Center
                         </a>
-                        <a href="https://www.globalgilson.com/Content/Images/uploaded/pdf/product-catalogs/pdf-viewer/2021/index.html?reload=1591207903917#page=1" class="mega-dropdown__catalog-link" target="_blank">
+                        <a href="https://www.globalgilson.com/Content/Images/uploaded/pdf/product-catalogs/pdf-viewer/2021/index.html?reload=1591207903917#page=1" 
+                           class="mega-dropdown__catalog-link" target="_blank">
                             <img alt="Gilson Catalog" class="mega-dropdown__catalog-img" loading="lazy" src="./src/assets/haeder-component/gilson-catalog-button.webp">
                         </a>
                         <a href="https://www.globalgilson.com/gilson-catalog" class="mega-dropdown__action-btn mega-dropdown__action-btn--request">
@@ -203,31 +154,25 @@ class MegaMenu {
         `;
     }
 
-    switchTab(dropdown, tabId, category) {
-        console.log(`Switching to tab: ${tabId}`);
-        
-        // Update tab styles
+    addTabEventListeners(dropdown, category) {
         dropdown.querySelectorAll('.mega-dropdown__tab-btn').forEach(btn => {
-            btn.classList.toggle('mega-dropdown__tab-btn--active', btn.dataset.tab === tabId);
-        });
-        
-        // Update content
-        const content = window.menuData[category].content[tabId];
-        const contentContainer = dropdown.querySelector('.mega-dropdown__content');
-        contentContainer.innerHTML = this.createContentHTML(window.menuData[category].content, tabId);
-        
-        // Reattach event listeners for resources
-        contentContainer.querySelectorAll('a[target="_blank"]').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.stopPropagation();
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.switchTab(dropdown, btn.dataset.tab, category);
             });
         });
     }
 
-    showMenu(item, category) {
-        console.log(`Showing menu for: ${category}`);
+    switchTab(dropdown, tabId, category) {
+        dropdown.querySelectorAll('.mega-dropdown__tab-btn').forEach(btn => {
+            btn.classList.toggle('mega-dropdown__tab-btn--active', btn.dataset.tab === tabId);
+        });
         
-        // Hide any currently open menu
+        const contentContainer = dropdown.querySelector('.mega-dropdown__content');
+        contentContainer.innerHTML = this.createContentHTML(window.menuData[category].content, tabId);
+    }
+
+    showMenu(item, category) {
         if (this.currentMenu && this.currentMenu !== item) {
             this.hideMenu();
         }
@@ -238,35 +183,27 @@ class MegaMenu {
         if (dropdown) {
             dropdown.classList.remove('mega-dropdown--hidden');
             dropdown.classList.add('mega-dropdown--visible');
-            
-            // Add active class to parent item
             item.classList.add('toolbar__nav-item--active');
             
-            // Add active style to link
             const link = item.querySelector('.toolbar__nav-link');
-            if (link) {
-                link.classList.add('toolbar__nav-link--active');
-            }
+            link?.classList.add('toolbar__nav-link--active');
         }
     }
 
     hideMenu() {
-        if (this.currentMenu) {
-            const dropdown = this.currentMenu.querySelector('.mega-dropdown');
-            if (dropdown) {
-                dropdown.classList.remove('mega-dropdown--visible');
-                dropdown.classList.add('mega-dropdown--hidden');
-            }
-            this.currentMenu.classList.remove('toolbar__nav-item--active');
-            
-            // Remove active style from link
-            const link = this.currentMenu.querySelector('.toolbar__nav-link');
-            if (link) {
-                link.classList.remove('toolbar__nav-link--active');
-            }
-            
-            this.currentMenu = null;
+        if (!this.currentMenu) return;
+        
+        const dropdown = this.currentMenu.querySelector('.mega-dropdown');
+        if (dropdown) {
+            dropdown.classList.remove('mega-dropdown--visible');
+            dropdown.classList.add('mega-dropdown--hidden');
         }
+        
+        this.currentMenu.classList.remove('toolbar__nav-item--active');
+        const link = this.currentMenu.querySelector('.toolbar__nav-link');
+        link?.classList.remove('toolbar__nav-link--active');
+        
+        this.currentMenu = null;
     }
 
     keepMenuOpen() {
@@ -276,8 +213,4 @@ class MegaMenu {
     }
 }
 
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM fully loaded, initializing MegaMenu');
-    new MegaMenu();
-});
+document.addEventListener('DOMContentLoaded', () => new MegaMenu());
