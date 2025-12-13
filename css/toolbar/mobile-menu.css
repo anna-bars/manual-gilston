@@ -78,7 +78,11 @@
     align-items: center;
     text-decoration: none;
 }
-
+.mobile-menu__item .mobile-menu__link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
 .mobile-menu__icon {
     object-fit: contain;
     margin-right: 15px;
