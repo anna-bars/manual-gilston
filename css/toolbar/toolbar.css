@@ -981,7 +981,7 @@ position: absolute;
     }
     
     .toolbar {
-        position: fixed;
+        position: sticky;
         top: 0;
         width: 100%;
         transition: all 0.4s ease-in-out;

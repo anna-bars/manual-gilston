@@ -8,9 +8,10 @@
     <link rel="stylesheet" href="./css/toolbar/toolbar.css">
     <link rel="stylesheet" href="./css/toolbar/menu-dropdown.css">
     <link rel="stylesheet" href="./css/toolbar/mobile-menu.css">
+    <link rel="stylesheet" href="./css/home/header-banner.css">
 </head>
 <body>
-    <header>
+    
         <div class="toolbar">
             <div class="toolbar__top d-desktop-only">
                 <div class="toolbar__container">
@@ -343,11 +344,68 @@
                 </button>
                 <div class="mobile-menu__content"></div>
             </div>
-    </header>
 
-    <script src="./js/menu-data.js"></script>
-    <script src="./js/menu-dropdown.js"></script>
-    <script src="./js/mobile-menu.js"></script>
+
+    <div class="banner-area">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12 p-0">
+                    <div class="banner-slider">
+                        <div class="slider single-item">
+                            <!-- Slider navigation buttons -->
+                            <button class="slider-nav slider-prev" aria-label="Previous slide">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button class="slider-nav slider-next" aria-label="Next slide">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                            
+                            <!-- Slider items - Only ONE slide as requested -->
+                            <div class="slider-items">
+                                <!-- Single Slide -->
+                                <div class="slider-item active">
+                                    <div class="slider-1">
+                                        <a href="#">
+                                            <picture>
+                                                <!-- Desktop image (min-width: 1025px) -->
+                                                <source 
+                                                    media="(min-width: 1025px)" 
+                                                    srcset="./src/assets/home/banner/optimized/gilson-materials-testing-equipment-1400.jpg">
+                                                
+                                                <!-- Mobile image (max-width: 1024px) -->
+                                                <source 
+                                                    media="(max-width: 1024px)" 
+                                                    srcset="./src/assets/home/banner/optimized/banner1-mob.jpg">
+                                                
+                                                <!-- Fallback image for desktop -->
+                                                <img 
+                                                    loading="eager" 
+                                                    src="./src/assets/home/banner/optimized/gilson-materials-testing-equipment-1024.jpg" 
+                                                    alt="Gilson Company, Inc. - Supplying quality construction and laboratory material testing equipment since 1939">
+                                            </picture>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Since there's only one slide, we don't need dots -->
+                            <!-- <div class="slider-dots">
+                                <button class="slider-dot active" data-slide="0" aria-label="Go to slide 1"></button>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2>1</h2>
+<h1>1</h1>
+    <script src="./js/toolbar/menu-data.js"></script>
+    <script src="./js/toolbar/menu-dropdown.js"></script>
+    <script src="./js/toolbar/mobile-menu.js"></script>
+
+    <script src="./js/home/header-banner.js"></script>
+
 
 </body>
 </html>
