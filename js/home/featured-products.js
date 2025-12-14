@@ -10,21 +10,21 @@
             this.slider = document.querySelector('.featured-products__slider');
             this.sliderContainer = document.querySelector('.featured-products__items-container');
             this.sliderItems = document.querySelector('.featured-products__items');
-            this.productItems = document.querySelectorAll('.featured-products__item');
+            this.productItems = document.querySelectorAll('.featured-products__item:not(.featured-products__item--cloned)');
             this.prevBtn = document.querySelector('.featured-products__nav--prev');
             this.nextBtn = document.querySelector('.featured-products__nav--next');
-            this.dots = document.querySelectorAll('.featured-products__dot');
+            this.dotsContainer = document.querySelector('.featured-products__dots');
             
             this.totalItems = this.productItems.length;
             this.currentIndex = 0;
-            this.slidesPerView = 4; // Desktop-ի համար
+            this.slidesPerView = 4;
             this.isTransitioning = false;
             this.autoSlideInterval = null;
             this.autoSlideDelay = 5000;
             this.resizeTimer = null;
             
-            // Clone items for infinite loop
             this.clonedItems = [];
+            this.totalSlides = 0;
             
             this.init();
         }
@@ -36,66 +36,22 @@
             }
             
             this.setupInfiniteSlider();
+            this.createDots();
             this.bindEvents();
             this.updateSlidesPerView();
-            this.updateDots();
+            this.updateSlider();
             this.startAutoSlide();
         }
         
         setupInfiniteSlider() {
-            // Clone first few items for infinite effect
-            for (let i = 0; i < this.slidesPerView; i++) {
-                const clone = this.productItems[i].cloneNode(true);
-                clone.classList.add('featured-products__item--cloned');
-                this.sliderItems.appendChild(clone);
-                this.clonedItems.push(clone);
-            }
+            // Clear any existing clones
+            this.removeClones();
             
-            // Clone last few items for infinite effect
-            for (let i = this.totalItems - this.slidesPerView; i < this.totalItems; i++) {
-                const clone = this.productItems[i].cloneNode(true);
-                clone.classList.add('featured-products__item--cloned');
-                this.sliderItems.insertBefore(clone, this.productItems[0]);
-                this.clonedItems.push(clone);
-            }
+            // Calculate how many clones we need based on slidesPerView
+            const clonesNeeded = Math.max(this.slidesPerView, 2);
             
-            // Set initial position to show real first items
-            this.goToSlide(0, false);
-        }
-        
-        updateSlidesPerView() {
-            const screenWidth = window.innerWidth;
-            let oldSlidesPerView = this.slidesPerView;
-            
-            if (screenWidth <= 768) {
-                this.slidesPerView = 1; // Mobile
-            } else if (screenWidth <= 1200) {
-                this.slidesPerView = 2; // Tablet
-            } else {
-                this.slidesPerView = 4; // Desktop
-            }
-            
-            // Re-clone items if slidesPerView changed
-            if (oldSlidesPerView !== this.slidesPerView) {
-                this.rebuildClones();
-                this.updateSlidesPosition();
-            }
-            
-            this.updateDots();
-        }
-        
-        rebuildClones() {
-            // Remove old clones
-            this.clonedItems.forEach(clone => {
-                if (clone.parentNode) {
-                    clone.parentNode.removeChild(clone);
-                }
-            });
-            this.clonedItems = [];
-            
-            // Add new clones based on current slidesPerView
             // Clone first items to end
-            for (let i = 0; i < this.slidesPerView; i++) {
+            for (let i = 0; i < clonesNeeded; i++) {
                 const clone = this.productItems[i].cloneNode(true);
                 clone.classList.add('featured-products__item--cloned');
                 this.sliderItems.appendChild(clone);
@@ -103,35 +59,120 @@
             }
             
             // Clone last items to beginning
-            for (let i = this.totalItems - this.slidesPerView; i < this.totalItems; i++) {
+            for (let i = this.totalItems - clonesNeeded; i < this.totalItems; i++) {
                 const clone = this.productItems[i].cloneNode(true);
                 clone.classList.add('featured-products__item--cloned');
                 this.sliderItems.insertBefore(clone, this.productItems[0]);
                 this.clonedItems.push(clone);
             }
+            
+            // Update total slides count
+            this.totalSlides = this.totalItems + (clonesNeeded * 2);
+            
+            // Set initial position to show real first items
+            this.goToSlide(this.currentIndex + clonesNeeded, false);
         }
         
-        updateSlidesPosition() {
+        removeClones() {
+            this.clonedItems.forEach(clone => {
+                if (clone.parentNode) {
+                    clone.parentNode.removeChild(clone);
+                }
+            });
+            this.clonedItems = [];
+        }
+        
+        createDots() {
+            if (!this.dotsContainer) return;
+            
+            // Clear existing dots
+            this.dotsContainer.innerHTML = '';
+            
+            // Create dots based on total items
+            for (let i = 0; i < this.totalItems; i++) {
+                const dot = document.createElement('button');
+                dot.className = 'featured-products__dot';
+                if (i === 0) {
+                    dot.classList.add('featured-products__dot--active');
+                    dot.setAttribute('aria-current', 'true');
+                }
+                dot.setAttribute('data-slide', i);
+                dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+                
+                this.dotsContainer.appendChild(dot);
+            }
+            
+            this.dots = document.querySelectorAll('.featured-products__dot');
+        }
+        
+        updateSlidesPerView() {
+            const screenWidth = window.innerWidth;
+            let oldSlidesPerView = this.slidesPerView;
+            
+            if (screenWidth <= 768) {
+                this.slidesPerView = 1;
+            } else if (screenWidth <= 1200) {
+                this.slidesPerView = 2;
+            } else {
+                this.slidesPerView = 4;
+            }
+            
+            // Re-clone items if slidesPerView changed
+            if (oldSlidesPerView !== this.slidesPerView) {
+                this.setupInfiniteSlider();
+                this.createDots();
+                this.updateSlider();
+            }
+            
+            this.updateDots();
+        }
+        
+        updateSlider() {
             const slideWidth = 100 / this.slidesPerView;
-            const translateX = -this.currentIndex * slideWidth;
+            const clonesCount = Math.max(this.slidesPerView, 2);
+            const translateX = -(this.currentIndex + clonesCount) * slideWidth;
+            
             this.sliderItems.style.transform = `translateX(${translateX}%)`;
+            
+            // Update item widths
+            const allItems = this.sliderItems.querySelectorAll('.featured-products__item');
+            allItems.forEach(item => {
+                item.style.flex = `0 0 ${100 / this.slidesPerView}%`;
+                item.style.maxWidth = `${100 / this.slidesPerView}%`;
+            });
         }
         
         nextSlide() {
             if (this.isTransitioning) return;
             
+            this.isTransitioning = true;
             this.currentIndex++;
             
-            // Infinite loop check
+            const clonesCount = Math.max(this.slidesPerView, 2);
+            const slideWidth = 100 / this.slidesPerView;
+            
+            // Animate to next position
+            const translateX = -(this.currentIndex + clonesCount) * slideWidth;
+            this.sliderItems.style.transition = 'transform 0.5s ease';
+            this.sliderItems.style.transform = `translateX(${translateX}%)`;
+            
+            // Check if we've reached the end of real items
             if (this.currentIndex >= this.totalItems) {
-                this.currentIndex = 0;
-                this.goToSlide(this.currentIndex, false);
                 setTimeout(() => {
-                    this.sliderItems.style.transition = 'transform 0.5s ease';
-                    this.goToSlide(this.currentIndex);
-                }, 50);
+                    // Jump to beginning (first real item)
+                    this.currentIndex = 0;
+                    const jumpTranslateX = -(this.currentIndex + clonesCount) * slideWidth;
+                    this.sliderItems.style.transition = 'none';
+                    this.sliderItems.style.transform = `translateX(${jumpTranslateX}%)`;
+                    
+                    setTimeout(() => {
+                        this.isTransitioning = false;
+                    }, 50);
+                }, 500);
             } else {
-                this.goToSlide(this.currentIndex);
+                setTimeout(() => {
+                    this.isTransitioning = false;
+                }, 500);
             }
             
             this.updateDots();
@@ -141,85 +182,59 @@
         prevSlide() {
             if (this.isTransitioning) return;
             
+            this.isTransitioning = true;
             this.currentIndex--;
             
-            // Infinite loop check
+            const clonesCount = Math.max(this.slidesPerView, 2);
+            const slideWidth = 100 / this.slidesPerView;
+            
+            // Animate to previous position
+            const translateX = -(this.currentIndex + clonesCount) * slideWidth;
+            this.sliderItems.style.transition = 'transform 0.5s ease';
+            this.sliderItems.style.transform = `translateX(${translateX}%)`;
+            
+            // Check if we've reached before the first real item
             if (this.currentIndex < 0) {
-                this.currentIndex = this.totalItems - 1;
-                const slideWidth = 100 / this.slidesPerView;
-                const translateX = -(this.totalItems + this.slidesPerView) * slideWidth;
-                
-                // Jump to cloned items (end)
-                this.sliderItems.style.transition = 'none';
-                this.sliderItems.style.transform = `translateX(${translateX}%)`;
-                
                 setTimeout(() => {
-                    this.sliderItems.style.transition = 'transform 0.5s ease';
-                    this.goToSlide(this.currentIndex);
-                }, 50);
+                    // Jump to end (last real item)
+                    this.currentIndex = this.totalItems - 1;
+                    const jumpTranslateX = -(this.currentIndex + clonesCount) * slideWidth;
+                    this.sliderItems.style.transition = 'none';
+                    this.sliderItems.style.transform = `translateX(${jumpTranslateX}%)`;
+                    
+                    setTimeout(() => {
+                        this.isTransitioning = false;
+                    }, 50);
+                }, 500);
             } else {
-                this.goToSlide(this.currentIndex);
+                setTimeout(() => {
+                    this.isTransitioning = false;
+                }, 500);
             }
             
             this.updateDots();
             this.resetAutoSlide();
         }
         
-        goToSlide(index, animate = true) {
+        goToSlide(index) {
             if (this.isTransitioning || index < 0 || index >= this.totalItems) return;
             
-            this.isTransitioning = true;
             this.currentIndex = index;
-            
-            const slideWidth = 100 / this.slidesPerView;
-            const translateX = -(index + this.slidesPerView) * slideWidth;
-            
-            if (!animate) {
-                this.sliderItems.style.transition = 'none';
-            } else {
-                this.sliderItems.style.transition = 'transform 0.5s ease';
-            }
-            
-            this.sliderItems.style.transform = `translateX(${translateX}%)`;
-            
-            // Reset transitioning flag after animation
-            if (animate) {
-                setTimeout(() => {
-                    this.isTransitioning = false;
-                    
-                    // Jump to start if at cloned end
-                    if (index === this.totalItems - 1) {
-                        setTimeout(() => {
-                            this.sliderItems.style.transition = 'none';
-                            this.goToSlide(0, false);
-                        }, 50);
-                    }
-                }, 500);
-            } else {
-                this.isTransitioning = false;
-            }
+            this.updateSlider();
+            this.updateDots();
+            this.resetAutoSlide();
         }
         
         updateDots() {
-            if (this.dots.length === 0) return;
-            
-            // Calculate number of dots needed
-            const dotsCount = Math.ceil(this.totalItems / this.slidesPerView);
-            const activeDotIndex = Math.floor(this.currentIndex / this.slidesPerView);
+            if (!this.dots || this.dots.length === 0) return;
             
             this.dots.forEach((dot, index) => {
-                if (index < dotsCount) {
-                    dot.style.display = 'inline-block';
-                    
-                    if (index === activeDotIndex) {
-                        dot.classList.add('featured-products__dot--active');
-                        dot.setAttribute('aria-current', 'true');
-                    } else {
-                        dot.classList.remove('featured-products__dot--active');
-                        dot.removeAttribute('aria-current');
-                    }
+                if (index === this.currentIndex) {
+                    dot.classList.add('featured-products__dot--active');
+                    dot.setAttribute('aria-current', 'true');
                 } else {
-                    dot.style.display = 'none';
+                    dot.classList.remove('featured-products__dot--active');
+                    dot.removeAttribute('aria-current');
                 }
             });
         }
@@ -235,13 +250,13 @@
             }
             
             // Dots navigation
-            this.dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    this.goToSlide(index * this.slidesPerView);
-                    this.updateDots();
-                    this.resetAutoSlide();
+            if (this.dots) {
+                this.dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => {
+                        this.goToSlide(index);
+                    });
                 });
-            });
+            }
             
             // Touch/swipe support
             let touchStartX = 0;
