@@ -25,13 +25,15 @@
    ========================================================================== */
 .gilson-insights__slider-wrapper {
     position: relative;
-    padding: 0 40px;
+    width: 94%;
+    margin: auto;
+    padding: 0 24px;
 }
 
 .gilson-insights__slider-container {
     overflow: hidden;
     position: relative;
-    padding: 35px 0;
+    padding: 35px 0 8px 0;
 }
 
 .gilson-insights__slides-wrapper {
@@ -71,19 +73,18 @@
     transform: translateY(-50%);
     width: 40px;
     height: 40px;
-    background: #fff;
-    border: 2px solid #002d58;
-    border-radius: 50%;
+    padding: 0;
+    cursor: pointer;
+    border: 0;
+    outline: 0;
+    background: #f6f7f8;
+    z-index: 10;
+    border-radius: 3px;
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    pointer-events: all;
-    z-index: 20;
-    font-size: 18px;
-    color: #002d58;
-    font-weight: bold;
+    transition: background-color 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .gilson-insights__nav:hover {
