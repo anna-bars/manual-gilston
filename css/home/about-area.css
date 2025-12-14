@@ -172,6 +172,7 @@
 
 .category-card {
     border: 1px solid #e9e7f2;
+    background: #ffffff; 
     padding: 25px 20px;
     position: relative;
     transition: all .4s ease-in-out;
