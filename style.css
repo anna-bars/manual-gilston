@@ -41,68 +41,7 @@ img {
     border-style: none;
 }
 
-/* Bootstrap Grid System */
-.container-fluid {
-    width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-}
 
-.container {
-    width: 94%;
-    margin: auto;
-}
-
-.row {
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: -15px;
-}
-
-.col-md-12, .col-md-8, .col-md-4, .col-lg-6, .col-lg-8, .col-lg-4 {
-    position: relative;
-    width: 100%;
-}
-
-/* Responsive Grid */
-@media (min-width: 768px) {
-    .col-md-4 {
-        -ms-flex: 0 0 31%;
-        flex: 0 0 31%;
-        max-width: 31%;
-    }
-    
-    .col-md-8 {
-        -ms-flex: 0 0 66.666667%;
-        flex: 0 0 66.666667%;
-        max-width: 66.666667%;
-    }
-    
-    .col-md-12 {
-        -ms-flex: 0 0 100%;
-        flex: 0 0 100%;
-        max-width: 100%;
-    }
-}
-
-@media (min-width: 992px) {
-    .col-lg-6 {
-        -ms-flex: 0 0 50%;
-        flex: 0 0 50%;
-        max-width: 50%;
-    }
-    
-    .col-lg-8 {
-        -ms-flex: 0 0 66.666667%;
-        flex: 0 0 66.666667%;
-        max-width: 66.666667%;
-    }
-}
 
 /* Form Controls */
 .form-control {

@@ -95,7 +95,6 @@
 }
 
 .category-card__content {
-    position: absolute;
     width: 100%;
     height: 100%;
     top: 0;
@@ -105,13 +104,13 @@
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    padding-bottom: 35px;
+    padding-bottom: 15px;
 }
 
 .category-card__link {
     font-size: 18px;
     color: #002d58;
-    font-weight: bold;
+    font-weight: 500;
     line-height: 20px;
     text-decoration: none;
     display: inline-block;

@@ -10,7 +10,6 @@
 
 .about-area .container {
     width: 94%;
-    max-width: 1200px;
     margin: 0 auto;
 }
 
@@ -120,7 +119,6 @@
     display: flex;
     align-items: center;
     padding: 30px 0;
-    border-bottom: 1px solid #d3d8dc;
 }
 
 /* Modifier: No Border */
@@ -175,7 +173,6 @@
 .category-card {
     border: 1px solid #e9e7f2;
     padding: 25px 20px;
-    background: #fff;
     position: relative;
     transition: all .4s ease-in-out;
     display: flex;
@@ -318,7 +315,7 @@
     }
     
     .features__item--no-border {
-        border-bottom: 0;
+        border-bottom: 0 !important;
     }
     
     .features__image {
@@ -368,9 +365,10 @@
     }
     
     .features__item {
-        flex-direction: column;
         text-align: center;
         padding: 20px 0;
+        border-bottom: 1px solid #d3d8dc;
+        gap: 16px;
     }
     
     .features__image {
