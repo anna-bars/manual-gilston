@@ -1,4 +1,4 @@
-/* Main featured products block */
+/* Featured Products - Պահպանված բնօրինակ դիզայնը */
 .featured-products {
     padding: 60px 0 80px 0;
     width: 100%;
@@ -33,7 +33,7 @@
     max-width: 100%;
 }
 
-/* Header element */
+/* Header - Նույնը */
 .featured-products__header {
     text-align: center;
     margin-bottom: 30px;
@@ -47,7 +47,7 @@
     margin: 0;
 }
 
-/* Slider block */
+/* Slider - Նույն դիզայնը */
 .featured-products__slider {
     position: relative;
     width: 100%;
@@ -60,29 +60,27 @@
     padding-bottom: 15px;
 }
 
-/* Items container for infinite scroll */
 .featured-products__items-container {
     overflow: hidden;
     width: 100%;
     padding: 0 40px;
 }
 
-/* Slider items container */
 .featured-products__items {
     display: flex;
     transition: transform 0.5s ease;
     will-change: transform;
 }
 
-/* Desktop - 4 slides per view */
+/* Desktop - 4 slides per view (նույնը) */
 .featured-products__item {
-    flex: 0 0 25%; /* 100% / 4 = 25% */
+    flex: 0 0 25%;
     padding: 20px;
     min-width: 0;
     box-sizing: border-box;
 }
 
-/* Product card block */
+/* Product card - Բացարձակապես նույնը */
 .product-card {
     background: #fff;
     padding: 15px;
@@ -141,7 +139,7 @@
     text-decoration: none;
 }
 
-/* Navigation arrows - FIXED POSITION */
+/* Navigation arrows - Նույն դիրքը */
 .featured-products__nav {
     position: absolute;
     top: 50%;
@@ -166,16 +164,10 @@
     background: #e9ecef;
 }
 
-.featured-products__nav i {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.featured-products__nav i img {
+.featured-products__nav-icon {
     width: 12px;
     height: 12px;
-    object-fit: contain;
+    fill: #002d58;
 }
 
 .featured-products__nav--prev {
@@ -186,7 +178,7 @@
     right: 0;
 }
 
-/* Dots navigation - FIXED */
+/* Dots navigation - Նույնը */
 .featured-products__dots {
     display: flex;
     justify-content: center;
@@ -215,11 +207,11 @@
     background: #002d58;
 }
 
-/* Responsive styles */
+/* Responsive styles - Նույնը */
 /* Tablet - 2 slides per view */
 @media only screen and (max-width: 1200px) and (min-width: 769px) {
     .featured-products__item {
-        flex: 0 0 50%; /* 100% / 2 = 50% */
+        flex: 0 0 50%;
     }
     
     .featured-products__items-container {
@@ -230,14 +222,13 @@
 /* Mobile - 1 slide per view */
 @media only screen and (max-width: 768px) {
     .featured-products__item {
-        flex: 0 0 100%; /* 100% / 1 = 100% */
+        flex: 0 0 100%;
     }
     
     .featured-products__items-container {
         padding: 0 30px;
     }
     
-    /* Keep arrows at sides on mobile, not at bottom */
     .featured-products__nav {
         width: 35px;
         height: 35px;
@@ -280,4 +271,7 @@
     .featured-products__items-container {
         padding: 0 35px;
     }
+}
+.featured-products__slider-wrapper {
+    padding-bottom: 5px;
 }
