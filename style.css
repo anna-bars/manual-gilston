@@ -67,16 +67,14 @@ img {
 .col-md-12, .col-md-8, .col-md-4, .col-lg-6, .col-lg-8, .col-lg-4 {
     position: relative;
     width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
 }
 
 /* Responsive Grid */
 @media (min-width: 768px) {
     .col-md-4 {
-        -ms-flex: 0 0 33.333333%;
-        flex: 0 0 33.333333%;
-        max-width: 33.333333%;
+        -ms-flex: 0 0 31%;
+        flex: 0 0 31%;
+        max-width: 31%;
     }
     
     .col-md-8 {

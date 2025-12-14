@@ -8,7 +8,17 @@
     background-color: #f4f8fb;
 }
 
+.about-area .container {
+    width: 94%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
 /* Element: Section Title */
+.about-area__header {
+    margin-bottom: 15px;
+}
+
 .about-area__title {
     margin-bottom: 15px;
 }
@@ -32,6 +42,21 @@
     background-color: #ffffff;
 }
 
+.company-info__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.company-info__logo-section {
+    width: 22%;
+}
+
+.company-info__content-section {
+    width: 71%;
+}
+
 /* Elements */
 .company-info__logo {
     text-align: center;
@@ -41,6 +66,7 @@
 .company-info__logo-image {
     width: 100%;
     height: auto;
+    max-width: 320px;
 }
 
 .company-info__content {
@@ -51,12 +77,14 @@
     font-size: 16px;
     color: #002c58;
     font-weight: bold;
+    margin-bottom: 15px;
 }
 
 .company-info__paragraph {
     color: #424445;
     font-size: 16px;
     margin-bottom: 12px;
+    line-height: 1.5;
 }
 
 .company-info__link {
@@ -81,6 +109,12 @@
     margin-bottom: 50px;
 }
 
+.features__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
 /* Element: Feature Item */
 .features__item {
     display: flex;
@@ -95,10 +129,11 @@
 }
 
 .features__image {
-    width: 40%;
+    width: 34%;
     height: auto;
     margin-right: 15px;
     margin-bottom: 0;
+    flex-shrink: 0;
 }
 
 .features__img {
@@ -109,7 +144,7 @@
 }
 
 .features__content {
-    width: 200px;
+    width: 63%;
 }
 
 .features__title {
@@ -123,16 +158,34 @@
     font-size: 16px;
     color: #424445;
     margin-bottom: 10px;
+    line-height: 1.5;
 }
 
 /* ===== BLOCK: Category Card ===== */
+.categories-cont {
+    margin-bottom: 30px;
+}
+
+.categories__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
 .category-card {
     border: 1px solid #e9e7f2;
     padding: 25px 20px;
     background: #fff;
     position: relative;
     transition: all .4s ease-in-out;
-    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.categories-cont .category-card__link {
+    font-size: 24px !important;
 }
 
 /* Element: Card Header */
@@ -141,12 +194,14 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 15px;
+    gap: 10px;
 }
 
 .category-card__title-text {
     font-size: 24px;
     color: #002c58;
     font-weight: bold;
+    margin: 0;
 }
 
 .category-card__link {
@@ -158,14 +213,16 @@
     text-decoration: underline;
 }
 
-.category-card__image {
+.category-card__images {
     width: 175px;
-    margin-left: 10px;
     height: 105px;
+    flex-shrink: 0;
 }
 
 .category-card__image-link {
     display: block;
+    width: 100%;
+    height: 100%;
 }
 
 .category-card__img {
@@ -176,7 +233,9 @@
 
 /* Element: Card Body */
 .category-card__body {
-    /* Additional styles if needed */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .category-card__description {
@@ -184,6 +243,8 @@
     color: #424445;
     margin-bottom: 25px;
     text-align: left;
+    line-height: 1.5;
+    flex-grow: 1;
 }
 
 .category-card__button {
@@ -196,6 +257,7 @@
     text-align: center;
     text-decoration: none;
     transition: background-color 0.3s ease;
+    margin-top: auto;
 }
 
 /* Modifier: Primary Button */
@@ -207,49 +269,142 @@
 
 /* Tablet (max-width: 1024px) */
 @media only screen and (max-width: 1024px) {
+    .features__grid,
+    .categories__grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+    
     .features__image {
         width: 150px;
     }
     
     .features__content {
-        width: 200px;
+        width: calc(100% - 165px);
+    }
+    
+    .category-card__images {
+        width: 150px;
+        height: 90px;
     }
 }
 
 /* Small Desktop (max-width: 992px) */
 @media only screen and (max-width: 992px) {
+    .company-info__wrapper {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .company-info__logo-section,
+    .company-info__content-section {
+        width: 100%;
+    }
+    
+    .company-info__logo {
+        max-width: 250px;
+        margin: 0 auto;
+    }
+    
+    .features__grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    
     .features__item {
-        display: block;
+        display: flex;
+        padding: 30px 0;
+        border-bottom: 1px solid #d3d8dc;
+    }
+    
+    .features__item--no-border {
+        border-bottom: 0;
     }
     
     .features__image {
-        width: 100%;
+        width: 40%;
         height: 180px;
-        margin-bottom: 20px;
-        margin-right: 0;
+        margin-right: 20px;
+        margin-bottom: 0;
     }
     
     .features__content {
-        width: 100%;
+        width: 60%;
     }
     
-    .category-card__button {
-        font-size: 14px;
+    .categories__grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+    }
+    
+    .category-card__images {
+        width: 130px;
+        height: auto;
+    }
+    
+    .who-area .category-card__link {
+        font-size: 20px !important;
+        line-height: normal !important;
     }
     
     .category-card__title-text {
         font-size: 20px;
         line-height: 22px;
     }
+    
+    .category-card__button {
+        font-size: 14px;
+    }
 }
 
-/* Mobile (max-width: 767px) */
-@media only screen and (max-width: 767px) {
+/* Tablet Portrait (max-width: 768px) */
+@media only screen and (max-width: 768px) {
+    .features__grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .categories__grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .features__item {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px 0;
+    }
+    
+    .features__image {
+        width: 100%;
+        max-width: 250px;
+        margin: 0 auto 20px;
+        height: auto;
+    }
+    
+    .features__content {
+        width: 100%;
+    }
+    
+    .category-card__header {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    .category-card__images {
+        width: 100%;
+        max-width: 200px;
+        margin: 0 auto;
+    }
+}
+
+/* Mobile (max-width: 600px) */
+@media only screen and (max-width: 600px) {
     .company-info {
         background-size: cover;
         background-position: top;
         background-image: url(../../src/assets/home/who-area/who1-bg-mob.avif);
         margin-bottom: 15px;
+        padding: 20px 15px;
     }
     
     .company-info__heading {
@@ -260,8 +415,11 @@
     .features__item {
         display: flex;
         align-items: center;
-        padding: 30px 0;
+        padding: 20px 0;
         border-bottom: 1px solid #d3d8dc;
+        flex-direction: row;
+        text-align: left;
+                gap: 16px;
     }
     
     .features__image {
@@ -275,36 +433,44 @@
         font-size: 14px;
     }
     
-    .category-card__image {
-        height: auto;
+    .categories__grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .category-card {
+        margin-bottom: 20px;
     }
 }
 
-/* Very Small Mobile (max-width: 375px) */
-@media only screen and (max-width: 375px) {
-    /* Specific adjustments for very small screens can be added here */
-    .features__item {
-        flex-direction: column;
-        text-align: center;
-    }
-    
+/* Very Small Mobile (max-width: 480px) */
+@media only screen and (max-width: 480px) {
     .features__image {
         width: 100%;
-        margin-right: 0;
-        margin-bottom: 15px;
+        max-width: 145px;
+        margin: 0 auto 15px;
     }
     
     .features__content {
         width: 100%;
     }
-}
-.align-items-center {
-    display: flex;
-    justify-content: space-between;
-}
-.col-md-3 {
-    width: 22%;
-}
-.col-md-9 {
-    width: 71%;
+    
+    .category-card {
+        padding: 20px 15px;
+    }
+    
+    .category-card__header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .category-card__images {
+        width: 100%;
+        max-width: 180px;
+        margin: 15px auto 0;
+    }
+    
+    .category-card__title-text {
+        font-size: 18px;
+        line-height: 20px;
+    }
 }
