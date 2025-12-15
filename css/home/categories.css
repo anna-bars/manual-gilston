@@ -34,7 +34,7 @@
 }
 
 /* ===== CATEGORY CARD ===== */
-.category-card {
+.categories .category-card {
     text-align: center;
     padding: 25px 20px 55px;
     background: #f9fafb;

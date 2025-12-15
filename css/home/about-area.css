@@ -1,44 +1,35 @@
-/* ===== MAIN BLOCK: About Area ===== */
+/* ===== ABOUT AREA ===== */
 .about-area {
-    background: url(../../src/assets/home/who-area/who-bg.avif);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    padding: 40px 0 30px 0;
+    background: url(../../src/assets/home/who-area/who-bg.avif) no-repeat center/cover;
     background-color: #f4f8fb;
+    padding: 40px 0 30px;
 }
 
-.about-area .container {
+.about-area__container {
     width: 94%;
+    max-width: 1400px;
     margin: 0 auto;
 }
 
-/* Element: Section Title */
 .about-area__header {
     margin-bottom: 15px;
 }
 
 .about-area__title {
-    margin-bottom: 15px;
-}
-
-.about-area__title-text {
     text-transform: uppercase;
     font-size: 18px;
     color: #002d58;
     font-weight: bold;
     text-align: center;
+    margin: 0 0 15px;
 }
 
-/* ===== BLOCK: Company Info ===== */
+/* ===== COMPANY INFO ===== */
 .company-info {
-    background: url(../../src/assets/home/who-area/who1-bg.avif);
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    background-position: center;
+    background: url(../../src/assets/home/who-area/who1-bg.avif) no-repeat center/100% 100%;
+    background-color: #fff;
     padding: 25px 20px;
     margin-bottom: 50px;
-    background-color: #ffffff;
 }
 
 .company-info__wrapper {
@@ -48,28 +39,20 @@
     gap: 30px;
 }
 
-.company-info__logo-section {
-    width: 22%;
-}
-
-.company-info__content-section {
-    width: 71%;
-}
-
-/* Elements */
 .company-info__logo {
+    width: 22%;
     text-align: center;
-    width: 100%;
+    flex-shrink: 0;
 }
 
-.company-info__logo-image {
+.company-info__logo img {
     width: 100%;
     height: auto;
     max-width: 320px;
 }
 
 .company-info__content {
-    padding: 10px;
+    width: 71%;
 }
 
 .company-info__heading {
@@ -79,7 +62,7 @@
     margin-bottom: 15px;
 }
 
-.company-info__paragraph {
+.company-info__content p {
     color: #424445;
     font-size: 16px;
     margin-bottom: 12px;
@@ -97,13 +80,12 @@
     transition: all 0.3s ease;
 }
 
-/* Modifier: Primary Link */
-.company-info__link--primary:hover {
+.company-info__link:hover {
     background: #6995c3;
     color: #fff;
 }
 
-/* ===== BLOCK: Features ===== */
+/* ===== FEATURES ===== */
 .features {
     margin-bottom: 50px;
 }
@@ -114,29 +96,21 @@
     gap: 30px;
 }
 
-/* Element: Feature Item */
 .features__item {
     display: flex;
     align-items: center;
     padding: 30px 0;
 }
 
-/* Modifier: No Border */
-.features__item--no-border {
-    border-bottom: 0;
+.features__item:last-child {
+    border-bottom: none;
 }
 
-.features__image {
+.features__item img {
     width: 34%;
     height: auto;
     margin-right: 15px;
-    margin-bottom: 0;
     flex-shrink: 0;
-}
-
-.features__img {
-    width: 100%;
-    height: auto;
     object-fit: contain;
     object-position: top;
 }
@@ -145,21 +119,21 @@
     width: 63%;
 }
 
-.features__title {
+.features__content h3 {
     font-weight: bold;
     font-size: 18px;
     color: #002c58;
     margin-bottom: 10px;
 }
 
-.features__description {
+.features__content p {
     font-size: 16px;
     color: #424445;
     margin-bottom: 10px;
     line-height: 1.5;
 }
 
-/* ===== BLOCK: Category Card ===== */
+/* ===== CATEGORIES ===== */
 .categories-cont {
     margin-bottom: 30px;
 }
@@ -169,24 +143,22 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
 }
- 
-.about-area .category-card {
+
+.category-card {
     border: 1px solid #e9e7f2;
-    background: #ffffff; 
+    background: #fff;
     padding: 25px 20px;
-    position: relative;
-    transition: all .4s ease-in-out;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+    transition: all 0.4s ease-in-out;
 }
 
-.categories-cont .category-card__link {
-    font-size: 24px !important;
+.category-card:hover {
+    box-shadow: 0 0 15px rgba(24, 66, 66, 0.2);
 }
 
-/* Element: Card Header */
 .category-card__header {
     display: flex;
     align-items: center;
@@ -196,54 +168,41 @@
     width: 100%;
 }
 
-.category-card__title-text {
-    font-size: 24px;
-    color: #002c58;
-    font-weight: bold;
+.category-card__header h2 {
     margin: 0;
 }
 
-.category-card__link {
-    color: inherit;
+.category-card__header a {
+    color: #002c58;
     text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
 }
 
-.category-card__link:hover {
+.category-card__header a:hover {
     text-decoration: underline;
 }
 
-.category-card__images {
+.category-card__image {
     width: 175px;
     height: 105px;
     flex-shrink: 0;
-}
-
-.category-card__image-link {
     display: block;
-    width: 100%;
-    height: 100%;
 }
 
-.category-card__img {
+.category-card__image img {
     width: 100%;
     height: 100%;
     object-fit: contain;
 }
 
-/* Element: Card Body */
-.category-card__body {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.category-card__description {
+.category-card p {
     font-size: 16px;
     color: #424445;
     margin-bottom: 25px;
-    text-align: left;
     line-height: 1.5;
     flex-grow: 1;
+    text-align: left;
 }
 
 .category-card__button {
@@ -257,24 +216,23 @@
     text-decoration: none;
     transition: background-color 0.3s ease;
     margin-top: auto;
+    width: 100%;
 }
 
-/* Modifier: Primary Button */
-.category-card__button--primary:hover {
+.category-card__button:hover {
     background: #e08b1b;
 }
 
-/* ===== RESPONSIVE DESIGN ===== */
+/* ===== RESPONSIVE ===== */
 
-/* Tablet (max-width: 1024px) */
+/* Tablet Landscape */
 @media only screen and (max-width: 1024px) {
     .features__grid,
     .categories__grid {
-        grid-template-columns: repeat(3, 1fr);
         gap: 20px;
     }
     
-    .features__image {
+    .features__item img {
         width: 150px;
     }
     
@@ -282,21 +240,21 @@
         width: calc(100% - 165px);
     }
     
-    .category-card__images {
+    .category-card__image {
         width: 150px;
         height: 90px;
     }
 }
 
-/* Small Desktop (max-width: 992px) */
+/* Tablet Portrait */
 @media only screen and (max-width: 992px) {
     .company-info__wrapper {
         flex-direction: column;
         gap: 20px;
     }
     
-    .company-info__logo-section,
-    .company-info__content-section {
+    .company-info__logo,
+    .company-info__content {
         width: 100%;
     }
     
@@ -311,20 +269,13 @@
     }
     
     .features__item {
-        display: flex;
         padding: 30px 0;
-        border-bottom: 1px solid #d3d8dc;
     }
     
-    .features__item--no-border {
-        border-bottom: 0 !important;
-    }
-    
-    .features__image {
+    .features__item img {
         width: 40%;
         height: 180px;
         margin-right: 20px;
-        margin-bottom: 0;
     }
     
     .features__content {
@@ -332,23 +283,17 @@
     }
     
     .categories__grid {
-        grid-template-columns: repeat(3, 1fr);
         gap: 15px;
     }
     
-    .category-card__images {
+    .category-card__image {
         width: 130px;
         height: auto;
     }
     
-    .who-area .category-card__link {
-        font-size: 20px !important;
-        line-height: normal !important;
-    }
-    
-    .category-card__title-text {
+    .category-card__header a {
         font-size: 20px;
-        line-height: 22px;
+        line-height: normal;
     }
     
     .category-card__button {
@@ -356,32 +301,15 @@
     }
 }
 
-/* Tablet Portrait (max-width: 768px) */
+/* Mobile Landscape */
 @media only screen and (max-width: 768px) {
-    .features__grid {
-        grid-template-columns: 1fr;
-    }
-    
     .categories__grid {
         grid-template-columns: repeat(2, 1fr);
     }
     
     .features__item {
-        text-align: center;
         padding: 20px 0;
-        border-bottom: 1px solid #d3d8dc;
         gap: 16px;
-    }
-    
-    .features__image {
-        width: 100%;
-        max-width: 250px;
-        margin: 0 auto 20px;
-        height: auto;
-    }
-    
-    .features__content {
-        width: 100%;
     }
     
     .category-card__header {
@@ -390,47 +318,26 @@
         gap: 15px;
     }
     
-    .category-card__images {
+    .category-card__image {
         width: 100%;
         max-width: 200px;
         margin: 0 auto;
     }
 }
 
-/* Mobile (max-width: 600px) */
+/* Mobile */
 @media only screen and (max-width: 600px) {
     .company-info {
+        background-image: url(../../src/assets/home/who-area/who1-bg-mob.avif);
         background-size: cover;
         background-position: top;
-        background-image: url(../../src/assets/home/who-area/who1-bg-mob.avif);
         margin-bottom: 15px;
         padding: 20px 15px;
     }
     
     .company-info__heading {
-        margin-bottom: 15px;
         text-align: center;
-    }
-    
-    .features__item {
-        display: flex;
-        align-items: center;
-        padding: 20px 0;
-        border-bottom: 1px solid #d3d8dc;
-        flex-direction: row;
-        text-align: left;
-                gap: 16px;
-    }
-    
-    .features__image {
-        width: 40%;
-        height: auto;
-        margin-right: 15px;
-        margin-bottom: 0;
-    }
-    
-    .features__description {
-        font-size: 14px;
+        margin-bottom: 15px;
     }
     
     .categories__grid {
@@ -442,9 +349,9 @@
     }
 }
 
-/* Very Small Mobile (max-width: 480px) */
+/* Small Mobile */
 @media only screen and (max-width: 480px) {
-    .features__image {
+    .features__item img {
         width: 100%;
         max-width: 145px;
         margin: 0 auto 15px;
@@ -458,18 +365,12 @@
         padding: 20px 15px;
     }
     
-    .category-card__header {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .category-card__images {
-        width: 100%;
+    .category-card__image {
         max-width: 180px;
         margin: 15px auto 0;
     }
     
-    .category-card__title-text {
+    .category-card__header a {
         font-size: 18px;
         line-height: 20px;
     }
