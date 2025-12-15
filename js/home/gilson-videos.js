@@ -1,66 +1,37 @@
 /**
- * Gilson Video Slider
+ * Video Slider - օպտիմալացված
  */
-class GilsonVideoSlider {
+class VideoSlider {
     constructor() {
-        this.selectors = {
-            slider: '.js-video-slider',
-            container: '.gilson-video__slider-container',
-            slidesWrapper: '.gilson-video__slides-wrapper',
-            slides: '.gilson-video__slide',
-            prevBtn: '.gilson-video__nav--prev',
-            nextBtn: '.gilson-video__nav--next',
-            dotsContainer: '.gilson-video__dots'
-        };
+        this.slider = document.querySelector('.gilson-video__slider');
+        if (!this.slider) return;
         
-        this.elements = {};
+        this.slidesWrapper = this.slider.querySelector('.gilson-video__slides');
+        this.slideItems = this.slidesWrapper.querySelectorAll('.gilson-video__slide');
+        this.totalItems = this.slideItems.length;
+        this.dotsContainer = this.slider.querySelector('.gilson-video__dots');
+        this.prevBtn = this.slider.querySelector('.gilson-video__nav--prev');
+        this.nextBtn = this.slider.querySelector('.gilson-video__nav--next');
+        
         this.state = {
             currentIndex: 0,
             isTransitioning: false,
             slidesPerView: 4,
-            totalSlides: 0,
-            autoSlideInterval: null,
-            isAutoSlideActive: true,
-            isDragging: false,
-            dragStartX: 0,
-            dragStartY: 0
+            autoSlideInterval: null
         };
         
+        this.clonedSlides = [];
         this.init();
     }
     
     init() {
-        this.getElements();
-        
-        if (!this.elements.slider) {
-            console.warn('Gilson Video Slider not found');
-            return;
-        }
-        
-        this.slideItems = document.querySelectorAll(this.selectors.slides);
-        this.totalItems = this.slideItems.length;
-        
-        if (this.totalItems === 0) {
-            console.warn('No slides found for Gilson Video Slider');
-            return;
-        }
-        
-        console.log(`Gilson Video Slider initialized with ${this.totalItems} slides`);
-        
         this.setupSlider();
         this.bindEvents();
         this.updateResponsive();
         this.startAutoSlide();
     }
     
-    getElements() {
-        for (const key in this.selectors) {
-            this.elements[key] = document.querySelector(this.selectors[key]);
-        }
-    }
-    
     setupSlider() {
-        this.state.slidesPerView = this.calculateSlidesPerView();
         this.removeClones();
         this.setupInfiniteScroll();
         this.createDots();
@@ -69,36 +40,27 @@ class GilsonVideoSlider {
     
     setupInfiniteScroll() {
         const clonesNeeded = Math.min(this.state.slidesPerView, this.totalItems);
-        this.clonedSlides = [];
         
         // Clone last items to beginning
         for (let i = this.totalItems - clonesNeeded; i < this.totalItems; i++) {
             const clone = this.slideItems[i].cloneNode(true);
-            clone.classList.add('gilson-video__slide--cloned');
-            this.elements.slidesWrapper.insertBefore(clone, this.slideItems[0]);
+            this.slidesWrapper.insertBefore(clone, this.slideItems[0]);
             this.clonedSlides.push(clone);
         }
         
         // Clone first items to end
         for (let i = 0; i < clonesNeeded; i++) {
             const clone = this.slideItems[i].cloneNode(true);
-            clone.classList.add('gilson-video__slide--cloned');
-            this.elements.slidesWrapper.appendChild(clone);
+            this.slidesWrapper.appendChild(clone);
             this.clonedSlides.push(clone);
         }
         
-        this.state.totalSlides = this.totalItems + (clonesNeeded * 2);
         this.state.currentIndex = clonesNeeded;
+        this.updateSlider(false);
     }
     
     removeClones() {
-        if (this.clonedSlides && this.clonedSlides.length > 0) {
-            this.clonedSlides.forEach(clone => {
-                if (clone && clone.parentNode) {
-                    clone.parentNode.removeChild(clone);
-                }
-            });
-        }
+        this.clonedSlides.forEach(clone => clone.remove());
         this.clonedSlides = [];
     }
     
@@ -109,47 +71,35 @@ class GilsonVideoSlider {
         const slideWidth = 100 / this.state.slidesPerView;
         const translateX = -this.state.currentIndex * slideWidth;
         
-        this.elements.slidesWrapper.style.transition = animate ? 
+        this.slidesWrapper.style.transition = animate ? 
             'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)' : 'none';
-        this.elements.slidesWrapper.style.transform = `translateX(${translateX}%)`;
+        this.slidesWrapper.style.transform = `translateX(${translateX}%)`;
         
-        const completeTransition = () => {
+        setTimeout(() => {
             this.checkLoopBoundaries();
+            this.updateDots();
             this.state.isTransitioning = false;
-        };
-        
-        if (animate) {
-            this.elements.slidesWrapper.addEventListener('transitionend', completeTransition, { once: true });
-        } else {
-            setTimeout(completeTransition, 50);
-        }
-        
-        this.updateDots();
-        this.updateNavigationButtons();
+        }, animate ? 500 : 50);
     }
     
     checkLoopBoundaries() {
         const clonesCount = Math.min(this.state.slidesPerView, this.totalItems);
-        const totalOriginalSlides = this.totalItems;
         
-        // Jump to real end if at beginning clones
         if (this.state.currentIndex < clonesCount) {
-            this.state.currentIndex = totalOriginalSlides + clonesCount - 1;
-            const slideWidth = 100 / this.state.slidesPerView;
-            const translateX = -this.state.currentIndex * slideWidth;
-            
-            this.elements.slidesWrapper.style.transition = 'none';
-            this.elements.slidesWrapper.style.transform = `translateX(${translateX}%)`;
-        }
-        // Jump to real beginning if at end clones
-        else if (this.state.currentIndex >= totalOriginalSlides + clonesCount) {
+            this.state.currentIndex = this.totalItems + clonesCount - 1;
+            this.jumpToSlide();
+        } else if (this.state.currentIndex >= this.totalItems + clonesCount) {
             this.state.currentIndex = clonesCount;
-            const slideWidth = 100 / this.state.slidesPerView;
-            const translateX = -this.state.currentIndex * slideWidth;
-            
-            this.elements.slidesWrapper.style.transition = 'none';
-            this.elements.slidesWrapper.style.transform = `translateX(${translateX}%)`;
+            this.jumpToSlide();
         }
+    }
+    
+    jumpToSlide() {
+        const slideWidth = 100 / this.state.slidesPerView;
+        const translateX = -this.state.currentIndex * slideWidth;
+        
+        this.slidesWrapper.style.transition = 'none';
+        this.slidesWrapper.style.transform = `translateX(${translateX}%)`;
     }
     
     getOriginalSlideIndex() {
@@ -160,26 +110,22 @@ class GilsonVideoSlider {
         } else if (this.state.currentIndex >= this.totalItems + clonesCount) {
             return this.state.currentIndex - this.totalItems - clonesCount;
         }
-        
         return this.state.currentIndex - clonesCount;
     }
     
-    calculateSlidesPerView() {
+    updateResponsive() {
         const width = window.innerWidth;
+        let newSlidesPerView;
         
         if (width <= 768) {
-            return 1;
+            newSlidesPerView = 1;
         } else if (width <= 992) {
-            return 2;
+            newSlidesPerView = 2;
         } else if (width <= 1200) {
-            return 3;
+            newSlidesPerView = 3;
         } else {
-            return 4;
+            newSlidesPerView = 4;
         }
-    }
-    
-    updateResponsive() {
-        const newSlidesPerView = this.calculateSlidesPerView();
         
         if (newSlidesPerView !== this.state.slidesPerView) {
             this.state.slidesPerView = newSlidesPerView;
@@ -188,154 +134,60 @@ class GilsonVideoSlider {
     }
     
     createDots() {
-        if (!this.elements.dotsContainer || this.totalItems <= 1) return;
+        if (!this.dotsContainer || this.totalItems <= 1) return;
         
-        this.elements.dotsContainer.innerHTML = '';
+        this.dotsContainer.innerHTML = '';
         
         for (let i = 0; i < this.totalItems; i++) {
             const dot = document.createElement('button');
             dot.className = 'gilson-video__dot';
-            dot.setAttribute('type', 'button');
-            dot.setAttribute('role', 'tab');
-            dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
-            dot.setAttribute('data-slide', i);
+            dot.type = 'button';
+            dot.role = 'tab';
+            dot.ariaLabel = `Go to slide ${i + 1}`;
+            dot.dataset.slide = i;
             
-            if (i === this.getOriginalSlideIndex()) {
-                dot.classList.add('gilson-video__dot--active');
-                dot.setAttribute('aria-current', 'true');
-            }
-            
-            this.elements.dotsContainer.appendChild(dot);
+            this.dotsContainer.appendChild(dot);
         }
     }
     
     bindEvents() {
-        // Navigation buttons
-        if (this.elements.prevBtn) {
-            this.elements.prevBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.prevSlide();
-            });
-        }
+        if (this.prevBtn) this.prevBtn.addEventListener('click', () => this.prevSlide());
+        if (this.nextBtn) this.nextBtn.addEventListener('click', () => this.nextSlide());
         
-        if (this.elements.nextBtn) {
-            this.elements.nextBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.nextSlide();
-            });
-        }
-        
-        // Dots navigation
-        if (this.elements.dotsContainer) {
-            this.elements.dotsContainer.addEventListener('click', (e) => {
+        if (this.dotsContainer) {
+            this.dotsContainer.addEventListener('click', (e) => {
                 if (e.target.classList.contains('gilson-video__dot')) {
-                    const slideIndex = parseInt(e.target.dataset.slide);
-                    this.goToSlide(slideIndex);
+                    this.goToSlide(parseInt(e.target.dataset.slide));
                 }
             });
         }
-        
-        // Mouse drag events
-        this.elements.container.addEventListener('mousedown', this.handleDragStart.bind(this));
-        this.elements.container.addEventListener('mousemove', this.handleDragMove.bind(this));
-        this.elements.container.addEventListener('mouseup', this.handleDragEnd.bind(this));
-        this.elements.container.addEventListener('mouseleave', this.handleDragEnd.bind(this));
         
         // Touch events
-        this.elements.container.addEventListener('touchstart', this.handleTouchStart.bind(this), { passive: true });
-        this.elements.container.addEventListener('touchmove', this.handleTouchMove.bind(this), { passive: false });
-        this.elements.container.addEventListener('touchend', this.handleTouchEnd.bind(this), { passive: true });
+        let touchStartX = 0;
+        this.slider.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            this.stopAutoSlide();
+        }, { passive: true });
         
-        // Mouse hover
-        const sliderWrapper = this.elements.slider.closest('.gilson-video__slider-wrapper');
-        if (sliderWrapper) {
-            sliderWrapper.addEventListener('mouseenter', () => this.stopAutoSlide());
-            sliderWrapper.addEventListener('mouseleave', () => {
-                if (this.state.isAutoSlideActive) {
-                    this.startAutoSlide();
-                }
-            });
-        }
+        this.slider.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const diff = touchStartX - touchEndX;
+            
+            if (diff > 50) this.nextSlide();
+            else if (diff < -50) this.prevSlide();
+            
+            this.startAutoSlide();
+        }, { passive: true });
         
-        // Window resize
-        let resizeTimer;
+        // Auto-slide control
+        this.slider.addEventListener('mouseenter', () => this.stopAutoSlide());
+        this.slider.addEventListener('mouseleave', () => this.startAutoSlide());
+        
+        // Resize
         window.addEventListener('resize', () => {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(() => {
-                this.updateResponsive();
-            }, 250);
+            clearTimeout(this.resizeTimer);
+            this.resizeTimer = setTimeout(() => this.updateResponsive(), 250);
         });
-    }
-    
-    handleDragStart(e) {
-        this.state.isDragging = true;
-        this.state.dragStartX = e.clientX;
-        this.state.dragStartY = e.clientY;
-        this.stopAutoSlide();
-        this.elements.container.style.cursor = 'grabbing';
-    }
-    
-    handleDragMove(e) {
-        if (!this.state.isDragging) return;
-        e.preventDefault();
-    }
-    
-    handleDragEnd(e) {
-        if (!this.state.isDragging) return;
-        
-        const dragEndX = e.clientX;
-        const diff = dragEndX - this.state.dragStartX;
-        
-        if (Math.abs(diff) > 50) {
-            if (diff < 0) {
-                this.nextSlide();
-            } else {
-                this.prevSlide();
-            }
-        }
-        
-        this.state.isDragging = false;
-        this.elements.container.style.cursor = 'grab';
-        this.startAutoSlide();
-    }
-    
-    handleTouchStart(e) {
-        this.state.isDragging = true;
-        this.state.dragStartX = e.touches[0].clientX;
-        this.state.dragStartY = e.touches[0].clientY;
-        this.stopAutoSlide();
-    }
-    
-    handleTouchMove(e) {
-        if (!this.state.isDragging) return;
-        
-        // Prevent vertical scroll when horizontal swipe is detected
-        const touchX = e.touches[0].clientX;
-        const touchY = e.touches[0].clientY;
-        const diffX = Math.abs(touchX - this.state.dragStartX);
-        const diffY = Math.abs(touchY - this.state.dragStartY);
-        
-        if (diffX > diffY) {
-            e.preventDefault();
-        }
-    }
-    
-    handleTouchEnd(e) {
-        if (!this.state.isDragging) return;
-        
-        const touchEndX = e.changedTouches[0].clientX;
-        const diff = touchEndX - this.state.dragStartX;
-        
-        if (Math.abs(diff) > 50) {
-            if (diff < 0) {
-                this.nextSlide();
-            } else {
-                this.prevSlide();
-            }
-        }
-        
-        this.state.isDragging = false;
-        this.startAutoSlide();
     }
     
     nextSlide() {
@@ -357,34 +209,25 @@ class GilsonVideoSlider {
         
         const clonesCount = Math.min(this.state.slidesPerView, this.totalItems);
         this.state.currentIndex = originalIndex + clonesCount;
-        this.updateSlider(true);
+        this.updateSlider();
         this.resetAutoSlide();
     }
     
     updateDots() {
-        const dots = document.querySelectorAll('.gilson-video__dot');
+        const dots = this.dotsContainer.querySelectorAll('.gilson-video__dot');
         if (!dots.length) return;
         
         const currentOriginalIndex = this.getOriginalSlideIndex();
         
         dots.forEach((dot, index) => {
-            const isActive = index === currentOriginalIndex;
-            dot.classList.toggle('gilson-video__dot--active', isActive);
-            dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+            dot.classList.toggle('gilson-video__dot--active', index === currentOriginalIndex);
+            dot.setAttribute('aria-current', index === currentOriginalIndex);
         });
-    }
-    
-    updateNavigationButtons() {
-        // Optional: Add disabled states if needed
     }
     
     startAutoSlide() {
         this.stopAutoSlide();
-        this.state.isAutoSlideActive = true;
-        
-        this.state.autoSlideInterval = setInterval(() => {
-            this.nextSlide();
-        }, 5000);
+        this.state.autoSlideInterval = setInterval(() => this.nextSlide(), 5000);
     }
     
     stopAutoSlide() {
@@ -396,21 +239,11 @@ class GilsonVideoSlider {
     
     resetAutoSlide() {
         this.stopAutoSlide();
-        if (this.state.isAutoSlideActive) {
-            this.startAutoSlide();
-        }
-    }
-    
-    destroy() {
-        this.stopAutoSlide();
-        this.removeClones();
+        this.startAutoSlide();
     }
 }
 
-// Initialize when DOM is ready
+// Initialize slider
 document.addEventListener('DOMContentLoaded', () => {
-    const videoSlider = new GilsonVideoSlider();
-    
-    // Export for debugging if needed
-    window.gilsonVideoSlider = videoSlider;
+    new VideoSlider();
 });

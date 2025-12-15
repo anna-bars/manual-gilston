@@ -1,35 +1,36 @@
+/* Gilson Video - օպտիմալացված */
 .gilson-video {
-    padding:  0 0 80px 0;
+    padding: 0 0 80px;
     position: relative;
     overflow: hidden;
 }
 
 .gilson-video__header {
     margin-bottom: 30px;
+    text-align: center;
 }
 
 .gilson-video__title {
     text-transform: uppercase;
     font-size: 18px;
     color: #002d58;
-    font-weight: bold;
-    text-align: center;
+    font-weight: 700;
 }
 
-.gilson-video__slider-wrapper {
+.gilson-video__slider {
     position: relative;
     width: 94%;
-    margin: auto;
+    margin: 0 auto;
     padding: 0 24px;
 }
 
-.gilson-video__slider-container {
+.gilson-video__container {
     overflow: hidden;
+    padding: 35px 0 8px;
     position: relative;
-    padding: 35px 0 8px 0;
 }
 
-.gilson-video__slides-wrapper {
+.gilson-video__slides {
     display: flex;
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: transform;
@@ -37,22 +38,11 @@
 }
 
 .gilson-video__slide {
-    flex: 0 0 25%; /* Default 4 items per view (313px each) */
+    flex: 0 0 25%;
     max-width: 25%;
     padding: 0 15px;
     box-sizing: border-box;
-    min-height: 1px;
-    opacity: 1;
     transition: opacity 0.3s ease;
-}
-
-.gilson-video__slider-controls {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    transform: translateY(-50%);
-    z-index: 10;
 }
 
 .gilson-video__nav {
@@ -64,16 +54,14 @@
     padding: 0;
     cursor: pointer;
     border: 0;
-    outline: 0;
     background: #f6f7f8;
     z-index: 10;
     border-radius: 3px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    transition: background 0.3s ease;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    pointer-events: auto;
 }
 
 .gilson-video__nav:hover {
@@ -84,11 +72,6 @@
     filter: invert(1);
 }
 
-.gilson-video__nav:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
 .gilson-video__nav--prev {
     left: -20px;
 }
@@ -97,12 +80,16 @@
     right: -20px;
 }
 
+.gilson-video__nav:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 .gilson-video__dots {
     display: flex;
     justify-content: center;
     gap: 10px;
     margin-top: 30px;
-    list-style: none;
     padding: 0;
 }
 
@@ -114,7 +101,7 @@
     border: none;
     padding: 0;
     cursor: pointer;
-    transition: background 0.3s ease, transform 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .gilson-video__dot--active {
@@ -141,28 +128,24 @@
 }
 
 .gilson-video__more-link:hover {
-    background-color: transparent;
+    background: transparent;
     color: #f59a1f;
-    text-decoration: none;
 }
 
+/* Video Card ստիլեր */
 .card {
     background: #fff;
     box-shadow: 0 0 5px rgba(24, 66, 66, 0.2);
     height: 100%;
     display: flex;
     flex-direction: column;
-    transition: all 0.3s ease;
+    transition: box-shadow 0.3s ease;
     border-radius: 4px;
     overflow: hidden;
 }
 
 .card:hover {
     box-shadow: 0 5px 7px rgba(24, 66, 66, 0.3);
-}
-
-.card--video:hover .card__overlay {
-    opacity: 0.9;
 }
 
 .card__image {
@@ -191,7 +174,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(238, 238, 238, 0.9);
+    background: rgba(238, 238, 238, 0.9);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -199,10 +182,13 @@
     transition: opacity 0.3s ease;
 }
 
+.card:hover .card__overlay {
+    opacity: 0.9;
+}
+
 .card__overlay-icon {
     color: #ff0000;
     font-size: 60px;
-    text-align: center;
 }
 
 .card__content {
@@ -216,10 +202,9 @@
 .card__title {
     font-size: 16px;
     color: #002c58;
-    font-weight: bold;
+    font-weight: 700;
     line-height: 1.4;
     margin-bottom: 10px;
-    flex-grow: 0;
 }
 
 .card__title a {
@@ -235,41 +220,33 @@
 .card__description {
     color: #6c6e70;
     font-size: 14px;
-    margin-bottom: 0;
     line-height: 1.5;
+    margin: 0;
     flex-grow: 1;
 }
 
-.card__link {
-    display: block;
-    text-decoration: none;
-}
-
-.fa-youtube-play:before {
-    content: "\f16a";
-}
-
-@media only screen and (max-width: 1400px) {
+/* Ադապտիվ դիզայն */
+@media (max-width: 1400px) {
     .gilson-video__slide {
         flex: 0 0 33.333%;
         max-width: 33.333%;
     }
 }
 
-@media only screen and (max-width: 1200px) {
+@media (max-width: 1200px) {
     .gilson-video__slide {
         flex: 0 0 33.333%;
         max-width: 33.333%;
     }
 }
 
-@media only screen and (max-width: 992px) {
+@media (max-width: 992px) {
     .gilson-video__slide {
         flex: 0 0 50%;
         max-width: 50%;
     }
     
-    .gilson-video__slider-wrapper {
+    .gilson-video__slider {
         padding: 0 30px;
     }
     
@@ -291,7 +268,7 @@
     }
 }
 
-@media only screen and (max-width: 768px) {
+@media (max-width: 768px) {
     .gilson-video {
         padding: 40px 0;
     }
@@ -301,7 +278,7 @@
         max-width: 100%;
     }
     
-    .gilson-video__slider-wrapper {
+    .gilson-video__slider {
         padding: 0 15px;
     }
     
@@ -309,7 +286,7 @@
         display: none;
     }
     
-    .gilson-video__slides-wrapper {
+    .gilson-video__slides {
         margin: 0;
     }
     
@@ -322,17 +299,12 @@
         margin-top: 30px;
     }
     
-    .gilson-video__more-link {
-        padding: 10px 20px;
-        font-size: 14px;
-    }
-    
     .card__overlay-icon {
         font-size: 45px;
     }
 }
 
-@media only screen and (max-width: 576px) {
+@media (max-width: 576px) {
     .gilson-video__header {
         margin-bottom: 20px;
     }
