@@ -1,6 +1,3 @@
-/**
- * Featured Products Slider - Optimized but Same Functionality
- */
 class FeaturedProductsSlider {
     constructor() {
         this.selectors = {
@@ -24,14 +21,13 @@ class FeaturedProductsSlider {
     }
     
     init() {
-        // Get DOM elements
-        for (const key in this.selectors) {
+        Object.keys(this.selectors).forEach(key => {
             this.elements[key] = document.querySelector(this.selectors[key]);
-        }
+        });
         
         if (!this.elements.slider) return;
         
-        this.productItems = document.querySelectorAll(this.selectors.items);
+        this.productItems = Array.from(document.querySelectorAll(this.selectors.items));
         this.totalItems = this.productItems.length;
         
         this.setupSlider();
@@ -42,112 +38,104 @@ class FeaturedProductsSlider {
     
     setupSlider() {
         this.removeClones();
-        this.setupInfiniteScroll();
-        this.updateSlider();
+        this.setupClones();
+        this.goToSlide(Math.max(this.state.slidesPerView, 2), false);
+        this.updateSlider(true, false);
     }
     
-    setupInfiniteScroll() {
+    setupClones() {
         const clonesNeeded = Math.max(this.state.slidesPerView, 2);
         this.clonedItems = [];
         
-        // Clone first items to end
-        for (let i = 0; i < clonesNeeded; i++) {
-            const clone = this.productItems[i].cloneNode(true);
-            clone.classList.add('featured-products__item--cloned');
-            this.elements.itemsWrapper.appendChild(clone);
-            this.clonedItems.push(clone);
-        }
+        // Create beginning clones
+        this.productItems.slice(-clonesNeeded).forEach(item => {
+            this.createClone(item, 'beginning');
+        });
         
-        // Clone last items to beginning
-        for (let i = this.totalItems - clonesNeeded; i < this.totalItems; i++) {
-            const clone = this.productItems[i].cloneNode(true);
-            clone.classList.add('featured-products__item--cloned');
-            this.elements.itemsWrapper.insertBefore(clone, this.productItems[0]);
-            this.clonedItems.push(clone);
-        }
+        // Create end clones
+        this.productItems.slice(0, clonesNeeded).forEach(item => {
+            this.createClone(item, 'end');
+        });
         
         this.totalSlides = this.totalItems + (clonesNeeded * 2);
-        this.goToSlide(clonesNeeded, false);
+    }
+    
+    createClone(item, position) {
+        const clone = item.cloneNode(true);
+        clone.classList.add('featured-products__item--cloned');
+        
+        if (position === 'beginning') {
+            this.elements.itemsWrapper.insertBefore(clone, this.productItems[0]);
+        } else {
+            this.elements.itemsWrapper.appendChild(clone);
+        }
+        
+        this.clonedItems.push(clone);
     }
     
     removeClones() {
-        if (this.clonedItems) {
-            this.clonedItems.forEach(clone => {
-                if (clone.parentNode) clone.parentNode.removeChild(clone);
-            });
-        }
+        this.clonedItems?.forEach(clone => clone.remove());
         this.clonedItems = [];
     }
     
-    updateSlider(animate = true) {
+    updateSlider(animate = true, checkBoundaries = true) {
         if (this.state.isTransitioning) return;
         
         this.state.isTransitioning = true;
-        const clonesCount = Math.max(this.state.slidesPerView, 2);
         const slideWidth = 100 / this.state.slidesPerView;
-        const translateX = -(this.state.currentIndex + clonesCount) * slideWidth;
+        const translateX = -(this.state.currentIndex + Math.max(this.state.slidesPerView, 2)) * slideWidth;
         
         this.elements.itemsWrapper.style.transition = animate ? 'transform 0.5s ease' : 'none';
         this.elements.itemsWrapper.style.transform = `translateX(${translateX}%)`;
         
-        // Update item widths
-        const allItems = this.elements.itemsWrapper.querySelectorAll('.featured-products__item');
-        allItems.forEach(item => {
+        // Set item dimensions
+        this.elements.itemsWrapper.querySelectorAll('.featured-products__item').forEach(item => {
             item.style.flex = `0 0 ${slideWidth}%`;
             item.style.maxWidth = `${slideWidth}%`;
         });
         
-        this.checkLoopBoundaries();
+        if (checkBoundaries) {
+            setTimeout(() => this.handleBoundaryReset(), 500);
+        }
+        
         this.updateDots();
     }
     
-    checkLoopBoundaries() {
+    handleBoundaryReset() {
+        const clonesCount = Math.max(this.state.slidesPerView, 2);
+        
+        if (this.state.currentIndex >= this.totalItems) {
+            this.state.currentIndex = 0;
+            this.resetPosition(clonesCount);
+        } else if (this.state.currentIndex < 0) {
+            this.state.currentIndex = this.totalItems - 1;
+            this.resetPosition(clonesCount);
+        } else {
+            this.state.isTransitioning = false;
+        }
+    }
+    
+    resetPosition(clonesCount) {
+        const slideWidth = 100 / this.state.slidesPerView;
+        const translateX = -(this.state.currentIndex + clonesCount) * slideWidth;
+        
+        this.elements.itemsWrapper.style.transition = 'none';
+        this.elements.itemsWrapper.style.transform = `translateX(${translateX}%)`;
+        
         setTimeout(() => {
-            const clonesCount = Math.max(this.state.slidesPerView, 2);
-            
-            if (this.state.currentIndex >= this.totalItems) {
-                this.state.currentIndex = 0;
-                const slideWidth = 100 / this.state.slidesPerView;
-                const translateX = -(this.state.currentIndex + clonesCount) * slideWidth;
-                
-                this.elements.itemsWrapper.style.transition = 'none';
-                this.elements.itemsWrapper.style.transform = `translateX(${translateX}%)`;
-                
-                setTimeout(() => {
-                    this.state.isTransitioning = false;
-                }, 50);
-            } 
-            else if (this.state.currentIndex < 0) {
-                this.state.currentIndex = this.totalItems - 1;
-                const slideWidth = 100 / this.state.slidesPerView;
-                const translateX = -(this.state.currentIndex + clonesCount) * slideWidth;
-                
-                this.elements.itemsWrapper.style.transition = 'none';
-                this.elements.itemsWrapper.style.transform = `translateX(${translateX}%)`;
-                
-                setTimeout(() => {
-                    this.state.isTransitioning = false;
-                }, 50);
-            } 
-            else {
-                setTimeout(() => {
-                    this.state.isTransitioning = false;
-                }, 500);
-            }
-        }, 500);
+            this.state.isTransitioning = false;
+        }, 50);
     }
     
     updateResponsive() {
         const width = window.innerWidth;
-        let newSlidesPerView;
+        const breakpoints = [
+            { max: 768, slides: 1 },
+            { max: 1200, slides: 2 },
+            { max: Infinity, slides: 4 }
+        ];
         
-        if (width <= 768) {
-            newSlidesPerView = 1;
-        } else if (width <= 1200) {
-            newSlidesPerView = 2;
-        } else {
-            newSlidesPerView = 4;
-        }
+        const newSlidesPerView = breakpoints.find(bp => width <= bp.max)?.slides || 4;
         
         if (newSlidesPerView !== this.state.slidesPerView) {
             this.state.slidesPerView = newSlidesPerView;
@@ -157,49 +145,42 @@ class FeaturedProductsSlider {
     
     bindEvents() {
         // Navigation buttons
-        if (this.elements.prevBtn) {
-            this.elements.prevBtn.addEventListener('click', () => this.prevSlide());
-        }
+        [['prevBtn', this.prevSlide.bind(this)], ['nextBtn', this.nextSlide.bind(this)]].forEach(([key, handler]) => {
+            this.elements[key]?.addEventListener('click', handler);
+        });
         
-        if (this.elements.nextBtn) {
-            this.elements.nextBtn.addEventListener('click', () => this.nextSlide());
-        }
-        
-        // Dots navigation
-        if (this.elements.dotsContainer) {
-            this.elements.dotsContainer.addEventListener('click', (e) => {
-                if (e.target.classList.contains('featured-products__dot')) {
-                    const slideIndex = parseInt(e.target.dataset.slide);
-                    this.goToSlide(slideIndex);
-                }
-            });
-        }
+        // Dots
+        this.elements.dotsContainer?.addEventListener('click', (e) => {
+            const slideIndex = e.target.dataset?.slide;
+            if (slideIndex) this.goToSlide(parseInt(slideIndex));
+        });
         
         // Touch events
         let touchStartX = 0;
-        this.elements.container.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-            this.stopAutoSlide();
-        }, { passive: true });
+        const touchHandler = (e) => {
+            if (e.type === 'touchstart') {
+                touchStartX = e.changedTouches[0].screenX;
+                this.stopAutoSlide();
+            } else if (e.type === 'touchend') {
+                const touchEndX = e.changedTouches[0].screenX;
+                if (touchEndX < touchStartX - 50) this.nextSlide();
+                else if (touchEndX > touchStartX + 50) this.prevSlide();
+                this.startAutoSlide();
+            }
+        };
         
-        this.elements.container.addEventListener('touchend', (e) => {
-            const touchEndX = e.changedTouches[0].screenX;
-            if (touchEndX < touchStartX - 50) this.nextSlide();
-            else if (touchEndX > touchStartX + 50) this.prevSlide();
-            this.startAutoSlide();
-        }, { passive: true });
+        this.elements.container.addEventListener('touchstart', touchHandler, { passive: true });
+        this.elements.container.addEventListener('touchend', touchHandler, { passive: true });
         
-        // Mouse hover
+        // Auto-slide controls
         this.elements.slider.addEventListener('mouseenter', () => this.stopAutoSlide());
         this.elements.slider.addEventListener('mouseleave', () => this.startAutoSlide());
         
-        // Window resize
+        // Resize handler
         let resizeTimer;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(() => {
-                this.updateResponsive();
-            }, 250);
+            resizeTimer = setTimeout(() => this.updateResponsive(), 250);
         });
         
         // Transition end
@@ -209,17 +190,19 @@ class FeaturedProductsSlider {
     }
     
     nextSlide() {
-        if (this.state.isTransitioning) return;
-        this.state.currentIndex++;
-        this.updateSlider();
-        this.resetAutoSlide();
+        if (!this.state.isTransitioning) {
+            this.state.currentIndex++;
+            this.updateSlider();
+            this.resetAutoSlide();
+        }
     }
     
     prevSlide() {
-        if (this.state.isTransitioning) return;
-        this.state.currentIndex--;
-        this.updateSlider();
-        this.resetAutoSlide();
+        if (!this.state.isTransitioning) {
+            this.state.currentIndex--;
+            this.updateSlider();
+            this.resetAutoSlide();
+        }
     }
     
     goToSlide(index, animate = true) {
@@ -230,28 +213,22 @@ class FeaturedProductsSlider {
     }
     
     updateDots() {
-        const dots = document.querySelectorAll('.featured-products__dot');
-        if (!dots.length) return;
-        
+        const dots = this.elements.dotsContainer?.querySelectorAll('.featured-products__dot') || [];
         dots.forEach((dot, index) => {
             const isActive = index === this.state.currentIndex;
             dot.classList.toggle('featured-products__dot--active', isActive);
-            dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+            dot.setAttribute('aria-current', isActive);
         });
     }
     
     startAutoSlide() {
         this.stopAutoSlide();
-        this.autoSlideInterval = setInterval(() => {
-            this.nextSlide();
-        }, 5000);
+        this.autoSlideInterval = setInterval(() => this.nextSlide(), 5000);
     }
     
     stopAutoSlide() {
-        if (this.autoSlideInterval) {
-            clearInterval(this.autoSlideInterval);
-            this.autoSlideInterval = null;
-        }
+        clearInterval(this.autoSlideInterval);
+        this.autoSlideInterval = null;
     }
     
     resetAutoSlide() {
@@ -265,7 +242,5 @@ class FeaturedProductsSlider {
     }
 }
 
-// Initialize
-document.addEventListener('DOMContentLoaded', () => {
-    new FeaturedProductsSlider();
-});
+// Initialize on DOM ready
+document.addEventListener('DOMContentLoaded', () => new FeaturedProductsSlider());

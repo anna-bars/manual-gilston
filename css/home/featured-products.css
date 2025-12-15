@@ -1,39 +1,15 @@
-/* Featured Products - Պահպանված բնօրինակ դիզայնը */
+/* ===== FEATURED PRODUCTS SECTION ===== */
 .featured-products {
-    padding: 60px 0 80px 0;
-    width: 100%;
-    position: relative;
+    padding: 60px 0 80px;
+    background: #fff;
 }
 
 .featured-products__container {
-    width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
     max-width: 94%;
+    margin: 0 auto;
+    padding: 0 15px;
 }
 
-.featured-products__row {
-    display: flex;
-    flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: -15px;
-}
-
-.featured-products__col {
-    position: relative;
-    width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-}
-
-.featured-products__col--full {
-    flex: 0 0 100%;
-    max-width: 100%;
-}
-
-/* Header - Նույնը */
 .featured-products__header {
     text-align: center;
     margin-bottom: 30px;
@@ -47,50 +23,39 @@
     margin: 0;
 }
 
-/* Slider - Նույն դիզայնը */
+/* ===== SLIDER ===== */
 .featured-products__slider {
     position: relative;
-    width: 100%;
-    overflow: hidden;
-}
-
-.featured-products__slider-wrapper {
-    position: relative;
-    width: 100%;
-    padding-bottom: 15px;
-}
-
-.featured-products__items-container {
-    overflow: hidden;
-    width: 100%;
     padding: 0 40px;
+}
+
+.featured-products__items-wrapper {
+    overflow: hidden;
+    width: 100%;
 }
 
 .featured-products__items {
     display: flex;
     transition: transform 0.5s ease;
-    will-change: transform;
 }
 
-/* Desktop - 4 slides per view (նույնը) */
 .featured-products__item {
     flex: 0 0 25%;
     padding: 20px;
-    min-width: 0;
     box-sizing: border-box;
 }
 
-/* Product card - Բացարձակապես նույնը */
+/* ===== PRODUCT CARD ===== */
 .product-card {
     background: #fff;
     padding: 15px;
-    position: relative;
     box-shadow: 0 0 5px rgba(24, 66, 66, 0.2);
+    text-align: center;
+    transition: transform 0.3s;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    transition: transform 0.3s;
 }
 
 .product-card:hover {
@@ -98,33 +63,25 @@
 }
 
 .product-card__image {
-    margin-bottom: 25px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-.product-card__image-link {
     display: block;
     width: 200px;
     height: 200px;
+    margin-bottom: 25px;
 }
 
-.product-card__img {
+.product-card__image img {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    display: block;
     transition: transform 0.3s;
 }
 
-.product-card__image-link:hover .product-card__img {
+.product-card__image:hover img {
     transform: scale(1.05);
 }
 
 .product-card__title {
     display: block;
-    text-align: center;
     font-size: 16px;
     font-weight: bold;
     color: #002d58;
@@ -136,10 +93,9 @@
 
 .product-card__title:hover {
     color: #fe9900;
-    text-decoration: none;
 }
 
-/* Navigation arrows - Նույն դիրքը */
+/* ===== NAVIGATION ===== */
 .featured-products__nav {
     position: absolute;
     top: 50%;
@@ -178,7 +134,7 @@
     right: 0;
 }
 
-/* Dots navigation - Նույնը */
+/* ===== DOTS NAVIGATION ===== */
 .featured-products__dots {
     display: flex;
     justify-content: center;
@@ -207,44 +163,37 @@
     background: #002d58;
 }
 
-/* Responsive styles - Նույնը */
-/* Tablet - 2 slides per view */
-@media only screen and (max-width: 1200px) and (min-width: 769px) {
+/* ===== RESPONSIVE ===== */
+@media only screen and (max-width: 1200px) {
     .featured-products__item {
         flex: 0 0 50%;
     }
     
-    .featured-products__items-container {
+    .featured-products__slider {
         padding: 0 50px;
     }
 }
 
-/* Mobile - 1 slide per view */
 @media only screen and (max-width: 768px) {
     .featured-products__item {
         flex: 0 0 100%;
     }
     
-    .featured-products__items-container {
+    .featured-products__slider {
         padding: 0 30px;
     }
     
     .featured-products__nav {
         width: 35px;
         height: 35px;
-        top: 50%;
-        bottom: auto;
-        transform: translateY(-50%);
     }
     
     .featured-products__nav--prev {
         left: 5px;
-        transform: translateY(-50%);
     }
     
     .featured-products__nav--next {
         right: 5px;
-        transform: translateY(-50%);
     }
     
     .featured-products__dots {
@@ -252,14 +201,8 @@
     }
 }
 
-@media only screen and (max-width: 992px) {
-    .featured-products__item {
-        padding: 20px 10px;
-    }
-}
-
 @media only screen and (max-width: 480px) {
-    .product-card__image-link {
+    .product-card__image {
         width: 150px;
         height: 150px;
     }
@@ -268,10 +211,7 @@
         font-size: 14px;
     }
     
-    .featured-products__items-container {
+    .featured-products__slider {
         padding: 0 35px;
     }
-}
-.featured-products__slider-wrapper {
-    padding-bottom: 5px;
 }
