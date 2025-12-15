@@ -1,19 +1,12 @@
-/* ===== TOOLBAR BASE STYLES ===== */
+/* ===== BASE STYLES ===== */
 .toolbar {
     background: #f4f5f6;
-
     font-family: inherit;
-
-        position: sticky;
-        top: 0;
-        width: 100%;
-        transition: all 0.4s ease-in-out;
-        z-index: 1480;
-    } 
-.sticky-toolbar {
-        position: sticky;
+    position: sticky;
     top: 0;
-    z-index: 9999;
+    width: 100%;
+    transition: all 0.4s ease-in-out;
+    z-index: 1480;
 }
 
 .toolbar__container {
@@ -52,9 +45,116 @@
 }
 
 .toolbar__col-actions {
-    flex: 0 0 47%;
+    flex: 0 0 50%;
     max-width: 50%;
     padding: 0 15px;
+}
+
+/* ===== COMMON COMPONENTS ===== */
+.toolbar__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toolbar__icon--down img {
+    width: 8px;
+    height: auto;
+}
+
+/* Dropdowns */
+.toolbar__dropdown {
+    position: absolute;
+    background: #fff;
+    border: 1px solid #a3a3a3;
+    box-shadow: 0 0 27px rgba(0, 43, 88, 0.17);
+    border-radius: 5px;
+    z-index: 9999;
+    display: none;
+}
+
+.toolbar__dropdown-arrow {
+    position: absolute;
+    top: -10px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #fff;
+    filter: drop-shadow(0 -2px 1px rgba(163, 163, 163, 0.2));
+}
+
+.toolbar__dropdown--contact .toolbar__dropdown-arrow {
+    left: 20px;
+}
+
+.toolbar__dropdown--tools .toolbar__dropdown-arrow,
+.toolbar__dropdown--account .toolbar__dropdown-arrow,
+.toolbar__dropdown--cart .toolbar__dropdown-arrow {
+    right: 20px;
+}
+
+/* Buttons */
+.toolbar__btn {
+    display: block;
+    text-align: center;
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.toolbar__btn--login {
+    background: #88c633;
+    color: #fff;
+}
+
+.toolbar__btn--login:hover {
+    background: #7ab22e;
+}
+
+.toolbar__btn--signup {
+    background: transparent;
+    color: #002d58;
+    border: 1px solid #002d58;
+}
+
+.toolbar__btn--signup:hover {
+    background: #002d58;
+    color: #fff;
+}
+
+.toolbar__btn--checkout {
+    background: #f59a1f;
+    color: #fff;
+}
+
+.toolbar__btn--checkout:hover {
+    background: #e08a1a;
+}
+
+.toolbar__btn--viewcart {
+    background: transparent;
+    color: #002d58;
+    border: 1px solid #002d58;
+}
+
+.toolbar__btn--viewcart:hover {
+    background: #002d58;
+    color: #fff;
+}
+
+/* Lists */
+.toolbar__contact-list,
+.toolbar__support-list,
+.toolbar__dropdown-list,
+.toolbar__account-menu,
+.toolbar__nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 /* ===== TOP SECTION ===== */
@@ -63,19 +163,15 @@
     background-color: #f4f5f6;
 }
 
-.toolbar__branding {
-    padding: 10px 0;
-}
-
 .toolbar__tagline {
     font-size: 14px;
     color: rgba(0, 45, 88, 0.6);
     margin: 0;
     font-weight: 500;
     line-height: 1.2;
+    padding: 10px 0;
 }
 
-/* Quick Navigation */
 .toolbar__quick-nav {
     display: flex;
     justify-content: flex-end;
@@ -83,9 +179,6 @@
 
 .toolbar__quick-list {
     display: flex;
-    margin: 0;
-    padding: 0;
-    list-style: none;
 }
 
 .toolbar__quick-item {
@@ -115,63 +208,15 @@
     color: #002d58;
 }
 
-/* Icons */
-.toolbar__icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.toolbar__icon--down img {
-    width: 8px;
-    height: auto;
-}
-
-/* ===== DROPDOWNS ===== */
-.toolbar__dropdown {
-    position: absolute;
-    background: #fff;
-    border: 1px solid #a3a3a3;
-    box-shadow: 0 0 27px rgba(0, 43, 88, 0.17);
-    border-radius: 5px;
-    z-index: 9999;
-    display: none;
-    min-width: 170px;
-}
-
-.toolbar__quick-item--has-dropdown:hover .toolbar__dropdown--contact,
-.toolbar__action--tools:hover .toolbar__dropdown--tools,
-.toolbar__action--account:hover .toolbar__dropdown--account,
-.toolbar__action--cart:hover .toolbar__dropdown--cart {
+/* Contact Dropdown */
+.toolbar__quick-item--has-dropdown:hover .toolbar__dropdown--contact {
     display: block;
 }
 
-.toolbar__dropdown-arrow {
-    position: absolute;
-    top: -10px;
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 10px solid #fff;
-    filter: drop-shadow(0 -2px 1px rgba(163, 163, 163, 0.2));
-}
-
-.toolbar__dropdown--contact .toolbar__dropdown-arrow {
-    left: 20px;
-}
-
-.toolbar__dropdown--tools .toolbar__dropdown-arrow,
-.toolbar__dropdown--account .toolbar__dropdown-arrow,
-.toolbar__dropdown--cart .toolbar__dropdown-arrow {
-    right: 20px;
-}
-
-/* Contact Dropdown */
 .toolbar__dropdown--contact {
     left: 0;
     top: 40px;
-    padding: 0;
+    min-width: 170px;
 }
 
 .toolbar__chat {
@@ -204,10 +249,7 @@
     color: #597baa;
     margin: 0;
 }
-.toolbar__actions-wrapper {
-    display: flex;
-    justify-content: flex-end;
-}
+
 .toolbar__contact-section,
 .toolbar__support-section {
     padding: 10px 15px;
@@ -225,17 +267,19 @@
     margin: 0 0 10px 0;
 }
 
-.toolbar__contact-list,
-.toolbar__support-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+.toolbar__contact-list li,
+.toolbar__support-list li {
+    margin-bottom: 8px;
+    position: relative;
+}
+
+.toolbar__contact-list li:last-child,
+.toolbar__support-list li:last-child {
+    margin-bottom: 0;
 }
 
 .toolbar__contact-list li {
-    position: relative;
     padding-left: 10px;
-    margin-bottom: 8px;
 }
 
 .toolbar__contact-list li:before {
@@ -243,11 +287,6 @@
     position: absolute;
     left: 0;
     color: #597baa;
-}
-
-.toolbar__contact-list li:last-child,
-.toolbar__support-list li:last-child {
-    margin-bottom: 0;
 }
 
 .toolbar__contact-list a,
@@ -288,11 +327,6 @@
     flex: 0 0 66.666667%;
     max-width: 66.666667%;
     padding-left: 15px;
-}
-
-/* Search Form */
-.toolbar__search-form {
-    position: relative;
 }
 
 .toolbar__search-group {
@@ -336,6 +370,11 @@
 }
 
 /* Contact Info */
+.toolbar__actions-wrapper {
+    display: flex;
+    justify-content: flex-end;
+}
+
 .toolbar__contact-info {
     display: flex;
     align-items: center;
@@ -392,7 +431,9 @@
     padding: 5px;
 }
 
-.toolbar__action-btn {
+.toolbar__action-btn,
+.toolbar__account-btn,
+.toolbar__cart-btn {
     background: none;
     border: none;
     padding: 0;
@@ -402,10 +443,8 @@
     align-items: center;
 }
 
-.toolbar__action-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.toolbar__action-icon,
+.toolbar__cart-icon {
     margin-bottom: 3px;
 }
 
@@ -414,24 +453,23 @@
     height: 25px;
 }
 
-.toolbar__action-text {
+.toolbar__action-text,
+.toolbar__cart-text {
     font-size: 12px;
     color: rgba(0, 45, 88, 0.8);
     margin-top: 4px;
 }
 
 /* Tools Dropdown */
+.toolbar__action--tools:hover .toolbar__dropdown--tools {
+    display: block;
+}
+
 .toolbar__dropdown--tools {
     right: -20px;
     top: 55px;
     min-width: 150px;
     padding: 15px 20px;
-}
-
-.toolbar__dropdown-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
 }
 
 .toolbar__dropdown-list li {
@@ -455,20 +493,20 @@
 }
 
 /* Account Section */
-
+.toolbar__action--account:hover .toolbar__dropdown--account {
+    display: block;
+}
 
 .toolbar__account-btn {
-    display: flex;
-    align-items: center;
+    flex-direction: row;
     border: 1px solid #658dbc;
     border-radius: 5px;
     padding: 10px 15px;
-    background: none;
-    cursor: pointer;
 }
 
 .toolbar__account-icon {
     margin-right: 10px;
+    margin-bottom: 0;
 }
 
 .toolbar__account-icon img {
@@ -497,7 +535,6 @@
     gap: 6px;
 }
 
-/* Account Dropdown */
 .toolbar__dropdown--account {
     right: 0;
     top: 55px;
@@ -513,40 +550,7 @@
     gap: 10px;
 }
 
-.toolbar__btn {
-    display: block;
-    text-align: center;
-    padding: 5px 15px;
-    border-radius: 5px;
-    font-size: 14px;
-    font-weight: bold;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-.toolbar__btn--login {
-    background: #88c633;
-    color: #fff;
-}
-
-.toolbar__btn--login:hover {
-    background: #7ab22e;
-}
-
-.toolbar__btn--signup {
-    background: transparent;
-    color: #002d58;
-    border: 1px solid #002d58;
-}
-
-.toolbar__btn--signup:hover {
-    background: #002d58;
-    color: #fff;
-}
-
 .toolbar__account-menu {
-    list-style: none;
-    margin: 0;
     padding: 0 15px 15px 15px;
 }
 
@@ -573,23 +577,16 @@
 }
 
 /* Cart */
+.toolbar__action--cart:hover .toolbar__dropdown--cart {
+    display: block;
+}
+
 .toolbar__action--cart {
     padding-right: 18px;
 }
 
 .toolbar__cart-btn {
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
     position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.toolbar__cart-icon {
-    margin-bottom: 3px;
 }
 
 .toolbar__cart-icon img {
@@ -598,20 +595,13 @@
 }
 
 .toolbar__cart-count {
-position: absolute;
+    position: absolute;
     top: -11px;
     right: -15px;
     font-size: 16px;
     color: #002d58;
 }
 
-.toolbar__cart-text {
-    font-size: 12px;
-    color: rgba(0, 45, 88, 0.8);
-    margin-top: 4px;
-}
-
-/* Cart Dropdown */
 .toolbar__dropdown--cart {
     right: 0;
     top: 55px;
@@ -738,42 +728,15 @@ position: absolute;
     gap: 10px;
 }
 
-.toolbar__btn--checkout {
-    background: #f59a1f;
-    color: #fff;
-}
-
-.toolbar__btn--checkout:hover {
-    background: #e08a1a;
-}
-
-.toolbar__btn--viewcart {
-    background: transparent;
-    color: #002d58;
-    border: 1px solid #002d58;
-}
-
-.toolbar__btn--viewcart:hover {
-    background: #002d58;
-    color: #fff;
-}
-
-/* ===== BOTTOM SECTION (Main Navigation) ===== */
+/* ===== BOTTOM SECTION ===== */
 .toolbar__bottom {
     background: #002d58;
     box-shadow: 0 3px 8px 0 #737476;
 }
 
-.toolbar__main-nav {
-    width: 100%;
-}
-
 .toolbar__nav-list {
     display: flex;
     justify-content: space-between;
-    margin: 0;
-    padding: 0;
-    list-style: none;
 }
 
 .toolbar__nav-item {
@@ -800,7 +763,7 @@ position: absolute;
     background: #597aa8;
 }
 
-/* ===== MOBILE STYLES ===== */
+/* ===== MOBILE ===== */
 .d-desktop-only {
     display: block;
 }
@@ -817,9 +780,6 @@ position: absolute;
 .toolbar__mobile-list {
     display: flex;
     align-items: center;
-    margin: 0;
-    padding: 0;
-    list-style: none;
 }
 
 .toolbar__mobile-item {
@@ -905,10 +865,7 @@ position: absolute;
 .toolbar__mobile-actions-list {
     display: flex;
     align-items: center;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .toolbar__mobile-action-item {
@@ -962,7 +919,8 @@ position: absolute;
     align-items: center;
     justify-content: center;
 }
-/* ===== RESPONSIVE BREAKPOINTS ===== */
+
+/* ===== RESPONSIVE ===== */
 @media only screen and (max-width: 1024px) {
     .d-desktop-only {
         display: none !important;
@@ -985,13 +943,6 @@ position: absolute;
     .toolbar__logo-container {
         flex: 0 0 auto;
         max-width: none;
-    }
-    
-  
-    
-    body {
-        padding-top: 0;
-        transition: padding-top 0.4s ease-in-out;
     }
 }
 
