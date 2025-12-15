@@ -1,29 +1,11 @@
-/* ==========================================================================
-   Footer Banner բլոկ
-   ========================================================================== */
+/* Footer Banner - օպտիմալացված */
 .footer-banner {
     padding: 40px 0 30px;
     position: relative;
     overflow: hidden;
 }
 
-/* Կոնտեյներ
-   ========================================================================== */
-.footer-banner__container {
-    position: relative;
-}
-
-.footer-banner__row {
-    margin: 0;
-}
-
-.footer-banner__col {
-    padding: 0;
-}
-
-/* Սլայդերի կոնտեյներ
-   ========================================================================== */
-.footer-banner__slider-wrapper {
+.footer-banner__slider {
     position: relative;
     width: 100%;
     margin: 0 auto;
@@ -31,37 +13,23 @@
     box-sizing: border-box;
 }
 
-.footer-banner__slider-container {
+.footer-banner__container {
     overflow: hidden;
     position: relative;
 }
 
-.footer-banner__slides-wrapper {
+.footer-banner__slides {
     display: flex;
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: transform;
     height: 100%;
 }
 
-/* Սլայդ իտեմներ
-   ========================================================================== */
 .footer-banner__slide {
     flex: 0 0 100%;
     max-width: 100%;
     min-height: 1px;
     position: relative;
-}
-
-/* Սլայդ կառավարման կոճակներ (միայն սլաքներ)
-   ========================================================================== */
-.footer-banner__slider-controls {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    transform: translateY(-50%);
-    z-index: 10;
-    pointer-events: none;
 }
 
 .footer-banner__nav {
@@ -73,7 +41,6 @@
     padding: 0;
     cursor: pointer;
     border: 0;
-    outline: 0;
     background: #ffffffc2;
     z-index: 10;
     border-radius: 3px;
@@ -82,7 +49,6 @@
     justify-content: center;
     transition: all 0.3s ease;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    pointer-events: auto;
 }
 
 .footer-banner__nav:hover {
@@ -97,16 +63,6 @@
 .footer-banner__nav:disabled {
     opacity: 0.3;
     cursor: not-allowed;
-    transform: translateY(-50%) scale(1);
-}
-
-.footer-banner__nav:disabled:hover {
-    background: rgba(255, 255, 255, 0.9);
-    transform: translateY(-50%) scale(1);
-}
-
-.footer-banner__nav:disabled:hover img {
-    filter: none;
 }
 
 .footer-banner__nav--prev {
@@ -123,17 +79,11 @@
     transition: filter 0.3s ease;
 }
 
-/* ==========================================================================
-   Banner Card բլոկ
-   ========================================================================== */
+/* Banner Card */
 .banner-card {
     width: 100%;
     height: 100%;
     position: relative;
-}
-
-.banner-card--link:hover .banner-card__image {
-    transform: scale(1.02);
 }
 
 .banner-card__link {
@@ -159,11 +109,13 @@
     transition: transform 0.5s ease;
 }
 
-/* ==========================================================================
-   Մեդիա հարցումներ
-   ========================================================================== */
-@media only screen and (max-width: 1200px) {
-    .footer-banner__slider-wrapper {
+.banner-card:hover .banner-card__image {
+    transform: scale(1.02);
+}
+
+/* Ադապտիվ դիզայն */
+@media (max-width: 1200px) {
+    .footer-banner__slider {
         padding: 0 50px;
     }
     
@@ -181,12 +133,12 @@
     }
 }
 
-@media only screen and (max-width: 992px) {
+@media (max-width: 992px) {
     .footer-banner {
         padding: 30px 0 20px;
     }
     
-    .footer-banner__slider-wrapper {
+    .footer-banner__slider {
         padding: 0 45px;
     }
     
@@ -201,12 +153,12 @@
     }
 }
 
-@media only screen and (max-width: 768px) {
+@media (max-width: 768px) {
     .footer-banner {
         padding: 20px 0 15px;
     }
     
-    .footer-banner__slider-wrapper {
+    .footer-banner__slider {
         padding: 0 40px;
     }
     
@@ -221,8 +173,8 @@
     }
 }
 
-@media only screen and (max-width: 576px) {
-    .footer-banner__slider-wrapper {
+@media (max-width: 576px) {
+    .footer-banner__slider {
         padding: 0 35px;
     }
     
@@ -245,8 +197,8 @@
     }
 }
 
-@media only screen and (max-width: 400px) {
-    .footer-banner__slider-wrapper {
+@media (max-width: 400px) {
+    .footer-banner__slider {
         padding: 0;
     }
     
