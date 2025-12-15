@@ -22,7 +22,7 @@ class FeaturedProductsSlider {
     init() {
         this.setupClones();
         this.bindEvents();
-        this.updateSlider(false); // Initial setup without animation
+        this.updateSlider(false);
         this.startAutoSlide();
     }
     
@@ -34,13 +34,11 @@ class FeaturedProductsSlider {
     }
     
     setupClones() {
-        // Remove existing clones
         this.removeClones();
         
         const clonesNeeded = Math.max(this.state.slidesPerView, 2);
         this.clonedItems = [];
         
-        // Clone items for infinite scroll
         for (let i = 0; i < clonesNeeded; i++) {
             const cloneEnd = this.items[i].cloneNode(true);
             const cloneStart = this.items[this.state.totalItems - 1 - i].cloneNode(true);
@@ -73,7 +71,6 @@ class FeaturedProductsSlider {
         this.itemsWrapper.style.transition = animate ? 'transform 0.5s ease' : 'none';
         this.itemsWrapper.style.transform = `translateX(${translateX}%)`;
         
-        // Remove inline styles from items - let CSS handle the responsive widths
         const allItems = this.itemsWrapper.querySelectorAll('.featured-products__item');
         allItems.forEach(item => {
             item.style.flex = '';
@@ -125,11 +122,9 @@ class FeaturedProductsSlider {
     }
     
     bindEvents() {
-        // Navigation
         this.prevBtn?.addEventListener('click', () => this.prevSlide());
         this.nextBtn?.addEventListener('click', () => this.nextSlide());
         
-        // Dots
         this.dotsContainer?.addEventListener('click', (e) => {
             const dot = e.target.closest('.featured-products__dot');
             if (dot && dot.dataset.slide) {
@@ -137,7 +132,6 @@ class FeaturedProductsSlider {
             }
         });
         
-        // Touch events
         let touchStartX = 0;
         this.slider.addEventListener('touchstart', (e) => {
             touchStartX = e.touches[0].clientX;
@@ -155,18 +149,15 @@ class FeaturedProductsSlider {
             this.startAutoSlide();
         }, { passive: true });
         
-        // Auto-slide controls
         this.slider.addEventListener('mouseenter', () => this.stopAutoSlide());
         this.slider.addEventListener('mouseleave', () => this.startAutoSlide());
         
-        // Resize handler
         let resizeTimer;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(() => this.handleResize(), 250);
         });
         
-        // Transition end
         this.itemsWrapper.addEventListener('transitionend', () => {
             this.state.isTransitioning = false;
         });
@@ -222,5 +213,4 @@ class FeaturedProductsSlider {
     }
 }
 
-// Initialize
 document.addEventListener('DOMContentLoaded', () => new FeaturedProductsSlider());
