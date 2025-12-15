@@ -249,7 +249,7 @@
 
 @media only screen and (max-width: 400px) {
     .footer-banner__slider-wrapper {
-        padding: 0 30px;
+        padding: 0;
     }
     
     .footer-banner__nav {

@@ -424,12 +424,17 @@
         border: 0;
         margin-bottom: 0;
     }
+    .footer__col {
+        width: 100%;
+    }
     
     /* Active state for mobile */
     .footer__section--active .footer__section-title::after {
         content: '-';
     }
-    
+    .row {
+        display: block;
+    }
     .footer__list-item {
         width: 50%;
     }
