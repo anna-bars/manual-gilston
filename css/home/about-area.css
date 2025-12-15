@@ -169,8 +169,8 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
 }
-
-.category-card {
+ 
+.about-area .category-card {
     border: 1px solid #e9e7f2;
     background: #ffffff; 
     padding: 25px 20px;

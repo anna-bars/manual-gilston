@@ -93,4 +93,4 @@
         window.bannerInstance = new Banner();
     });
     
-})();
+})(); 
