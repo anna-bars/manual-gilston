@@ -644,48 +644,143 @@
     </div>
     </section>
 
-   <section class="gilson-insights">
-    <div class="container">
-        <div class="gilson-insights__header">
-            <h3 class="gilson-insights__title">Gilson Insights</h3>
-        </div>
-        
-        <div class="gilson-insights__slider">
-            <div class="gilson-insights__nav-btn gilson-insights__nav-btn--prev" aria-label="Previous slide">
-                <img src="./src/assets/home/best-seller/icon/left.png" alt="">
-            </div>
-            <div class="gilson-insights__nav-btn gilson-insights__nav-btn--next" aria-label="Next slide">
-                <img src="./src/assets/home/best-seller/icon/next.png" alt="">
-            </div>
-            
-            <div class="gilson-insights__slides-container">
-                <div class="gilson-insights__slides">
-                    <!-- Սլայդները մնում են նույնը, բայց կարող եք հեռացնել կրկնվող դասանունները -->
-                    <div class="gilson-insights__slide">
-                        <article class="card">
-                            <div class="card__image">
-                                <a href="https://www.globalgilson.com/blog/coarse-aggregate-gradation" class="card__link">
-                                    <img loading="lazy" src="./src/assets/home/insights/coarse-aggregate-gradation.avif" alt="Coarse Aggregate Gradation" width="313" height="172" class="card__img">
-                                </a>
-                            </div>
-                            <div class="card__content">
-                                <h3 class="card__title">Coarse Aggregate Gradation: Test Sieves or Screen Trays?</h3>
-                                <p class="card__description">Learn how using a laboratory-scale testing screen shaker can improve testing efficiency and productivity.</p>
-                            </div>
-                        </article>
-                    </div>
-                    <!-- ... մնացած սլայդները ... -->
+    <section class="gilson-insights">
+    <div class="gilson-insights__container container">
+        <div class="gilson-insights__row">
+            <div class="gilson-insights__col col-md-12">
+                <div class="gilson-insights__header">
+                    <h3 class="gilson-insights__title">Gilson Insights</h3>
                 </div>
-            </div>
-            
-            <div class="gilson-insights__dots"></div>
-            
-            <div class="gilson-insights__more">
-                <a href="https://www.globalgilson.com/blog" class="gilson-insights__btn">Read More Gilson Insights</a>
+                <div class="gilson-insights__slider-wrapper">
+                    <div class="gilson-insights__slider-controls">
+                        <button class="gilson-insights__nav gilson-insights__nav--prev" aria-label="Previous slide">
+                            <img src="./src/assets/home/best-seller/icon/left.png" alt="">
+                        </button>
+                        <button class="gilson-insights__nav gilson-insights__nav--next" aria-label="Next slide">
+                            <img src="./src/assets/home/best-seller/icon/next.png" alt="">
+                        </button>
+                    </div>
+                    
+                    <div class="gilson-insights__slider-container">
+                        <div class="gilson-insights__slides-wrapper js-insights-slider">
+                            <div class="gilson-insights__slide">
+                                <article class="card card--insight">
+                                    <div class="card__image">
+                                        <a href="https://www.globalgilson.com/blog/coarse-aggregate-gradation" class="card__link">
+                                            <img loading="lazy" src="./src/assets/home/insights/coarse-aggregate-gradation.avif" alt="Coarse Aggregate Gradation" width="313" height="172" class="card__img">
+                                        </a>
+                                    </div>
+                                    <div class="card__content">
+                                        <h3 class="card__title">Coarse Aggregate Gradation: Test Sieves or Screen Trays?</h3>
+                                        <p class="card__description">Learn how using a laboratory-scale testing screen shaker can improve testing efficiency and productivity.</p>
+                                    </div>
+                                </article>
+                            </div>
+                            <div class="gilson-insights__slide">
+                                <article class="card card--insight">
+                                    <div class="card__image">
+                                        <a href="https://www.globalgilson.com/blog/sand-equivalent-method" class="card__link">
+                                            <img loading="lazy" src="./src/assets/home/insights/sand-equivlant.avif" alt="Sand Equivalent Test Method Explained" width="313" height="172" class="card__img">
+                                        </a>
+                                    </div>
+                                    <div class="card__content">
+                                        <h3 class="card__title">Sand Equivalent Test Method Explained: The Purpose and The Process</h3>
+                                        <p class="card__description">Understand how fines can impact the performance of composite materials.</p>
+                                    </div>
+                                </article>
+                            </div>
+                            <div class="gilson-insights__slide">
+                                <article class="card card--insight">
+                                    <div class="card__image">
+                                        <a href="https://www.globalgilson.com/blog/finding-rebar-in-concrete" class="card__link">
+                                            <img loading="lazy" src="./src/assets/home/insights/detecting-rebar-in-concrete.avif" alt="Rebar in Concrete" width="313" height="172" class="card__img">
+                                        </a>
+                                    </div>
+                                    <div class="card__content">
+                                        <h3 class="card__title">Rebar in Concrete: Non-destructive Evaluation of the Reinforcement Matrix</h3>
+                                        <p class="card__description">Identify the right tool for finding embedded concrete reinforcing steel.</p>
+                                    </div>
+                                </article>
+                            </div>
+                            <div class="gilson-insights__slide">
+                                <article class="card card--insight">
+                                    <div class="card__image">
+                                        <a href="https://www.globalgilson.com/blog/soil-direct-shear-test" class="card__link">
+                                            <img loading="lazy" src="./src/assets/home/insights/direct-shear-test.avif" alt="Soil Direct Shear Test" width="313" height="172" class="card__img">
+                                        </a>
+                                    </div>
+                                    <div class="card__content">
+                                        <h3 class="card__title">Soil Direct Shear Test: Understanding the Process</h3>
+                                        <p class="card__description">Know why a relatively simple soil mechanics test is very important to geotechnical engineers.</p>
+                                    </div>
+                                </article>
+                            </div>
+                            <div class="gilson-insights__slide">
+                                <article class="card card--insight">
+                                    <div class="card__image">
+                                        <a href="https://www.globalgilson.com/blog/cmt-field-lab-setup" class="card__link">
+                                            <img loading="lazy" src="./src/assets/home/insights/cmt-field-lab-setup.avif" alt="Setting Up A CMT Field Lab" width="313" height="172" class="card__img">
+                                        </a>
+                                    </div>
+                                    <div class="card__content">
+                                        <h3 class="card__title">Setting Up A CMT Field Lab: Application-Specific Equipment & Considerations</h3>
+                                        <p class="card__description">Find out which testing equipment to use based on the materials being tested.</p>
+                                    </div>
+                                </article>
+                            </div>
+                            <div class="gilson-insights__slide">
+                                <article class="card card--insight">
+                                    <div class="card__image">
+                                        <a href="https://www.globalgilson.com/blog/equipment-needed-for-construction-field-testing-lab" class="card__link">
+                                            <img loading="lazy" src="./src/assets/home/insights/cmt-field-lab-essentials.avif" alt="Setting Up A CMT Field Lab" width="313" height="172" class="card__img">
+                                        </a>
+                                    </div>
+                                    <div class="card__content">
+                                        <h3 class="card__title">How To Set Up A Field Lab For Construction Materials Testing: The Essentials</h3>
+                                        <p class="card__description">Learn the ABC's that are required for a materials testing lab in the field.</p>
+                                    </div>
+                                </article>
+                            </div>
+                            <div class="gilson-insights__slide">
+                                <article class="card card--insight">
+                                    <div class="card__image">
+                                        <a href="https://www.globalgilson.com/blog/cbr-testing" class="card__link">
+                                            <img loading="lazy" src="./src/assets/home/insights/cbr-test.avif" alt="California Bearing Ratio Test" width="313" height="172" class="card__img">
+                                        </a>
+                                    </div>
+                                    <div class="card__content">
+                                        <h3 class="card__title">California Bearing Ratio Test: CBR Values & Why They Matter</h3>
+                                        <p class="card__description">Gain insight as to why evaluating the strength of soil subgrades is important to highway engineers.</p>
+                                    </div>
+                                </article>
+                            </div>
+                            <div class="gilson-insights__slide">
+                                <article class="card card--insight">
+                                    <div class="card__image">
+                                        <a href="https://www.globalgilson.com/blog/concrete-cracking" class="card__link">
+                                            <img loading="lazy" src="./src/assets/home/insights/concrete-cracking.avif" alt="Concrete Cracking" width="313" height="172" class="card__img">
+                                        </a>
+                                    </div>
+                                    <div class="card__content">
+                                        <h3 class="card__title">Concrete Cracking: Evaluating Width, Depth & Movement</h3>
+                                        <p class="card__description">Discover trusted solutions for measuring cracks in concrete including width, depth and movement.</p>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="gilson-insights__dots" role="tablist">
+                    </div>
+                    
+                    <div class="gilson-insights__more">
+                        <a href="https://www.globalgilson.com/blog" class="gilson-insights__more-link" title="Click here to read more Gilson Insights blog posts">Read More Gilson Insights</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</section>
+    </section>
 
     <section class="gilson-video">
         <div class="gilson-video__container container">
