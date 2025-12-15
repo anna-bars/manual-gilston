@@ -1,71 +1,57 @@
 /* ==========================================================================
-   Gilson Insights բլոկ
+   Gilson Insights - օպտիմալացված
    ========================================================================== */
+
+/* Հիմնական կոնտեյներ */
 .gilson-insights {
     padding: 80px 0;
     position: relative;
     overflow: hidden;
 }
 
-/* Վերնագիր էլեմենտ
-   ========================================================================== */
 .gilson-insights__header {
     margin-bottom: 30px;
+    text-align: center;
 }
 
 .gilson-insights__title {
     text-transform: uppercase;
     font-size: 18px;
     color: #002d58;
-    font-weight: bold;
-    text-align: center;
+    font-weight: 700;
 }
 
-/* Սլայդերի կոնտեյներ
-   ========================================================================== */
-.gilson-insights__slider-wrapper {
+/* Սլայդեր կոնտեյներ */
+.gilson-insights__slider {
     position: relative;
     width: 94%;
-    margin: auto;
+    margin: 0 auto;
     padding: 0 24px;
 }
 
-.gilson-insights__slider-container {
+.gilson-insights__container {
     overflow: hidden;
+    padding: 35px 0 8px;
     position: relative;
-    padding: 35px 0 8px 0;
 }
 
-.gilson-insights__slides-wrapper {
+.gilson-insights__slides {
     display: flex;
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: transform;
     margin: 0 -15px;
 }
 
-/* Սլայդ իտեմներ
-   ========================================================================== */
+/* Սլայդներ */
 .gilson-insights__slide {
-    flex: 0 0 25%; /* Default 4 items per view (313px each) */
+    flex: 0 0 25%;
     max-width: 25%;
     padding: 0 15px;
     box-sizing: border-box;
-    min-height: 1px;
-    opacity: 1;
     transition: opacity 0.3s ease;
 }
 
-/* Սլայդ կառավարման կոճակներ
-   ========================================================================== */
-.gilson-insights__slider-controls {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    transform: translateY(-50%);
-    z-index: 10;
-}
-
+/* Նավիգացիոն կոճակներ */
 .gilson-insights__nav {
     position: absolute;
     top: 50%;
@@ -75,7 +61,6 @@
     padding: 0;
     cursor: pointer;
     border: 0;
-    outline: 0;
     background: #f6f7f8;
     z-index: 10;
     border-radius: 3px;
@@ -88,12 +73,6 @@
 
 .gilson-insights__nav:hover {
     background: #002d58;
-    color: #fff;
-}
-
-.gilson-insights__nav:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
 }
 
 .gilson-insights__nav--prev {
@@ -104,14 +83,17 @@
     right: -20px;
 }
 
-/* Dots նավիգացիա
-   ========================================================================== */
+.gilson-insights__nav:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Dots նավիգացիա */
 .gilson-insights__dots {
     display: flex;
     justify-content: center;
     gap: 10px;
     margin-top: 30px;
-    list-style: none;
     padding: 0;
 }
 
@@ -123,20 +105,15 @@
     border: none;
     padding: 0;
     cursor: pointer;
-    transition: background 0.3s ease, transform 0.3s ease;
+    transition: all 0.3s ease;
 }
-
-/* .gilson-insights__dot:hover {
-    transform: scale(1.2);
-} */
 
 .gilson-insights__dot--active {
     background: #002d58;
     transform: scale(1.2);
 }
 
-/* "Read More" էլեմենտ
-   ========================================================================== */
+/* Read More կոճակ */
 .gilson-insights__more {
     text-align: center;
     margin-top: 40px;
@@ -156,21 +133,18 @@
 }
 
 .gilson-insights__more-link:hover {
-    background-color: transparent;
+    background: transparent;
     color: #f59a1f;
-    text-decoration: none;
 }
 
-/* ==========================================================================
-   Card բլոկ (վերօգտագործվող կոմպոնենտ)
-   ========================================================================== */
+/* Card ստիլեր */
 .card {
     background: #fff;
     box-shadow: 0 0 5px rgba(24, 66, 66, 0.2);
     height: 100%;
     display: flex;
     flex-direction: column;
-    transition: all 0.3s ease;
+    transition: box-shadow 0.3s ease;
     border-radius: 4px;
     overflow: hidden;
 }
@@ -179,8 +153,6 @@
     box-shadow: 0 5px 7px rgba(24, 66, 66, 0.3);
 }
 
-/* Card էլեմենտներ
-   ========================================================================== */
 .card__image {
     position: relative;
     width: 100%;
@@ -194,9 +166,7 @@
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 0.5s ease;
 }
-
 
 .card__content {
     padding: 20px;
@@ -209,44 +179,41 @@
 .card__title {
     font-size: 16px;
     color: #002c58;
-    font-weight: bold;
+    font-weight: 700;
     line-height: 1.4;
     margin-bottom: 10px;
-    flex-grow: 0;
 }
 
 .card__description {
     color: #6c6e70;
     font-size: 14px;
-    margin-bottom: 0;
     line-height: 1.5;
+    margin: 0;
     flex-grow: 1;
 }
 
-/* ==========================================================================
-   Մեդիա հարցումներ
-   ========================================================================== */
-@media only screen and (max-width: 1400px) {
+/* Ադապտիվ դիզայն */
+@media (max-width: 1400px) {
     .gilson-insights__slide {
         flex: 0 0 33.333%;
         max-width: 33.333%;
     }
 }
 
-@media only screen and (max-width: 1200px) {
+@media (max-width: 1200px) {
     .gilson-insights__slide {
         flex: 0 0 33.333%;
         max-width: 33.333%;
     }
 }
 
-@media only screen and (max-width: 992px) {
+@media (max-width: 992px) {
     .gilson-insights__slide {
         flex: 0 0 50%;
         max-width: 50%;
     }
     
-    .gilson-insights__slider-wrapper {
+    .gilson-insights__slider {
         padding: 0 30px;
     }
     
@@ -264,7 +231,7 @@
     }
 }
 
-@media only screen and (max-width: 768px) {
+@media (max-width: 768px) {
     .gilson-insights {
         padding: 40px 0;
     }
@@ -274,7 +241,7 @@
         max-width: 100%;
     }
     
-    .gilson-insights__slider-wrapper {
+    .gilson-insights__slider {
         padding: 0 15px;
     }
     
@@ -282,12 +249,13 @@
         display: none;
     }
     
-    .gilson-insights__slides-wrapper {
+    .gilson-insights__slides {
         margin: 0;
     }
     
     .card__content {
         padding: 15px;
+        min-height: 150px;
     }
     
     .gilson-insights__more {
@@ -296,11 +264,10 @@
     
     .gilson-insights__more-link {
         padding: 10px 20px;
-        font-size: 14px;
     }
 }
 
-@media only screen and (max-width: 576px) {
+@media (max-width: 576px) {
     .gilson-insights__header {
         margin-bottom: 20px;
     }
@@ -311,9 +278,5 @@
     
     .card__description {
         font-size: 13px;
-    }
-    
-    .card__content {
-        min-height: 150px;
     }
 }

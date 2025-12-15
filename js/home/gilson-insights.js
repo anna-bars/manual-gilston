@@ -1,19 +1,18 @@
 /**
- * Gilson Insights Slider - Վերօգտագործված Featured Products Slider-ից
+ * Gilson Insights Slider - օպտիմալացված
  */
-class GilsonInsightsSlider {
+class InsightsSlider {
     constructor() {
-        this.selectors = {
-            slider: '.gilson-insights__slider-wrapper',
-            container: '.gilson-insights__slider-container',
-            slidesWrapper: '.gilson-insights__slides-wrapper',
-            slides: '.gilson-insights__slide',
-            prevBtn: '.gilson-insights__nav--prev',
-            nextBtn: '.gilson-insights__nav--next',
-            dotsContainer: '.gilson-insights__dots'
-        };
+        this.slider = document.querySelector('.gilson-insights__slider');
+        if (!this.slider) return;
         
-        this.elements = {};
+        this.slidesWrapper = this.slider.querySelector('.gilson-insights__slides');
+        this.slideItems = this.slidesWrapper.querySelectorAll('.gilson-insights__slide');
+        this.totalItems = this.slideItems.length;
+        this.dotsContainer = this.slider.querySelector('.gilson-insights__dots');
+        this.prevBtn = this.slider.querySelector('.gilson-insights__nav--prev');
+        this.nextBtn = this.slider.querySelector('.gilson-insights__nav--next');
+        
         this.state = {
             currentIndex: 0,
             isTransitioning: false,
@@ -21,20 +20,11 @@ class GilsonInsightsSlider {
             totalSlides: 0
         };
         
+        this.clonedSlides = [];
         this.init();
     }
     
     init() {
-        // Get DOM elements
-        for (const key in this.selectors) {
-            this.elements[key] = document.querySelector(this.selectors[key]);
-        }
-        
-        if (!this.elements.slider) return;
-        
-        this.slideItems = document.querySelectorAll(this.selectors.slides);
-        this.totalItems = this.slideItems.length;
-        
         this.setupSlider();
         this.bindEvents();
         this.updateResponsive();
@@ -50,36 +40,30 @@ class GilsonInsightsSlider {
     
     setupInfiniteScroll() {
         const clonesNeeded = this.state.slidesPerView;
-        this.clonedSlides = [];
         
-        // Clone last items to beginning (for infinite scroll)
+        // Clone last items to beginning
         for (let i = this.totalItems - clonesNeeded; i < this.totalItems; i++) {
             const clone = this.slideItems[i].cloneNode(true);
-            clone.classList.add('gilson-insights__slide--cloned');
-            this.elements.slidesWrapper.insertBefore(clone, this.slideItems[0]);
+            this.slidesWrapper.insertBefore(clone, this.slideItems[0]);
             this.clonedSlides.push(clone);
         }
         
-        // Clone first items to end (for infinite scroll)
+        // Clone first items to end
         for (let i = 0; i < clonesNeeded; i++) {
             const clone = this.slideItems[i].cloneNode(true);
-            clone.classList.add('gilson-insights__slide--cloned');
-            this.elements.slidesWrapper.appendChild(clone);
+            this.slidesWrapper.appendChild(clone);
             this.clonedSlides.push(clone);
         }
         
         this.state.totalSlides = this.totalItems + (clonesNeeded * 2);
-        // Start from original first slide (after clones)
         this.state.currentIndex = clonesNeeded;
         this.updateSlider(false);
     }
     
     removeClones() {
-        if (this.clonedSlides) {
-            this.clonedSlides.forEach(clone => {
-                if (clone.parentNode) clone.parentNode.removeChild(clone);
-            });
-        }
+        this.clonedSlides.forEach(clone => {
+            clone.remove();
+        });
         this.clonedSlides = [];
     }
     
@@ -90,43 +74,38 @@ class GilsonInsightsSlider {
         const slideWidth = 100 / this.state.slidesPerView;
         const translateX = -this.state.currentIndex * slideWidth;
         
-        this.elements.slidesWrapper.style.transition = animate ? 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)' : 'none';
-        this.elements.slidesWrapper.style.transform = `translateX(${translateX}%)`;
+        this.slidesWrapper.style.transition = animate ? 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)' : 'none';
+        this.slidesWrapper.style.transform = `translateX(${translateX}%)`;
         
-        // Check for infinite scroll loop
         setTimeout(() => {
             this.checkLoopBoundaries();
+            this.updateDots();
         }, animate ? 500 : 0);
-        
-        this.updateDots();
     }
     
     checkLoopBoundaries() {
         const clonesCount = this.state.slidesPerView;
         const totalOriginalSlides = this.totalItems;
         
-        // If we're at the beginning clones, jump to real end
         if (this.state.currentIndex < clonesCount) {
             this.state.currentIndex = totalOriginalSlides + clonesCount - 1;
-            const slideWidth = 100 / this.state.slidesPerView;
-            const translateX = -this.state.currentIndex * slideWidth;
-            
-            this.elements.slidesWrapper.style.transition = 'none';
-            this.elements.slidesWrapper.style.transform = `translateX(${translateX}%)`;
-        }
-        // If we're at the end clones, jump to real beginning
-        else if (this.state.currentIndex >= totalOriginalSlides + clonesCount) {
+            this.jumpToSlide();
+        } else if (this.state.currentIndex >= totalOriginalSlides + clonesCount) {
             this.state.currentIndex = clonesCount;
-            const slideWidth = 100 / this.state.slidesPerView;
-            const translateX = -this.state.currentIndex * slideWidth;
-            
-            this.elements.slidesWrapper.style.transition = 'none';
-            this.elements.slidesWrapper.style.transform = `translateX(${translateX}%)`;
+            this.jumpToSlide();
         }
         
         setTimeout(() => {
             this.state.isTransitioning = false;
         }, 50);
+    }
+    
+    jumpToSlide() {
+        const slideWidth = 100 / this.state.slidesPerView;
+        const translateX = -this.state.currentIndex * slideWidth;
+        
+        this.slidesWrapper.style.transition = 'none';
+        this.slidesWrapper.style.transform = `translateX(${translateX}%)`;
     }
     
     getOriginalSlideIndex() {
@@ -160,77 +139,59 @@ class GilsonInsightsSlider {
     }
     
     createDots() {
-        if (!this.elements.dotsContainer || this.totalItems <= 1) return;
+        if (!this.dotsContainer || this.totalItems <= 1) return;
         
-        this.elements.dotsContainer.innerHTML = '';
+        this.dotsContainer.innerHTML = '';
         
         for (let i = 0; i < this.totalItems; i++) {
             const dot = document.createElement('button');
             dot.className = 'gilson-insights__dot';
-            dot.setAttribute('type', 'button');
-            dot.setAttribute('role', 'tab');
-            dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
-            dot.setAttribute('data-slide', i);
+            dot.type = 'button';
+            dot.role = 'tab';
+            dot.ariaLabel = `Go to slide ${i + 1}`;
+            dot.dataset.slide = i;
             
-            if (i === this.getOriginalSlideIndex()) {
-                dot.classList.add('gilson-insights__dot--active');
-                dot.setAttribute('aria-current', 'true');
-            }
-            
-            this.elements.dotsContainer.appendChild(dot);
+            this.dotsContainer.appendChild(dot);
         }
     }
     
     bindEvents() {
-        // Navigation buttons
-        if (this.elements.prevBtn) {
-            this.elements.prevBtn.addEventListener('click', () => this.prevSlide());
-        }
+        if (this.prevBtn) this.prevBtn.addEventListener('click', () => this.prevSlide());
+        if (this.nextBtn) this.nextBtn.addEventListener('click', () => this.nextSlide());
         
-        if (this.elements.nextBtn) {
-            this.elements.nextBtn.addEventListener('click', () => this.nextSlide());
-        }
-        
-        // Dots navigation
-        if (this.elements.dotsContainer) {
-            this.elements.dotsContainer.addEventListener('click', (e) => {
+        if (this.dotsContainer) {
+            this.dotsContainer.addEventListener('click', (e) => {
                 if (e.target.classList.contains('gilson-insights__dot')) {
-                    const slideIndex = parseInt(e.target.dataset.slide);
-                    this.goToSlide(slideIndex);
+                    this.goToSlide(parseInt(e.target.dataset.slide));
                 }
             });
         }
         
         // Touch events
         let touchStartX = 0;
-        this.elements.container.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
+        this.slider.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
             this.stopAutoSlide();
         }, { passive: true });
         
-        this.elements.container.addEventListener('touchend', (e) => {
-            const touchEndX = e.changedTouches[0].screenX;
-            if (touchEndX < touchStartX - 50) this.nextSlide();
-            else if (touchEndX > touchStartX + 50) this.prevSlide();
+        this.slider.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const diff = touchStartX - touchEndX;
+            
+            if (diff > 50) this.nextSlide();
+            else if (diff < -50) this.prevSlide();
+            
             this.startAutoSlide();
         }, { passive: true });
         
-        // Mouse hover
-        this.elements.slider.addEventListener('mouseenter', () => this.stopAutoSlide());
-        this.elements.slider.addEventListener('mouseleave', () => this.startAutoSlide());
+        // Auto-slide control
+        this.slider.addEventListener('mouseenter', () => this.stopAutoSlide());
+        this.slider.addEventListener('mouseleave', () => this.startAutoSlide());
         
-        // Window resize
-        let resizeTimer;
+        // Resize
         window.addEventListener('resize', () => {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(() => {
-                this.updateResponsive();
-            }, 250);
-        });
-        
-        // Transition end
-        this.elements.slidesWrapper.addEventListener('transitionend', () => {
-            this.state.isTransitioning = false;
+            clearTimeout(this.resizeTimer);
+            this.resizeTimer = setTimeout(() => this.updateResponsive(), 250);
         });
     }
     
@@ -248,17 +209,17 @@ class GilsonInsightsSlider {
         this.resetAutoSlide();
     }
     
-    goToSlide(originalIndex, animate = true) {
+    goToSlide(originalIndex) {
         if (this.state.isTransitioning || originalIndex < 0 || originalIndex >= this.totalItems) return;
         
         const clonesCount = this.state.slidesPerView;
         this.state.currentIndex = originalIndex + clonesCount;
-        this.updateSlider(animate);
+        this.updateSlider();
         this.resetAutoSlide();
     }
     
     updateDots() {
-        const dots = document.querySelectorAll('.gilson-insights__dot');
+        const dots = this.dotsContainer.querySelectorAll('.gilson-insights__dot');
         if (!dots.length) return;
         
         const currentOriginalIndex = this.getOriginalSlideIndex();
@@ -266,15 +227,13 @@ class GilsonInsightsSlider {
         dots.forEach((dot, index) => {
             const isActive = index === currentOriginalIndex;
             dot.classList.toggle('gilson-insights__dot--active', isActive);
-            dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+            dot.setAttribute('aria-current', isActive);
         });
     }
     
     startAutoSlide() {
         this.stopAutoSlide();
-        this.autoSlideInterval = setInterval(() => {
-            this.nextSlide();
-        }, 5000);
+        this.autoSlideInterval = setInterval(() => this.nextSlide(), 5000);
     }
     
     stopAutoSlide() {
@@ -292,10 +251,11 @@ class GilsonInsightsSlider {
     destroy() {
         this.stopAutoSlide();
         this.removeClones();
+        window.removeEventListener('resize', this.updateResponsive);
     }
 }
 
-// Initialize
+// Initialize slider
 document.addEventListener('DOMContentLoaded', () => {
-    const insightsSlider = new GilsonInsightsSlider();
+    new InsightsSlider();
 });
