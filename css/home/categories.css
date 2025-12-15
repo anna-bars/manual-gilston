@@ -65,7 +65,7 @@
     display: block;
 }
 
-.category-card__link {
+.categories .category-card__link {
     font-size: 18px;
     color: #002d58;
     font-weight: 500;

@@ -193,6 +193,7 @@
     justify-content: space-between;
     margin-bottom: 15px;
     gap: 10px;
+    width: 100%;
 }
 
 .category-card__title-text {
