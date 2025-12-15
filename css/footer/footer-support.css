@@ -1,29 +1,7 @@
-/* ==========================================================================
-   Footer Support բլոկ
-   ========================================================================== */
-.footer-support {
-    /* padding is handled by parent if needed */
-}
-
-.footer-support__container {
-    /* Bootstrap container-fluid */
-}
-
-.footer-support__row {
-    /* Bootstrap row */
-}
-
-.footer-support__col {
-    /* Bootstrap column */
-    padding: 0 !important; /* Same as p-0 */
-}
-
-/* Իմեջ կոնտեյներ */
 .footer-support__image-container {
     position: relative;
 }
 
-/* Պատկեր */
 .footer-support__picture {
     display: block;
     width: 100%;
@@ -37,79 +15,69 @@
     display: block;
 }
 
-/* Կոնտենտ */
 .footer-support__content {
-    height: 100%;
-    padding: 20px;
     position: absolute;
-    width: 50%;
     top: 0;
     right: 0;
-    bottom: 0;
+    width: 50%;
+    height: 100%;
+    padding: 20px;
 }
 
-/* Վերնագիր */
 .footer-support__title {
     text-align: center;
     color: #002c58;
-    font-weight: bold;
+    font-weight: 700;
     font-size: 20px;
     margin-bottom: 15px;
     text-transform: uppercase;
 }
 
-/* Մեթոդներ */
 .footer-support__methods {
     display: flex;
     justify-content: space-around;
 }
 
-/* Յուրաքանչյուր մեթոդ */
 .footer-support__method {
     position: relative;
     list-style: none;
 }
 
-/* Լինք */
 .footer-support__link {
     position: absolute;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
     font-size: 0;
 }
 
-/* Այկոն */
 .footer-support__icon {
     background: #f59a1f;
     border-radius: 5px;
     padding: 12px 15px;
     display: inline-block;
-    color: #fff;
-    font-size: 20px;
     margin-bottom: 0;
     text-align: center;
 }
 
-/* Տեքստ */
+.footer-support__icon img {
+    display: block;
+}
+
 .footer-support__text {
     color: #424445;
     text-align: center;
     position: relative;
     padding: 5px;
     font-size: 16px;
-    font-weight: bold;
-    color: #424445;
+    font-weight: 700;
 }
 
 .footer-support__text p {
     margin: 0;
 }
 
-/* Support Center */
 .footer-support__center {
     margin-top: 20px;
 }
@@ -119,78 +87,67 @@
     color: #424445;
     text-align: center;
     position: relative;
-    margin-bottom: 0;
+    margin: 0;
 }
 
-.footer-support__center-title:before {
-    position: absolute;
+.footer-support__center-title::before,
+.footer-support__center-title::after {
     content: '';
+    position: absolute;
     width: 130px;
     height: 1px;
     background: #424445;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.footer-support__center-title::before {
     left: 0;
-    top: 50%;
-    transform: translateY(-50%);
 }
 
-.footer-support__center-title:after {
-    position: absolute;
-    content: '';
-    width: 130px;
-    height: 1px;
-    background: #424445;
+.footer-support__center-title::after {
     right: 0;
-    top: 50%;
-    transform: translateY(-50%);
 }
 
 .footer-support__center-link {
     color: #6995c3;
-    font-weight: bold;
+    font-weight: 700;
     text-decoration: underline;
 }
 
-/* ==========================================================================
-   Մեդիա հարցումներ (նույնը ինչ առաջ)
-   ========================================================================== */
-@media only screen and (max-width: 1024px) {
+/* Ադապտիվ դիզայն */
+@media (max-width: 1024px) {
     .footer-support__content {
         width: 60%;
         left: 0;
-        margin: 0 auto;
         right: auto;
+        margin: 0 auto;
     }
     
     .footer-support__text {
-        margin-bottom: 0;
-        position: relative;
         padding: 5px 0;
         text-align: left;
+        margin-bottom: 0;
     }
     
-    .footer-support__text:before {
+    .footer-support__text::before {
+        content: '→';
         position: absolute;
-        content: '\f105';
-        width: 20px;
-        height: 20px;
-        font-size: 20px;
-        font-weight: bold;
-        color: #424445;
-        font-family: 'FontAwesome';
         right: -15px;
         top: 0;
+        font-size: 20px;
+        font-weight: 700;
+        color: #424445;
     }
 }
 
-@media only screen and (max-width: 767px) {
+@media (max-width: 767px) {
     .footer-support__title {
         font-size: 17px;
         margin-bottom: 25px;
     }
     
     .footer-support__text {
-        margin-bottom: 0;
-        position: relative;
         padding: 5px 0;
         text-align: left;
     }
@@ -207,10 +164,9 @@
         right: -10px;
         top: 9px;
     }
-
     
-    .footer-support__center-title:before,
-    .footer-support__center-title:after {
+    .footer-support__center-title::before,
+    .footer-support__center-title::after {
         width: 40px;
     }
     
@@ -221,24 +177,21 @@
     .footer-support__img {
         height: 450px;
     }
-    .footer-support__col.col-md-12 {
-    width: 100%;
-    }
 }
 
-@media only screen and (max-width: 375px) {
+@media (max-width: 375px) {
     .footer-support__img {
         height: 450px;
     }
 }
 
-@media only screen and (max-width: 320px) {
+@media (max-width: 320px) {
     .footer-support__img {
         height: 400px;
     }
     
-    .footer-support__center-title:before,
-    .footer-support__center-title:after {
+    .footer-support__center-title::before,
+    .footer-support__center-title::after {
         width: 18px;
     }
     
